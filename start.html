@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start</title>
+  <style>
+    @font-face {
+      font-family: "Proxima Nova Nav";
+      src: url('proxima-nova-scosf-bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova";
+      src: url('proxima-nova-light.otf') format('opentype');
+      font-weight: 300;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova";
+      src: url('proxima-nova-regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova";
+      src: url('proxima-nova-semibold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova";
+      src: url('proxima-nova-bold.otf') format('opentype');
+      font-weight: 700 900;
+      font-style: normal;
+    }
+    :root {
+      --bg: #f5f5f4;
+      --surface: #ffffff;
+      --border: #e2e2e0;
+      --text: #1a1a18;
+      --text-muted: #9a9a96;
+      --hover-bg: #ebebea;
+      --shadow: 0 1px 3px rgba(0,0,0,0.07);
+    }
+
+    [data-theme="dark"] {
+      --bg: #1e1e1c;
+      --surface: #2a2a28;
+      --border: #3a3a38;
+      --text: #f0f0ec;
+      --text-muted: #7a7a76;
+      --hover-bg: #343432;
+      --shadow: 0 1px 3px rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Proxima Nova", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      padding: 48px 32px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    /* ── Clock ── */
+    .clock {
+      text-align: center;
+      line-height: 1;
+    }
+
+    .clock-date {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .clock-time {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 96px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      max-width: 740px;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 148px;
+      flex-shrink: 0;
+      padding-right: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-item {
+      font-family: "Proxima Nova", sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 5px 0;
+      line-height: 1.4;
+      transition: color 0.15s;
+      user-select: none;
+    }
+
+    .nav-item:hover { color: var(--text); }
+
+    .nav-item.active {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+
+    .nav-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 10px 0;
+    }
+
+    /* ── Divider ── */
+    .vdivider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+      min-height: 100px;
+      flex-shrink: 0;
+    }
+
+    /* ── Content ── */
+    .content {
+      flex: 1;
+      padding-left: 48px;
+    }
+
+    /* ── Panels ── */
+    .panel {
+      display: none;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .panel.active {
+      display: flex;
+      animation: panelIn 0.2s ease forwards;
+    }
+
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(7px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-heading {
+      font-size: 21px;
+      font-weight: 300;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    /* ── Chips ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px 7px 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      box-shadow: var(--shadow);
+      transition: background 0.12s, border-color 0.12s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+    }
+
+    .btn:active { transform: translateY(0); }
+
+    /* Simple Icons via CSS mask */
+    .si {
+      display: inline-block;
+      width: 13px;
+      height: 13px;
+      background-color: var(--text);
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      flex-shrink: 0;
+      opacity: 0.65;
+      transition: opacity 0.12s;
+    }
+
+    .btn:hover .si { opacity: 1; }
+
+    .svg-icon {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      opacity: 0.65;
+      transition: opacity 0.12s;
+    }
+
+    .btn:hover .svg-icon { opacity: 1; }
+
+    .fav {
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      flex-shrink: 0;
+      filter: grayscale(1) opacity(0.55);
+      transition: filter 0.12s;
+    }
+
+    [data-theme="dark"] .fav {
+      filter: grayscale(1) invert(1) opacity(0.65);
+    }
+
+    .btn:hover .fav { filter: grayscale(0.3) opacity(0.9); }
+    [data-theme="dark"] .btn:hover .fav { filter: grayscale(0.3) invert(0.8) opacity(0.9); }
+
+    .label { line-height: 1; }
+
+    /* ── Theme switch ── */
+    .theme-switch {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .switch-icon {
+      width: 13px;
+      height: 13px;
+      color: var(--text-muted);
+      transition: color 0.2s, opacity 0.2s;
+      flex-shrink: 0;
+    }
+
+    .switch-icon.active { color: var(--text); }
+
+    .switch-track {
+      width: 34px;
+      height: 18px;
+      background: var(--border);
+      border-radius: 999px;
+      position: relative;
+      transition: background 0.25s;
+      flex-shrink: 0;
+    }
+
+    [data-theme="dark"] .switch-track { background: var(--text-muted); }
+
+    .switch-thumb {
+      width: 12px;
+      height: 12px;
+      background: var(--surface);
+      border-radius: 50%;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: transform 0.25s cubic-bezier(0.4,0,0.2,1), background 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    [data-theme="dark"] .switch-thumb { transform: translateX(16px); }
+  </style>
+</head>
+<body>
+
+  <div class="theme-switch" onclick="toggleTheme()">
+    <!-- Sun -->
+    <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+      <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    </svg>
+    <!-- Track -->
+    <div class="switch-track">
+      <div class="switch-thumb"></div>
+    </div>
+    <!-- Moon -->
+    <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+    </svg>
+  </div>
+
+  <div class="clock">
+    <div class="clock-date" id="clockDate"></div>
+    <div class="clock-time" id="clockTime"></div>
+  </div>
+
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="nav-item active" data-section="main">Links</div>
+      <div class="nav-divider"></div>
+<div class="nav-item" data-section="network">Network & Infra</div>
+      <div class="nav-item" data-section="files">Files & Sharing</div>
+      <div class="nav-item" data-section="resources">Resources</div>
+      <div class="nav-item" data-section="whatbox">Whatbox</div>
+    </nav>
+
+    <!-- Vertical divider -->
+    <div class="vdivider"></div>
+
+    <!-- Content -->
+    <main class="content">
+
+      <!-- Main -->
+      <div class="panel active" id="panel-main">
+        <div class="chips">
+          <a class="btn" href="https://drive.google.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googledrive');mask-image:url('https://cdn.simpleicons.org/googledrive')"></span>
+            <span class="label">Drive</span>
+          </a>
+          <a class="btn" href="https://youtube.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
+            <span class="label">YouTube</span>
+          </a>
+          <a class="btn" href="https://sniffies.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://ryanc.vercel.app/sniffies.svg');mask-image:url('https://ryanc.vercel.app/sniffies.svg')"></span>
+            <span class="label">Sniffies</span>
+          </a>
+          <a class="btn" href="https://news.ycombinator.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/ycombinator');mask-image:url('https://cdn.simpleicons.org/ycombinator')"></span>
+            <span class="label">Hacker News</span>
+          </a>
+          <a class="btn" href="https://brutalist.report" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('brutalist-report-icon.svg');mask-image:url('brutalist-report-icon.svg')"></span>
+            <span class="label">Brutalist Report</span>
+          </a>
+          <a class="btn" href="https://app.plex.tv" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('plex-icon.svg');mask-image:url('plex-icon.svg')"></span>
+            <span class="label">Plex</span>
+          </a>
+          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('whatbox-icon.svg');mask-image:url('whatbox-icon.svg')"></span>
+            <span class="label">Whatbox</span>
+          </a>
+          <a class="btn" href="https://claude.ai/new" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/claude');mask-image:url('https://cdn.simpleicons.org/claude')"></span>
+            <span class="label">Claude</span>
+          </a>
+          <a class="btn" href="https://chatgpt.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('chatgpt-icon.svg');mask-image:url('chatgpt-icon.svg')"></span>
+            <span class="label">ChatGPT</span>
+          </a>
+          <a class="btn" href="https://gemini.google.com/app" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googlegemini');mask-image:url('https://cdn.simpleicons.org/googlegemini')"></span>
+            <span class="label">Gemini</span>
+          </a>
+          <a class="btn" href="https://mail.google.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
+            <span class="label">Gmail</span>
+          </a>
+          <a class="btn" href="https://fastmail.com" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            <span class="label">Fastmail</span>
+          </a>
+          <a class="btn" href="https://voice.google.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('google-voice-icon.svg');mask-image:url('google-voice-icon.svg')"></span>
+            <span class="label">Google Voice</span>
+          </a>
+        </div>
+      </div>
+
+
+      <!-- Media -->
+
+      <!-- Network & Infra -->
+      <div class="panel" id="panel-network">
+        <div class="chips">
+          <a class="btn" href="https://speed.cloudflare.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('cloudflare-speed-icon.svg');mask-image:url('cloudflare-speed-icon.svg')"></span>
+            <span class="label">Speed Test</span>
+          </a>
+          <a class="btn" href="https://my.nextdns.io/8584eb/logs" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/nextdns');mask-image:url('https://cdn.simpleicons.org/nextdns')"></span>
+            <span class="label">NextDNS</span>
+          </a>
+          <a class="btn" href="https://wifiman.com/" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/ubiquiti');mask-image:url('https://cdn.simpleicons.org/ubiquiti')"></span>
+            <span class="label">WiFiMan</span>
+          </a>
+          <a class="btn" href="https://vercel.com/ryanchavezzz" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/vercel');mask-image:url('https://cdn.simpleicons.org/vercel')"></span>
+            <span class="label">Vercel</span>
+          </a>
+          <a class="btn" href="https://www.oracle.com/cloud/sign-in.html" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('oracle-cloud-icon.svg');mask-image:url('oracle-cloud-icon.svg')"></span>
+            <span class="label">Oracle Cloud</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Files & Sharing -->
+      <div class="panel" id="panel-files">
+        <div class="chips">
+          <a class="btn" href="https://file.pizza/" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('filepizza-icon.svg');mask-image:url('filepizza-icon.svg')"></span>
+            <span class="label">FilePizza</span>
+          </a>
+          <a class="btn" href="https://url.town/" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 16 16" fill="none">
+              <path d="M6.5 9.5a3.182 3.182 0 0 0 4.5 0l1.5-1.5a3.182 3.182 0 0 0-4.5-4.5L7 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M9.5 6.5a3.182 3.182 0 0 0-4.5 0L3.5 8A3.182 3.182 0 0 0 8 12.5L9 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            <span class="label">url.town</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Resources -->
+      <div class="panel" id="panel-resources">
+        <div class="chips">
+          <a class="btn" href="https://trash-guides.info/" target="_blank">
+            <img class="fav" src="https://www.google.com/s2/favicons?domain=trash-guides.info&sz=64" alt="">
+            <span class="label">TRaSH Guides</span>
+          </a>
+          <a class="btn" href="https://dashboardicons.com" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none">
+              <rect x="1.5" y="1.5" width="21" height="21" rx="4" stroke="currentColor" stroke-width="1.75"/>
+              <rect x="3.25" y="3.25" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+              <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+              <rect x="15.75" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+              <rect x="9.5" y="15.75" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+              <rect x="15.75" y="15.75" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+              <rect x="9.5" y="3.25" width="5" height="5" rx="1" fill="currentColor"/>
+              <circle cx="18.25" cy="5.75" r="2.5" fill="currentColor"/>
+              <circle cx="5.75" cy="12" r="2.5" fill="currentColor"/>
+              <rect x="3.25" y="15.75" width="5" height="5" rx="1" fill="currentColor"/>
+            </svg>
+            <span class="label">Dashboard Icons</span>
+          </a>
+          <a class="btn" href="https://elax46.github.io/custom-brand-icons/" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('custom-brand-icons-icon.svg');mask-image:url('custom-brand-icons-icon.svg')"></span>
+            <span class="label">Custom Brand Icons</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Whatbox -->
+      <div class="panel" id="panel-whatbox">
+        <div class="chips">
+
+          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('whatbox-icon.svg');mask-image:url('whatbox-icon.svg')"></span>
+            <span class="label">Whatbox</span>
+          </a>
+
+          <a class="btn" href="http://files.rchvz.dev" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 16 16" fill="none">
+              <path d="M3 2h7l3 3v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+              <path d="M10 2v3h3" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/>
+            </svg>
+            <span class="label">Files</span>
+          </a>
+
+          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('flood-icon.svg');mask-image:url('flood-icon.svg')"></span>
+            <span class="label">Flood</span>
+          </a>
+
+          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('jackett-icon.svg');mask-image:url('jackett-icon.svg')"></span>
+            <span class="label">Jackett</span>
+          </a>
+
+          <a class="btn" href="http://prowlarr.rchvz.dev" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 16 16" fill="none">
+              <circle cx="4" cy="8" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+              <circle cx="12" cy="8" r="2.5" stroke="currentColor" stroke-width="1.3"/>
+              <path d="M6.5 8h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+            </svg>
+            <span class="label">Prowlarr</span>
+          </a>
+
+          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('rutorrent-icon.svg');mask-image:url('rutorrent-icon.svg')"></span>
+            <span class="label">ruTorrent</span>
+          </a>
+
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      const h = now.getHours() % 12 || 12;
+      const m = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('clockTime').textContent = `${h}:${m}`;
+      document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Theme
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let isDark = prefersDark;
+    applyTheme();
+
+    function applyTheme() {
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+      document.getElementById('iconSun').classList.toggle('active', !isDark);
+      document.getElementById('iconMoon').classList.toggle('active', isDark);
+    }
+
+    function toggleTheme() { isDark = !isDark; applyTheme(); }
+
+    // Panel navigation
+    const navItems = document.querySelectorAll('.nav-item[data-section]');
+    let current = 'main';
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const section = item.dataset.section;
+        if (section === current) return;
+
+        // Deactivate old
+        document.querySelector('.nav-item.active').classList.remove('active');
+        const oldPanel = document.getElementById('panel-' + current);
+        oldPanel.classList.remove('active');
+
+        // Activate new
+        item.classList.add('active');
+        current = section;
+        const newPanel = document.getElementById('panel-' + section);
+        newPanel.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
