@@ -1,0 +1,30 @@
+section,label,url,icon_type,icon_value
+Main,Drive,https://drive.google.com,simpleicons,googledrive
+Main,YouTube,https://youtube.com,simpleicons,youtube
+Main,Sniffies,https://sniffies.com,url,https://ryanc.vercel.app/sniffies.svg
+Main,Hacker News,https://news.ycombinator.com,simpleicons,ycombinator
+Main,Brutalist Report,https://brutalist.report,local,brutalist-report-icon.svg
+Main,Plex,https://app.plex.tv,local,plex-icon.svg
+Main,Whatbox,https://whatbox.ca/manage,local,whatbox-icon.svg
+Main,Claude,https://claude.ai/new,simpleicons,claude
+Main,ChatGPT,https://chatgpt.com,local,chatgpt-icon.svg
+Main,Gemini,https://gemini.google.com/app,simpleicons,googlegemini
+Main,Gmail,https://mail.google.com,simpleicons,gmail
+Main,Fastmail,https://fastmail.com,inline,[envelope SVG]
+Main,Google Voice,https://voice.google.com,local,google-voice-icon.svg
+Network & Infra,Speed Test,https://speed.cloudflare.com,local,cloudflare-speed-icon.svg
+Network & Infra,NextDNS,https://my.nextdns.io/8584eb/logs,simpleicons,nextdns
+Network & Infra,WiFiMan,https://wifiman.com/,simpleicons,ubiquiti
+Network & Infra,Vercel,https://vercel.com/ryanchavezzz,simpleicons,vercel
+Network & Infra,Oracle Cloud,https://www.oracle.com/cloud/sign-in.html,local,oracle-cloud-icon.svg
+Files & Sharing,FilePizza,https://file.pizza/,local,filepizza-icon.svg
+Files & Sharing,url.town,https://url.town/,inline,[link SVG]
+Resources,TRaSH Guides,https://trash-guides.info/,favicon,trash-guides.info
+Resources,Dashboard Icons,https://dashboardicons.com,inline,[dashboard icons SVG]
+Resources,Custom Brand Icons,https://elax46.github.io/custom-brand-icons/,local,custom-brand-icons-icon.svg
+Whatbox,Whatbox,https://whatbox.ca/manage,local,whatbox-icon.svg
+Whatbox,Files,http://files.rchvz.dev,inline,[file SVG]
+Whatbox,Flood,http://flood.rchvz.dev,local,flood-icon.svg
+Whatbox,Jackett,http://jackett.rchvz.dev,local,jackett-icon.svg
+Whatbox,Prowlarr,http://prowlarr.rchvz.dev,inline,[prowlarr SVG]
+Whatbox,ruTorrent,http://rtorrent.rchvz.dev,local,rutorrent-icon.svg
