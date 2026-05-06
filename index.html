@@ -416,6 +416,164 @@
 
     .holiday-banner.today .holiday-name { font-weight: 600; }
     .holiday-banner.today .holiday-when { color: var(--text); font-weight: 500; }
+
+    /* ── Search overlay ── */
+    .srch-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.18);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 20vh;
+      z-index: 200;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.12s;
+    }
+
+    [data-theme="dark"] .srch-overlay { background: rgba(0,0,0,0.45); }
+
+    .srch-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .srch-modal {
+      width: 100%;
+      max-width: 540px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 12px 48px rgba(0,0,0,0.14);
+      overflow: hidden;
+      transform: translateY(-6px) scale(0.99);
+      transition: transform 0.15s cubic-bezier(0.2,0,0,1);
+    }
+
+    .srch-overlay.open .srch-modal { transform: translateY(0) scale(1); }
+
+    .srch-input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 16px;
+    }
+
+    .srch-input-icon {
+      width: 15px;
+      height: 15px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    .srch-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: "Proxima Nova", sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    .srch-input::placeholder { color: var(--text-muted); }
+
+    .srch-sep {
+      height: 1px;
+      background: var(--border);
+    }
+
+    .srch-results {
+      display: flex;
+      flex-direction: column;
+      padding: 4px 0;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .srch-result {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 16px;
+      cursor: pointer;
+      transition: background 0.08s;
+    }
+
+    .srch-result:hover,
+    .srch-result.active { background: var(--hover-bg); }
+
+    .srch-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .srch-icon svg { width: 13px; height: 13px; color: var(--text-muted); }
+
+    .srch-icon .srch-si {
+      width: 13px;
+      height: 13px;
+      background-color: var(--text);
+      opacity: 0.6;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+    }
+
+    .srch-icon .srch-fav {
+      width: 13px;
+      height: 13px;
+      border-radius: 2px;
+      filter: grayscale(1) opacity(0.55);
+    }
+
+    .srch-icon .srch-svg {
+      width: 13px;
+      height: 13px;
+      opacity: 0.6;
+      color: var(--text);
+    }
+
+    .srch-text { flex: 1; min-width: 0; }
+
+    .srch-label {
+      font-size: 13px;
+      color: var(--text);
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: -0.01em;
+    }
+
+    .srch-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .srch-hint {
+      padding: 10px 16px;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
   </style>
 </head>
 <body>
@@ -479,6 +637,14 @@
           <a class="btn" href="https://drive.google.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googledrive');mask-image:url('https://cdn.simpleicons.org/googledrive')"></span>
             <span class="label">Drive</span>
+          </a>
+          <a class="btn" href="https://photos.google.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://simpleicons.org/icons/googlephotos.svg');mask-image:url('https://simpleicons.org/icons/googlephotos.svg')"></span>
+            <span class="label">Photos</span>
+          </a>
+          <a class="btn" href="https://maps.google.com" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('https://simpleicons.org/icons/googlemaps.svg');mask-image:url('https://simpleicons.org/icons/googlemaps.svg')"></span>
+            <span class="label">Maps</span>
           </a>
           <a class="btn" href="https://youtube.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
@@ -636,6 +802,21 @@
 
   </div><!-- /.wrapper -->
 
+  <!-- Search overlay -->
+  <div class="srch-overlay" id="srchOverlay">
+    <div class="srch-modal" id="srchModal">
+      <div class="srch-input-row">
+        <svg class="srch-input-icon" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <input class="srch-input" id="srchInput" type="text" placeholder="Search or open a link…" autocomplete="off" spellcheck="false">
+      </div>
+      <div class="srch-sep"></div>
+      <div class="srch-results" id="srchResults"></div>
+    </div>
+  </div>
+
   <script>
     // Clock
     function updateClock() {
@@ -722,6 +903,154 @@
     }
 
     checkHolidays();
+
+    // ── Search ──────────────────────────────────────────────────────────
+    (function () {
+      const SHORTCUTS = {
+        yt:   { name: 'YouTube',        url: 'https://www.youtube.com/results?search_query=%s' },
+        maps: { name: 'Google Maps',    url: 'https://www.google.com/maps/search/%s' },
+        gim:  { name: 'Google Images',  url: 'https://www.google.com/search?tbm=isch&q=%s' },
+        di:   { name: 'Dashboard Icons', url: 'https://dashboardicons.com/icons?q=%s' },
+        a:    { name: 'App Store',      url: 'https://apps.apple.com/search?term=%s' },
+      };
+
+      let chips = [], isOpen = false, activeIdx = 0, results = [];
+
+      function buildChips() {
+        const seen = new Set();
+        chips = [];
+        document.querySelectorAll('.btn').forEach(btn => {
+          if (!btn.href || seen.has(btn.href)) return;
+          seen.add(btn.href);
+          const label = btn.querySelector('.label')?.textContent.trim();
+          if (!label) return;
+          const si = btn.querySelector('.si');
+          const fav = btn.querySelector('.fav');
+          const svg = btn.querySelector('.svg-icon');
+          let icon = '';
+          if (si) {
+            const m = si.style.webkitMaskImage || si.style.maskImage;
+            icon = `<div class="srch-si" style="-webkit-mask-image:${m};mask-image:${m}"></div>`;
+          } else if (fav) {
+            icon = `<img class="srch-fav" src="${fav.src}" alt="">`;
+          } else if (svg) {
+            icon = svg.outerHTML.replace('class="svg-icon"', 'class="srch-svg"');
+          }
+          let host = '';
+          try { host = new URL(btn.href).hostname; } catch (_) {}
+          chips.push({ label, url: btn.href, icon, host });
+        });
+      }
+
+      function compute(raw) {
+        const q = raw.trim();
+        if (!q) return [];
+        const out = [];
+
+        const sm = q.match(/^(\S+)\s+(.+)$/);
+        let usedShortcut = false;
+        if (sm) {
+          const sc = SHORTCUTS[sm[1].toLowerCase()];
+          if (sc) {
+            usedShortcut = true;
+            out.push({ type: 'search', label: `Search ${sc.name} for "${sm[2]}"`, url: sc.url.replace('%s', encodeURIComponent(sm[2])), sub: null });
+          }
+        }
+
+        const ql = q.toLowerCase();
+        chips.filter(c => c.label.toLowerCase().includes(ql)).slice(0, 6).forEach(c => {
+          out.push({ type: 'chip', label: c.label, url: c.url, icon: c.icon, sub: c.host });
+        });
+
+        if (!usedShortcut) {
+          out.push({ type: 'search', label: `Search Google for "${q}"`, url: 'https://www.google.com/search?q=' + encodeURIComponent(q), sub: 'google.com' });
+        }
+        return out;
+      }
+
+      function render(res) {
+        results = res;
+        const el = document.getElementById('srchResults');
+        el.innerHTML = '';
+
+        if (!res.length) {
+          el.innerHTML = '<div class="srch-hint">Type to search · yt YouTube · gim Google Images · maps Google Maps · di Dashboard Icons · a App Store</div>';
+          activeIdx = -1;
+          return;
+        }
+
+        res.forEach((r, i) => {
+          const row = document.createElement('div');
+          row.className = 'srch-result';
+          row.dataset.i = i;
+
+          const iconInner = (r.type === 'chip' && r.icon)
+            ? r.icon
+            : `<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
+
+          row.innerHTML = `<div class="srch-icon">${iconInner}</div><div class="srch-text"><div class="srch-label">${r.label}</div>${r.sub ? `<div class="srch-sub">${r.sub}</div>` : ''}</div>`;
+          row.addEventListener('mouseenter', () => setActive(i));
+          row.addEventListener('click', () => execute(i));
+          el.appendChild(row);
+        });
+
+        activeIdx = 0;
+        setActive(0);
+      }
+
+      function setActive(i) {
+        document.querySelectorAll('.srch-result').forEach((el, j) => el.classList.toggle('active', j === i));
+        activeIdx = i;
+      }
+
+      function execute(i) {
+        const r = results[i];
+        if (!r) return;
+        window.open(r.url, '_blank');
+        close();
+      }
+
+      function open(initial) {
+        buildChips();
+        document.getElementById('srchOverlay').classList.add('open');
+        isOpen = true;
+        const inp = document.getElementById('srchInput');
+        inp.value = (initial === ' ' || !initial) ? '' : initial;
+        inp.focus();
+        update();
+      }
+
+      function close() {
+        document.getElementById('srchOverlay').classList.remove('open');
+        isOpen = false;
+        document.getElementById('srchInput').value = '';
+        document.getElementById('srchResults').innerHTML = '';
+        results = [];
+      }
+
+      function update() {
+        render(compute(document.getElementById('srchInput').value));
+      }
+
+      document.getElementById('srchInput').addEventListener('input', update);
+
+      document.getElementById('srchInput').addEventListener('keydown', e => {
+        if (e.key === 'Escape') { close(); return; }
+        if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(activeIdx + 1, results.length - 1)); }
+        else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(activeIdx - 1, 0)); }
+        else if (e.key === 'Enter') { e.preventDefault(); execute(activeIdx); }
+      });
+
+      document.getElementById('srchOverlay').addEventListener('click', e => {
+        if (e.target === document.getElementById('srchOverlay')) close();
+      });
+
+      document.addEventListener('keydown', e => {
+        if (isOpen) return;
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
+        if (e.key.length === 1) { open(e.key); e.preventDefault(); }
+      });
+    })();
 
     // Panel navigation
     const navItems = document.querySelectorAll('.nav-item[data-section]');
