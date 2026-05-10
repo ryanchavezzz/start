@@ -4,13 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Start</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;900&family=Merriweather:wght@300;400;700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/mono.css">
   <style>
+    @font-face {
+      font-family: "Proxima Nova Sc";
+      src: url('fonts/Proxima Nova ScOsf Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova Sc";
+      src: url('fonts/Proxima Nova ScOsf Semibold.otf') format('opentype');
+      font-weight: 600;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova Sc";
+      src: url('fonts/Proxima Nova ScOsf Bold.otf') format('opentype');
+      font-weight: 700 800;
+      font-style: normal;
+    }
     @font-face {
       font-family: "Proxima Nova Nav";
       src: url('fonts/proxima-nova-scosf-bold.otf') format('opentype');
       font-weight: 700;
+      font-style: normal;
+    }
+    @font-face {
+      font-family: "Proxima Nova Condensed";
+      src: url('fonts/proxima-nova-condensed-semibold.otf') format('opentype');
+      font-weight: 600;
       font-style: normal;
     }
     @font-face {
@@ -37,42 +64,54 @@
       font-weight: 700 900;
       font-style: normal;
     }
+
     :root {
       --bg: #f5f5f4;
       --surface: #ffffff;
       --border: #e2e2e0;
       --text: #1a1a18;
-      --text-muted: #9a9a96;
-      --hover-bg: #ebebea;
-      --shadow: 0 1px 3px rgba(0,0,0,0.07);
+      --text-muted: #71716a;
+      --hover-bg: #f5f5f4;
+      --hover-border: #d4d4d2;
+      --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.03);
+      --accent: #1a1a18;
+      --radius: 12px;
+      --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     [data-theme="dark"] {
-      --bg: #1e1e1c;
-      --surface: #2a2a28;
-      --border: #3a3a38;
-      --text: #f0f0ec;
-      --text-muted: #7a7a76;
-      --hover-bg: #343432;
-      --shadow: 0 1px 3px rgba(0,0,0,0.25);
+      --bg: #0c0c0b;
+      --surface: #141413;
+      --border: #262624;
+      --text: #e5e5e0;
+      --text-muted: #8c8c82;
+      --hover-bg: #1c1c1b;
+      --hover-border: #333331;
+      --shadow: 0 4px 16px rgba(0,0,0,0.4);
+      --accent: #e5e5e0;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
     body {
-      font-family: "Proxima Nova", sans-serif;
+      font-family: "Proxima Nova", system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
+      line-height: 1.6;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 48px 32px;
-      transition: background 0.2s, color 0.2s;
+      transition: background var(--transition), color var(--transition);
     }
 
-    /* ── Wrapper ── */
     .wrapper {
       display: flex;
       flex-direction: column;
@@ -84,199 +123,180 @@
     /* ── Clock ── */
     .clock-row {
       display: flex;
+      justify-content: center;
       width: 100%;
+      margin-bottom: 64px;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
     }
 
     .clock {
-      width: 148px;
-      flex-shrink: 0;
-      padding-right: 40px;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
+      flex-direction: row;
+      align-items: baseline;
+      gap: 0;
+      padding: 0;
+      font-size: 16px;
+      line-height: 1;
     }
 
     .clock-time-wrap {
       display: flex;
       align-items: baseline;
-      gap: 4px;
+      gap: 3px;
+      margin-right: 28px; /* Large gap after AM PM */
     }
 
     .clock-time {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 22px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
+      font-size: 15px;
+      font-weight: 800;
       color: var(--text);
-      line-height: 1;
     }
 
     .clock-ampm {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.01em;
-      color: var(--text);
-      line-height: 1;
+      font-size: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.04em;
+      color: var(--text-muted);
     }
 
     .clock-date {
-      font-family: system-ui, -apple-system, sans-serif;
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--text-muted);
-      line-height: 1;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      font-size: 15px;
+      color: var(--text);
     }
 
     .clock-date strong {
-      font-weight: 700;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 15px;
+    }
+
+    .clock-date span {
+      font-weight: 300;
+      font-size: 15px;
+      color: var(--text-muted);
+      letter-spacing: -0.02em;
+    }
+
+    .holiday-badge {
+      display: none;
+      align-items: center;
+      padding: 1px 9px;
+      background: var(--text-muted);
+      color: var(--bg);
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-left: 16px;
+      font-family: "Proxima Nova", system-ui, sans-serif;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+      align-self: center;
+    }
+
+    .holiday-badge.visible { display: inline-flex; }
+    .holiday-badge.today { 
+      background: var(--accent);
+    }
+
+    .holiday-badge .name-part { font-weight: 800; }
+    .holiday-badge .days-part { 
+      font-size: 10px; 
+      margin-left: 4px; 
+      font-weight: 600; 
+      opacity: 0.9;
     }
 
     /* ── Layout ── */
-    .layout {
-      display: flex;
-      align-items: flex-start;
-      width: 100%;
-    }
-
-    /* ── Sidebar ── */
-    .sidebar {
-      width: 148px;
-      flex-shrink: 0;
-      padding-right: 40px;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .nav-item {
-      font-family: "Silkscreen", sans-serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0em;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 5px 0;
-      line-height: 1.4;
-      transition: color 0.15s;
-      user-select: none;
-    }
-
-    .nav-item:hover { color: var(--text); }
-
-    .nav-item.active {
-      color: var(--text);
-      font-weight: 700;
-    }
-
-
-    .nav-divider {
-      width: 100%;
-      height: 1px;
-      background: var(--border);
-      margin: 10px 0;
-    }
-
-    /* ── Divider ── */
-    .vdivider {
-      width: 1px;
-      background: var(--border);
-      align-self: stretch;
-      min-height: 100px;
-      flex-shrink: 0;
-    }
-
-    /* ── Content ── */
     .content {
-      flex: 1;
-      padding-left: 48px;
-    }
-
-    /* ── Panels ── */
-    .panel {
-      display: none;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .panel.active {
+      width: 100%;
       display: flex;
-      animation: panelIn 0.2s ease forwards;
+      flex-direction: column;
+      gap: 48px;
     }
 
-    @keyframes panelIn {
-      from { opacity: 0; transform: translateY(7px); }
-      to   { opacity: 1; transform: translateY(0); }
+    .panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     .panel-heading {
-      font-size: 21px;
-      font-weight: 300;
-      letter-spacing: -0.04em;
+      font-family: "Silkscreen", sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
       color: var(--text);
       line-height: 1;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
     }
 
     .chips {
       display: flex;
       flex-wrap: wrap;
-      gap: 7px;
+      gap: 10px;
     }
 
     .chip-label {
       width: 100%;
-      font-family: "Proxima Nova", sans-serif;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
+      font-family: "Silkscreen", sans-serif;
+      font-size: 10px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
       display: inline-block;
-      padding-bottom: 3px;
-      margin-top: 10px;
-      margin-bottom: 4px;
-      border-bottom: 1.5px solid var(--text-muted);
+      padding-bottom: 4px;
+      margin-top: 8px;
+      margin-bottom: 2px;
     }
 
     .chip-label:first-child { margin-top: 0; }
-    .chip-label.orange { border-bottom-color: #c4621e; }
-    .chip-label.blue   { border-bottom-color: #2e6cc4; }
-    .chip-label.teal   { border-bottom-color: #1a8a84; }
 
-    /* ── Chips ── */
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 7px 14px 7px 10px;
+      gap: 8px;
+      padding: 8px 14px 8px 10px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
       text-decoration: none;
       color: var(--text);
       font-size: 13px;
-      font-weight: 400;
+      font-weight: 500;
       letter-spacing: -0.01em;
       box-shadow: var(--shadow);
-      transition: background 0.12s, border-color 0.12s, transform 0.1s;
+      transition: all var(--transition);
       white-space: nowrap;
+      position: relative;
     }
 
     .btn:hover {
       background: var(--hover-bg);
-      border-color: var(--text-muted);
-      transform: translateY(-1px);
+      border-color: var(--hover-border);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
     }
 
     .btn:active { transform: translateY(0); }
 
+    .si, .svg-icon, .fav {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-    /* Simple Icons via CSS mask */
     .si {
-      display: inline-block;
-      width: 13px;
-      height: 13px;
       background-color: var(--text);
       -webkit-mask-size: contain;
       mask-size: contain;
@@ -284,42 +304,35 @@
       mask-repeat: no-repeat;
       -webkit-mask-position: center;
       mask-position: center;
-      flex-shrink: 0;
-      opacity: 0.65;
-      transition: opacity 0.12s;
+      opacity: 0.7;
+      transition: opacity var(--transition);
     }
-
-    .btn:hover .si { opacity: 1; }
 
     .svg-icon {
-      width: 13px;
-      height: 13px;
-      flex-shrink: 0;
-      opacity: 0.65;
-      transition: opacity 0.12s;
+      opacity: 0.7;
+      transition: opacity var(--transition);
     }
 
-    .btn:hover .svg-icon { opacity: 1; }
+    .svg-icon svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+    }
 
     .fav {
-      width: 13px;
-      height: 13px;
       border-radius: 2px;
-      flex-shrink: 0;
-      filter: grayscale(1) opacity(0.55);
-      transition: filter 0.12s;
+      filter: grayscale(1) opacity(0.6);
+      transition: all var(--transition);
     }
 
     [data-theme="dark"] .fav {
-      filter: grayscale(1) invert(1) opacity(0.65);
+      filter: grayscale(1) invert(1) opacity(0.7);
     }
 
-    .btn:hover .fav { filter: grayscale(0.3) opacity(0.9); }
-    [data-theme="dark"] .btn:hover .fav { filter: grayscale(0.3) invert(0.8) opacity(0.9); }
+    .btn:hover .si, .btn:hover .svg-icon { opacity: 1; }
+    .btn:hover .fav { filter: grayscale(0) opacity(1); }
+    [data-theme="dark"] .btn:hover .fav { filter: grayscale(0) invert(0) opacity(1); }
 
-    .label { line-height: 1; }
-
-    /* ── Theme switch ── */
     .theme-switch {
       position: fixed;
       top: 20px;
@@ -367,72 +380,25 @@
 
     [data-theme="dark"] .switch-thumb { transform: translateX(16px); }
 
-    /* ── Holiday banner ── */
-    .holiday-banner {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 14px;
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: 8px;
-      width: 100%;
-      transition: border-color 0.2s;
-    }
+    .label { line-height: 1; }
 
-    .holiday-banner.visible { display: flex; }
-    .holiday-banner.soon { border-color: var(--text-muted); }
-    .holiday-banner.today { border-color: var(--text); }
-
-    .holiday-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .holiday-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--text-muted);
-      flex-shrink: 0;
-      transition: background 0.2s;
-    }
-
-    .holiday-banner.soon .holiday-dot { background: var(--text); }
-    .holiday-banner.today .holiday-dot { background: var(--text); }
-
-    .holiday-name {
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .holiday-when {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .holiday-banner.today .holiday-name { font-weight: 600; }
-    .holiday-banner.today .holiday-when { color: var(--text); font-weight: 500; }
-
-    /* ── Search overlay ── */
     .srch-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.18);
+      background: rgba(0,0,0,0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding-top: 20vh;
+      padding-top: 15vh;
       z-index: 200;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.12s;
+      transition: opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    [data-theme="dark"] .srch-overlay { background: rgba(0,0,0,0.45); }
+    [data-theme="dark"] .srch-overlay { background: rgba(0,0,0,0.3); }
 
     .srch-overlay.open {
       opacity: 1;
@@ -441,14 +407,14 @@
 
     .srch-modal {
       width: 100%;
-      max-width: 540px;
+      max-width: 580px;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: 0 12px 48px rgba(0,0,0,0.14);
+      border-radius: 16px;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.15);
       overflow: hidden;
-      transform: translateY(-6px) scale(0.99);
-      transition: transform 0.15s cubic-bezier(0.2,0,0,1);
+      transform: translateY(-12px) scale(0.98);
+      transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1.1);
     }
 
     .srch-overlay.open .srch-modal { transform: translateY(0) scale(1); }
@@ -456,13 +422,13 @@
     .srch-input-row {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 13px 16px;
+      gap: 12px;
+      padding: 16px 20px;
     }
 
     .srch-input-icon {
-      width: 15px;
-      height: 15px;
+      width: 16px;
+      height: 16px;
       color: var(--text-muted);
       flex-shrink: 0;
     }
@@ -472,8 +438,8 @@
       border: none;
       outline: none;
       background: transparent;
-      font-family: "Proxima Nova", sans-serif;
-      font-size: 15px;
+      font-family: inherit;
+      font-size: 16px;
       font-weight: 400;
       color: var(--text);
       letter-spacing: -0.01em;
@@ -489,27 +455,27 @@
     .srch-results {
       display: flex;
       flex-direction: column;
-      padding: 4px 0;
-      max-height: 300px;
+      padding: 6px 0;
+      max-height: 400px;
       overflow-y: auto;
     }
 
     .srch-result {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 7px 16px;
+      gap: 12px;
+      padding: 10px 20px;
       cursor: pointer;
-      transition: background 0.08s;
+      transition: background 0.1s;
     }
 
     .srch-result:hover,
     .srch-result.active { background: var(--hover-bg); }
 
     .srch-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 6px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
       background: var(--bg);
       border: 1px solid var(--border);
       display: flex;
@@ -518,13 +484,11 @@
       flex-shrink: 0;
     }
 
-    .srch-icon svg { width: 13px; height: 13px; color: var(--text-muted); }
-
-    .srch-icon .srch-si {
-      width: 13px;
-      height: 13px;
+    .srch-icon .si {
+      width: 14px;
+      height: 14px;
       background-color: var(--text);
-      opacity: 0.6;
+      opacity: 0.7;
       -webkit-mask-size: contain;
       mask-size: contain;
       -webkit-mask-repeat: no-repeat;
@@ -533,24 +497,29 @@
       mask-position: center;
     }
 
-    .srch-icon .srch-fav {
-      width: 13px;
-      height: 13px;
+    .srch-icon .fav {
+      width: 14px;
+      height: 14px;
       border-radius: 2px;
-      filter: grayscale(1) opacity(0.55);
+      filter: grayscale(1) opacity(0.6);
     }
 
-    .srch-icon .srch-svg {
-      width: 13px;
-      height: 13px;
-      opacity: 0.6;
+    .srch-icon .svg-icon {
+      width: 14px;
+      height: 14px;
+      opacity: 0.7;
       color: var(--text);
+    }
+
+    .srch-icon .svg-icon svg {
+      width: 100%;
+      height: 100%;
     }
 
     .srch-text { flex: 1; min-width: 0; }
 
     .srch-label {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text);
       font-weight: 500;
       white-space: nowrap;
@@ -560,7 +529,7 @@
     }
 
     .srch-sub {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-muted);
       white-space: nowrap;
       overflow: hidden;
@@ -568,83 +537,49 @@
     }
 
     .srch-hint {
-      padding: 10px 16px;
+      padding: 12px 20px;
       font-size: 11px;
       color: var(--text-muted);
       text-align: center;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
     }
   </style>
 </head>
 <body>
 
   <div class="theme-switch" onclick="toggleTheme()">
-    <!-- Sun -->
     <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
       <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
     </svg>
-    <!-- Track -->
     <div class="switch-track">
       <div class="switch-thumb"></div>
     </div>
-    <!-- Moon -->
     <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
     </svg>
   </div>
 
   <div class="wrapper">
-
-  <div class="clock-row">
-    <div class="clock">
-      <div class="clock-time-wrap">
-        <div class="clock-time" id="clockTime"></div>
-        <div class="clock-ampm" id="clockAmpm"></div>
-      </div>
-      <div class="clock-date" id="clockDate"></div>
+<div class="clock-row">
+  <div class="clock">
+    <div class="clock-time-wrap">
+      <div class="clock-time" id="clockTime"></div>
+      <div class="clock-ampm" id="clockAmpm"></div>
     </div>
+    <div class="clock-date" id="clockDate"></div>
+    <div class="holiday-badge" id="holidayBadge"></div>
   </div>
+</div>
 
-  <div class="holiday-banner" id="holidayBanner">
-    <div class="holiday-left">
-      <div class="holiday-dot"></div>
-      <div class="holiday-name" id="holidayName"></div>
-    </div>
-    <div class="holiday-when" id="holidayWhen"></div>
-  </div>
-
-  <div class="layout">
-
-    <!-- Sidebar -->
-    <nav class="sidebar">
-      <div class="nav-item active" data-section="main">Links</div>
-      <div class="nav-divider"></div>
-<div class="nav-item" data-section="network">Network & Infra</div>
-      <div class="nav-item" data-section="files">Files & Sharing</div>
-      <div class="nav-item" data-section="resources">Resources</div>
-    </nav>
-
-    <!-- Vertical divider -->
-    <div class="vdivider"></div>
-
-    <!-- Content -->
     <main class="content">
-
-      <!-- Main -->
-      <div class="panel active" id="panel-main">
+      <div class="panel" id="panel-main">
+        <h2 class="panel-heading">Links</h2>
         <div class="chips">
           <a class="btn" href="https://drive.google.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googledrive');mask-image:url('https://cdn.simpleicons.org/googledrive')"></span>
             <span class="label">Drive</span>
-          </a>
-          <a class="btn" href="https://photos.google.com" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('https://simpleicons.org/icons/googlephotos.svg');mask-image:url('https://simpleicons.org/icons/googlephotos.svg')"></span>
-            <span class="label">Photos</span>
-          </a>
-          <a class="btn" href="https://maps.google.com" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('https://simpleicons.org/icons/googlemaps.svg');mask-image:url('https://simpleicons.org/icons/googlemaps.svg')"></span>
-            <span class="label">Maps</span>
           </a>
           <a class="btn" href="https://youtube.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
@@ -670,7 +605,6 @@
             <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
             <span class="label">Whatbox</span>
           </a>
-          <div class="chip-label">LLMs</div>
           <a class="btn" href="https://claude.ai/new" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/claude');mask-image:url('https://cdn.simpleicons.org/claude')"></span>
             <span class="label">Claude</span>
@@ -683,7 +617,6 @@
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googlegemini');mask-image:url('https://cdn.simpleicons.org/googlegemini')"></span>
             <span class="label">Gemini</span>
           </a>
-          <div class="chip-label">Comms</div>
           <a class="btn" href="https://mail.google.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
             <span class="label">Gmail</span>
@@ -698,35 +631,11 @@
             <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
             <span class="label">Google Voice</span>
           </a>
-          <div class="chip-label">Whatbox</div>
-          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
-            <span class="label">Manage</span>
-          </a>
-          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
-            <span class="label">Flood</span>
-          </a>
-          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
-            <span class="label">Jackett</span>
-          </a>
-          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
-            <span class="label">ruTorrent</span>
-          </a>
-          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
-            <span class="label">Wiki</span>
-          </a>
         </div>
       </div>
 
-
-      <!-- Media -->
-
-      <!-- Network & Infra -->
       <div class="panel" id="panel-network">
+        <h2 class="panel-heading">Network & Infra</h2>
         <div class="chips">
           <a class="btn" href="https://speed.cloudflare.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('icons/cloudflare-speed-icon.svg');mask-image:url('icons/cloudflare-speed-icon.svg')"></span>
@@ -751,8 +660,8 @@
         </div>
       </div>
 
-      <!-- Files & Sharing -->
       <div class="panel" id="panel-files">
+        <h2 class="panel-heading">Files & Sharing</h2>
         <div class="chips">
           <a class="btn" href="https://file.pizza/" target="_blank">
             <span class="si" style="-webkit-mask-image:url('icons/filepizza-icon.svg');mask-image:url('icons/filepizza-icon.svg')"></span>
@@ -768,8 +677,8 @@
         </div>
       </div>
 
-      <!-- Resources -->
       <div class="panel" id="panel-resources">
+        <h2 class="panel-heading">Resources</h2>
         <div class="chips">
           <a class="btn" href="https://trash-guides.info/" target="_blank">
             <img class="fav" src="https://www.google.com/s2/favicons?domain=trash-guides.info&sz=64" alt="">
@@ -797,20 +706,52 @@
         </div>
       </div>
 
+      <div class="panel" id="panel-whatbox">
+        <h2 class="panel-heading">Whatbox</h2>
+        <div class="chips">
+          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
+            <span class="label">Whatbox</span>
+          </a>
+          <a class="btn" href="http://files.rchvz.dev" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <span class="label">Files</span>
+          </a>
+          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
+            <span class="label">Flood</span>
+          </a>
+          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
+            <span class="label">Jackett</span>
+          </a>
+          <a class="btn" href="http://prowlarr.rchvz.dev" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 512 512">
+              <path fill="currentColor" d="M336.1 80c-61.8 0-112 50.2-112 112 0 22.2 6.5 42.8 17.6 60.2L112 381.9V432h50.1l129.7-129.7c17.4 11.1 38 17.6 60.2 17.6 61.8 0 112-50.2 112-112s-50.2-112-112-112zm0 176c-35.3 0-64-28.7-64-64s28.7-64 64-64 64 28.7 64 64-28.7 64-64 64z"/>
+            </svg>
+            <span class="label">Prowlarr</span>
+          </a>
+          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
+            <span class="label">ruTorrent</span>
+          </a>
+          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
+            <span class="label">Wiki</span>
+          </a>
+        </div>
+      </div>
     </main>
   </div>
 
-  </div><!-- /.wrapper -->
-
-  <!-- Search overlay -->
   <div class="srch-overlay" id="srchOverlay">
-    <div class="srch-modal" id="srchModal">
+    <div class="srch-modal">
       <div class="srch-input-row">
-        <svg class="srch-input-icon" viewBox="0 0 16 16" fill="none">
-          <circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-        </svg>
-        <input class="srch-input" id="srchInput" type="text" placeholder="Search or open a link…" autocomplete="off" spellcheck="false">
+        <svg class="srch-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" class="srch-input" id="srchInput" placeholder="Search..." autocomplete="off">
       </div>
       <div class="srch-sep"></div>
       <div class="srch-results" id="srchResults"></div>
@@ -821,203 +762,110 @@
     // Clock
     function updateClock() {
       const now = new Date();
-      const h = now.getHours() % 12 || 12;
+      const hours = now.getHours();
+      const h = hours % 12 || 12;
       const m = String(now.getMinutes()).padStart(2, '0');
-      const ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+      const ampm = hours >= 12 ? 'PM' : 'AM';
       document.getElementById('clockTime').textContent = `${h}:${m}`;
-      document.getElementById('clockAmpm').textContent = ampm;
+      const ampmEl = document.getElementById('clockAmpm');
+      ampmEl.textContent = ampm;
+      ampmEl.classList.toggle('am', ampm === 'AM');
+      ampmEl.classList.toggle('pm', ampm === 'PM');
       const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
-      const rest = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      document.getElementById('clockDate').innerHTML = `<strong>${weekday}</strong> ${rest}`;
+      const month = now.toLocaleDateString('en-US', { month: 'short' });
+      const day = now.getDate();
+      document.getElementById('clockDate').innerHTML = `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
     }
 
     updateClock();
     setInterval(updateClock, 1000);
 
     // Theme
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let isDark = prefersDark;
-    applyTheme();
-
     function applyTheme() {
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
       document.getElementById('iconSun').classList.toggle('active', !isDark);
       document.getElementById('iconMoon').classList.toggle('active', isDark);
     }
-
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let isDark = prefersDark;
+    applyTheme();
     function toggleTheme() { isDark = !isDark; applyTheme(); }
 
-    // Holiday banner
-    function nthWeekday(year, month, weekday, n) {
-      const d = new Date(year, month, 1);
-      let count = 0;
-      while (true) {
-        if (d.getDay() === weekday) { count++; if (count === n) return d.getDate(); }
-        d.setDate(d.getDate() + 1);
-      }
-    }
-
-    function lastWeekday(year, month, weekday) {
-      const d = new Date(year, month + 1, 0);
-      while (d.getDay() !== weekday) d.setDate(d.getDate() - 1);
-      return d.getDate();
-    }
-
-    function getHolidays(year) {
-      return [
-        { name: "New Year's Day",      icon: "🎆", month: 0,  day: 1 },
-        { name: "MLK Day",             icon: "✊", month: 0,  day: nthWeekday(year, 0, 1, 3) },
-        { name: "Presidents' Day",     icon: "🇺🇸", month: 1,  day: nthWeekday(year, 1, 1, 3) },
-        { name: "Memorial Day",        icon: "🎖️", month: 4,  day: lastWeekday(year, 4, 1) },
-        { name: "Juneteenth",          icon: "✊", month: 5,  day: 19 },
-        { name: "Independence Day",    icon: "🎇", month: 6,  day: 4 },
-        { name: "Labor Day",           icon: "🛠️", month: 8,  day: nthWeekday(year, 8, 1, 1) },
-        { name: "Columbus Day",        icon: "⚓", month: 9,  day: nthWeekday(year, 9, 1, 2) },
-        { name: "Veterans Day",        icon: "🎖️", month: 10, day: 11 },
-        { name: "Thanksgiving",        icon: "🦃", month: 10, day: nthWeekday(year, 10, 4, 4) },
-        { name: "Christmas",           icon: "🎄", month: 11, day: 25 },
+    // Holidays
+    (function() {
+      const holidays = [
+        { name: "New Year's Day", month: 0, day: 1 },
+        { name: "Valentine's Day", month: 1, day: 14 },
+        { name: "St. Patrick's Day", month: 2, day: 17 },
+        { name: "Easter Sunday", month: 3, day: 5 },
+        { name: "Earth Day", month: 3, day: 22 },
+        { name: "Mother's Day", month: 4, day: 10 },
+        { name: "Memorial Day", month: 4, day: 25 },
+        { name: "Father's Day", month: 5, day: 21 },
+        { name: "Juneteenth", month: 5, day: 19 },
+        { name: "Independence Day", month: 6, day: 4 },
+        { name: "Labor Day", month: 8, day: 7 },
+        { name: "Halloween", month: 9, day: 31 },
+        { name: "Veterans Day", month: 10, day: 11 },
+        { name: "Thanksgiving", month: 10, day: 26 },
+        { name: "Christmas Eve", month: 11, day: 24 },
+        { name: "Christmas Day", month: 11, day: 25 },
+        { name: "New Year's Eve", month: 11, day: 31 }
       ];
-    }
 
-    function checkHolidays() {
       const now = new Date();
-      const year = now.getFullYear();
-      const holidays = getHolidays(year);
-      const banner = document.getElementById('holidayBanner');
+      const todayMonth = now.getMonth();
+      const todayDay = now.getDate();
 
-      for (const h of holidays) {
-        const hDate = new Date(year, h.month, h.day);
-        const diff = Math.round((hDate - new Date(now.getFullYear(), now.getMonth(), now.getDate())) / 86400000);
-        if (diff >= 0 && diff <= 3) {
-          const dateStr = hDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-          const when = diff === 0 ? 'Today' : diff === 1 ? `Tomorrow — ${dateStr}` : `${diff} days away — ${dateStr}`;
-          document.getElementById('holidayName').textContent = h.name;
-          document.getElementById('holidayWhen').textContent = when;
-          banner.classList.add('visible');
-          banner.classList.toggle('soon', diff <= 1);
-          banner.classList.toggle('today', diff === 0);
-          return;
+      const sorted = holidays.map(h => {
+        let year = now.getFullYear();
+        let date = new Date(year, h.month, h.day);
+        if (date < new Date(year, todayMonth, todayDay)) {
+          date = new Date(year + 1, h.month, h.day);
+        }
+        return { ...h, date };
+      }).sort((a, b) => a.date - b.date);
+
+      const next = sorted[0];
+      const diff = Math.ceil((next.date - now) / (1000 * 60 * 60 * 24));
+      
+      const badge = document.getElementById('holidayBadge');
+      if (diff <= 7) {
+        badge.classList.add('visible');
+        if (diff === 0) {
+          badge.classList.add('today');
+          badge.innerHTML = `<span class="name-part">${next.name}</span>`;
+        } else {
+          if (diff <= 3) badge.classList.add('soon');
+          const dayText = diff === 1 ? "Tomorrow" : `${diff}d`;
+          badge.innerHTML = `<span class="name-part">${next.name}</span><span class="days-part">(${dayText})</span>`;
         }
       }
-      banner.classList.remove('visible', 'soon', 'today');
-    }
+    })();
 
-    checkHolidays();
-
-    // ── Search ──────────────────────────────────────────────────────────
-    (function () {
-      const SHORTCUTS = {
-        yt:   { name: 'YouTube',        url: 'https://www.youtube.com/results?search_query=%s' },
-        maps: { name: 'Google Maps',    url: 'https://www.google.com/maps/search/%s' },
-        gim:  { name: 'Google Images',  url: 'https://www.google.com/search?tbm=isch&q=%s' },
-        di:   { name: 'Dashboard Icons', url: 'https://dashboardicons.com/icons?q=%s' },
-        a:    { name: 'App Store',      url: 'https://apps.apple.com/search?term=%s' },
-      };
-
-      let chips = [], isOpen = false, activeIdx = 0, results = [];
-
-      function buildChips() {
-        const seen = new Set();
-        chips = [];
-        document.querySelectorAll('.btn').forEach(btn => {
-          if (!btn.href || seen.has(btn.href)) return;
-          seen.add(btn.href);
-          const label = btn.querySelector('.label')?.textContent.trim();
-          if (!label) return;
-          const si = btn.querySelector('.si');
-          const fav = btn.querySelector('.fav');
-          const svg = btn.querySelector('.svg-icon');
-          let icon = '';
-          if (si) {
-            const m = si.style.webkitMaskImage || si.style.maskImage;
-            icon = `<div class="srch-si" style="-webkit-mask-image:${m};mask-image:${m}"></div>`;
-          } else if (fav) {
-            icon = `<img class="srch-fav" src="${fav.src}" alt="">`;
-          } else if (svg) {
-            icon = svg.outerHTML.replace('class="svg-icon"', 'class="srch-svg"');
-          }
-          let host = '';
-          try { host = new URL(btn.href).hostname; } catch (_) {}
-          chips.push({ label, url: btn.href, icon, host });
+    // Search
+    (function() {
+      const allLinks = [];
+      document.querySelectorAll('.btn').forEach(btn => {
+        allLinks.push({
+          label: btn.querySelector('.label').textContent,
+          url: btn.href,
+          iconStyle: btn.querySelector('.si, .svg-icon, .fav').outerHTML,
+          section: btn.closest('.panel').querySelector('.panel-heading').textContent
         });
-      }
+      });
 
-      function compute(raw) {
-        const q = raw.trim();
-        if (!q) return [];
-        const out = [];
+      let isOpen = false;
+      let results = [];
+      let selectedIdx = -1;
 
-        const sm = q.match(/^(\S+)\s+(.+)$/);
-        let usedShortcut = false;
-        if (sm) {
-          const sc = SHORTCUTS[sm[1].toLowerCase()];
-          if (sc) {
-            usedShortcut = true;
-            out.push({ type: 'search', label: `Search ${sc.name} for "${sm[2]}"`, url: sc.url.replace('%s', encodeURIComponent(sm[2])), sub: null });
-          }
-        }
-
-        const ql = q.toLowerCase();
-        chips.filter(c => c.label.toLowerCase().includes(ql)).slice(0, 6).forEach(c => {
-          out.push({ type: 'chip', label: c.label, url: c.url, icon: c.icon, sub: c.host });
-        });
-
-        if (!usedShortcut) {
-          out.push({ type: 'search', label: `Search Google for "${q}"`, url: 'https://www.google.com/search?q=' + encodeURIComponent(q), sub: 'google.com' });
-        }
-        return out;
-      }
-
-      function render(res) {
-        results = res;
-        const el = document.getElementById('srchResults');
-        el.innerHTML = '';
-
-        if (!res.length) {
-          el.innerHTML = '<div class="srch-hint">Type to search · yt YouTube · gim Google Images · maps Google Maps · di Dashboard Icons · a App Store</div>';
-          activeIdx = -1;
-          return;
-        }
-
-        res.forEach((r, i) => {
-          const row = document.createElement('div');
-          row.className = 'srch-result';
-          row.dataset.i = i;
-
-          const iconInner = (r.type === 'chip' && r.icon)
-            ? r.icon
-            : `<svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M10 10l3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>`;
-
-          row.innerHTML = `<div class="srch-icon">${iconInner}</div><div class="srch-text"><div class="srch-label">${r.label}</div>${r.sub ? `<div class="srch-sub">${r.sub}</div>` : ''}</div>`;
-          row.addEventListener('mouseenter', () => setActive(i));
-          row.addEventListener('click', () => execute(i));
-          el.appendChild(row);
-        });
-
-        activeIdx = 0;
-        setActive(0);
-      }
-
-      function setActive(i) {
-        document.querySelectorAll('.srch-result').forEach((el, j) => el.classList.toggle('active', j === i));
-        activeIdx = i;
-      }
-
-      function execute(i) {
-        const r = results[i];
-        if (!r) return;
-        window.open(r.url, '_blank');
-        close();
-      }
-
-      function open(initial) {
-        buildChips();
+      function open(q = '') {
         document.getElementById('srchOverlay').classList.add('open');
+        const input = document.getElementById('srchInput');
+        input.value = q;
+        input.focus();
         isOpen = true;
-        const inp = document.getElementById('srchInput');
-        inp.value = (initial === ' ' || !initial) ? '' : initial;
-        inp.focus();
-        update();
+        if (q) doSearch(q);
       }
 
       function close() {
@@ -1028,52 +876,42 @@
         results = [];
       }
 
-      function update() {
-        render(compute(document.getElementById('srchInput').value));
+      function doSearch(q) {
+        if (!q) { results = []; render(); return; }
+        const term = q.toLowerCase();
+        results = allLinks.filter(l => 
+          l.label.toLowerCase().includes(term) || 
+          l.section.toLowerCase().includes(term)
+        ).slice(0, 8);
+        selectedIdx = results.length > 0 ? 0 : -1;
+        render();
       }
 
-      document.getElementById('srchInput').addEventListener('input', update);
+      function render() {
+        const container = document.getElementById('srchResults');
+        container.innerHTML = results.map((r, i) => `
+          <div class="srch-result ${i === selectedIdx ? 'active' : ''}" onclick="window.open('${r.url}', '_blank'); close();">
+            <div class="srch-icon">${r.iconStyle}</div>
+            <div class="srch-text">
+              <div class="srch-label">${r.label}</div>
+              <div class="srch-sub">${r.section}</div>
+            </div>
+          </div>
+        `).join('') + (results.length ? '<div class="srch-hint">Enter to open • Esc to close</div>' : '');
+      }
 
-      document.getElementById('srchInput').addEventListener('keydown', e => {
-        if (e.key === 'Escape') { close(); return; }
-        if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(activeIdx + 1, results.length - 1)); }
-        else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(activeIdx - 1, 0)); }
-        else if (e.key === 'Enter') { e.preventDefault(); execute(activeIdx); }
-      });
-
-      document.getElementById('srchOverlay').addEventListener('click', e => {
-        if (e.target === document.getElementById('srchOverlay')) close();
-      });
-
-      document.addEventListener('keydown', e => {
-        if (isOpen) return;
-        if (e.metaKey || e.ctrlKey || e.altKey) return;
-        if (e.key.length === 1) { open(e.key); e.preventDefault(); }
+      document.getElementById('srchInput').addEventListener('input', e => doSearch(e.target.value));
+      
+      window.addEventListener('keydown', e => {
+        if (e.key === '/' && !isOpen) { open(); e.preventDefault(); }
+        if (e.key === 'Escape' && isOpen) close();
+        if (isOpen) {
+          if (e.key === 'ArrowDown') { selectedIdx = (selectedIdx + 1) % results.length; render(); e.preventDefault(); }
+          if (e.key === 'ArrowUp') { selectedIdx = (selectedIdx + -1 + results.length) % results.length; render(); e.preventDefault(); }
+          if (e.key === 'Enter' && selectedIdx > -1) { window.open(results[selectedIdx].url, '_blank'); close(); }
+        }
       });
     })();
-
-    // Panel navigation
-    const navItems = document.querySelectorAll('.nav-item[data-section]');
-    let current = 'main';
-
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const section = item.dataset.section;
-        if (section === current) return;
-
-        // Deactivate old
-        document.querySelector('.nav-item.active').classList.remove('active');
-        const oldPanel = document.getElementById('panel-' + current);
-        oldPanel.classList.remove('active');
-
-        // Activate new
-        item.classList.add('active');
-        current = section;
-        const newPanel = document.getElementById('panel-' + section);
-        newPanel.classList.add('active');
-      });
-    });
   </script>
-
 </body>
 </html>
