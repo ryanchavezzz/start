@@ -123,7 +123,7 @@
     /* ── Clock ── */
     .clock-row {
       display: flex;
-      justify-content: center;
+      justify-content: flex-start;
       width: 100%;
       margin-bottom: 64px;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
@@ -132,28 +132,29 @@
     .clock {
       display: flex;
       flex-direction: row;
-      align-items: baseline;
-      gap: 0;
+      align-items: center;
+      gap: 12px;
       padding: 0;
       font-size: 16px;
       line-height: 1;
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
 
     .clock-time-wrap {
       display: flex;
       align-items: baseline;
       gap: 3px;
-      margin-right: 28px; /* Large gap after AM PM */
     }
 
     .clock-time {
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--text);
     }
 
     .clock-ampm {
-      font-size: 8px;
+      font-size: 9px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: -0.04em;
@@ -164,19 +165,18 @@
       display: flex;
       align-items: baseline;
       gap: 4px;
-      font-size: 15px;
+      font-size: 18px;
       color: var(--text);
     }
 
     .clock-date strong {
       font-weight: 800;
-      text-transform: uppercase;
-      font-size: 15px;
+      font-size: 18px;
     }
 
     .clock-date span {
-      font-weight: 300;
-      font-size: 15px;
+      font-weight: 400;
+      font-size: 18px;
       color: var(--text-muted);
       letter-spacing: -0.02em;
     }
@@ -190,11 +190,9 @@
       border-radius: 999px;
       font-size: 11px;
       font-weight: 800;
-      margin-left: 16px;
       font-family: "Proxima Nova", system-ui, sans-serif;
       letter-spacing: -0.01em;
       line-height: 1.4;
-      align-self: center;
     }
 
     .holiday-badge.visible { display: inline-flex; }
@@ -210,138 +208,32 @@
       opacity: 0.9;
     }
 
-    /* ── Layout ── */
-    .content {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 48px;
-    }
-
-    .panel {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .panel-heading {
-      font-family: "Silkscreen", sans-serif;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text);
-      line-height: 1;
-      padding-bottom: 8px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 4px;
-    }
-
-    .chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .chip-label {
-      width: 100%;
-      font-family: "Silkscreen", sans-serif;
-      font-size: 10px;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--text-muted);
-      display: inline-block;
-      padding-bottom: 4px;
-      margin-top: 8px;
-      margin-bottom: 2px;
-    }
-
-    .chip-label:first-child { margin-top: 0; }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px 8px 10px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      text-decoration: none;
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 500;
-      letter-spacing: -0.01em;
-      box-shadow: var(--shadow);
-      transition: all var(--transition);
-      white-space: nowrap;
-      position: relative;
-    }
-
-    .btn:hover {
-      background: var(--hover-bg);
-      border-color: var(--hover-border);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    }
-
-    .btn:active { transform: translateY(0); }
-
-    .si, .svg-icon, .fav {
-      width: 14px;
-      height: 14px;
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .si {
-      background-color: var(--text);
-      -webkit-mask-size: contain;
-      mask-size: contain;
-      -webkit-mask-repeat: no-repeat;
-      mask-repeat: no-repeat;
-      -webkit-mask-position: center;
-      mask-position: center;
-      opacity: 0.7;
-      transition: opacity var(--transition);
-    }
-
-    .svg-icon {
-      opacity: 0.7;
-      transition: opacity var(--transition);
-    }
-
-    .svg-icon svg {
-      width: 14px;
-      height: 14px;
-      display: block;
-    }
-
-    .fav {
-      border-radius: 2px;
-      filter: grayscale(1) opacity(0.6);
-      transition: all var(--transition);
-    }
-
-    [data-theme="dark"] .fav {
-      filter: grayscale(1) invert(1) opacity(0.7);
-    }
-
-    .btn:hover .si, .btn:hover .svg-icon { opacity: 1; }
-    .btn:hover .fav { filter: grayscale(0) opacity(1); }
-    [data-theme="dark"] .btn:hover .fav { filter: grayscale(0) invert(0) opacity(1); }
-
     .theme-switch {
-      position: fixed;
-      top: 20px;
-      right: 20px;
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
       user-select: none;
+      margin-left: 4px;
+    }
+
+    @media (min-width: 600px) {
+      .theme-switch {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        margin-left: 0;
+      }
+      .clock {
+        gap: 0;
+        flex-wrap: nowrap;
+      }
+      .clock-time-wrap {
+        margin-right: 28px;
+      }
+      .holiday-badge {
+        margin-left: 16px;
+      }
     }
 
     .switch-icon {
@@ -381,6 +273,112 @@
     [data-theme="dark"] .switch-thumb { transform: translateX(16px); }
 
     .label { line-height: 1; }
+
+    /* ── Content ── */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      width: 100%;
+    }
+
+    /* ── Panels ── */
+    .panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel-heading {
+      font-family: "Silkscreen", sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      line-height: 1;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+
+    /* ── Chips ── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px 10px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      box-shadow: var(--shadow);
+      transition: all var(--transition);
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .btn:hover {
+      background: var(--hover-bg);
+      border-color: var(--hover-border);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .btn:active { transform: translateY(0); }
+
+    /* Icons */
+    .si {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      background-color: var(--text);
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      mask-position: center;
+      flex-shrink: 0;
+      opacity: 0.7;
+      transition: opacity var(--transition);
+    }
+
+    .btn:hover .si { opacity: 1; }
+
+    .fav {
+      width: 18px;
+      height: 18px;
+      border-radius: 2px;
+      filter: grayscale(1) opacity(0.6);
+      transition: all var(--transition);
+    }
+
+    .btn:hover .fav {
+      filter: none;
+      opacity: 1;
+    }
+
+    .svg-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      opacity: 0.7;
+      color: var(--text);
+      transition: opacity var(--transition);
+    }
+
+    .btn:hover .svg-icon { opacity: 1; }
 
     .srch-overlay {
       position: fixed;
@@ -548,30 +546,29 @@
 </head>
 <body>
 
-  <div class="theme-switch" onclick="toggleTheme()">
-    <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
-      <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-    </svg>
-    <div class="switch-track">
-      <div class="switch-thumb"></div>
-    </div>
-    <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
-    </svg>
-  </div>
-
   <div class="wrapper">
-<div class="clock-row">
-  <div class="clock">
-    <div class="clock-time-wrap">
-      <div class="clock-time" id="clockTime"></div>
-      <div class="clock-ampm" id="clockAmpm"></div>
+    <div class="clock-row">
+      <div class="clock">
+        <div class="clock-time-wrap">
+          <div class="clock-time" id="clockTime"></div>
+          <div class="clock-ampm" id="clockAmpm"></div>
+        </div>
+        <div class="clock-date" id="clockDate"></div>
+        <div class="holiday-badge" id="holidayBadge"></div>
+        <div class="theme-switch" onclick="toggleTheme()">
+          <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+            <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <div class="switch-track">
+            <div class="switch-thumb"></div>
+          </div>
+          <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+          </svg>
+        </div>
+      </div>
     </div>
-    <div class="clock-date" id="clockDate"></div>
-    <div class="holiday-badge" id="holidayBadge"></div>
-  </div>
-</div>
 
     <main class="content">
       <div class="panel" id="panel-main">
@@ -580,6 +577,12 @@
           <a class="btn" href="https://drive.google.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googledrive');mask-image:url('https://cdn.simpleicons.org/googledrive')"></span>
             <span class="label">Drive</span>
+          </a>
+          <a class="btn" href="https://www.icloud.com/iclouddrive/" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+              <path d="M293.6 91.5c-50.2.1-96.4 27.3-120.9 71.1-10.4-5-21.7-7.7-33.3-7.7-37.3.1-69 27.2-75 64C25.4 235.2 0 273.4 0 315.7c.1 57.9 47 104.8 105 104.8 4.4 0 8.8-.4 13.2-.9h291.7c1.5.1 3.1.2 4.6.2s2.9-.1 4.4-.2h7v-.6c49.2-5.8 86.2-47.7 86.2-97.4v-.2c-.1-47.1-33.5-87.4-79.5-96.2-2.9-74.6-64.3-133.8-139-133.7" fill="currentColor"/>
+            </svg>
+            <span class="label">iCloud Drive</span>
           </a>
           <a class="btn" href="https://youtube.com" target="_blank">
             <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
