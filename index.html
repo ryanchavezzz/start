@@ -74,7 +74,7 @@
       --hover-bg: #f5f5f4;
       --hover-border: #d4d4d2;
       --shadow: 0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.03);
-      --accent: #1a1a18;
+      --accent: #4b709d;
       --radius: 12px;
       --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -88,7 +88,7 @@
       --hover-bg: #1c1c1b;
       --hover-border: #333331;
       --shadow: 0 4px 16px rgba(0,0,0,0.4);
-      --accent: #e5e5e0;
+      --accent: #8fb1e0;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -148,13 +148,13 @@
     }
 
     .clock-time {
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--text);
     }
 
     .clock-ampm {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 900;
       text-transform: uppercase;
       letter-spacing: -0.04em;
@@ -165,18 +165,18 @@
       display: flex;
       align-items: baseline;
       gap: 4px;
-      font-size: 18px;
+      font-size: 16px;
       color: var(--text);
     }
 
     .clock-date strong {
       font-weight: 800;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .clock-date span {
       font-weight: 400;
-      font-size: 18px;
+      font-size: 16px;
       color: var(--text-muted);
       letter-spacing: -0.02em;
     }
@@ -337,6 +337,13 @@
 
     .btn:active { transform: translateY(0); }
 
+    .btn-icon {
+      padding: 10px;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+    }
+
     /* Icons */
     .si {
       display: inline-block;
@@ -354,7 +361,20 @@
       transition: opacity var(--transition);
     }
 
-    .btn:hover .si { opacity: 1; }
+    .si-color {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      flex-shrink: 0;
+      opacity: 0.9;
+      transition: opacity var(--transition);
+    }
+
+    .btn:hover .si,
+    .btn:hover .si-color { opacity: 1; }
 
     .fav {
       width: 18px;
@@ -571,6 +591,32 @@
     </div>
 
     <main class="content">
+      <div class="panel" id="panel-whatbox">
+        <h2 class="panel-heading">Whatbox</h2>
+        <div class="chips">
+          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+            <span class="si-color" style="background-image:url('icons/whatbox-icon.svg')"></span>
+            <span class="label">Whatbox</span>
+          </a>
+          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
+            <span class="si-color" style="background-image:url('icons/flood-icon.svg')"></span>
+            <span class="label">Flood</span>
+          </a>
+          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
+            <span class="si-color" style="background-image:url('icons/jackett-icon.svg')"></span>
+            <span class="label">Jackett</span>
+          </a>
+          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+            <span class="si-color" style="background-image:url('icons/rutorrent-icon.svg')"></span>
+            <span class="label">ruTorrent</span>
+          </a>
+          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
+            <span class="si-color" style="background-image:url('icons/whatbox-wiki-icon.svg')"></span>
+            <span class="label">Wiki</span>
+          </a>
+        </div>
+      </div>
+
       <div class="panel" id="panel-main">
         <h2 class="panel-heading">Links</h2>
         <div class="chips">
@@ -579,8 +625,10 @@
             <span class="label">Drive</span>
           </a>
           <a class="btn" href="https://www.icloud.com/iclouddrive/" target="_blank">
-            <svg class="svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
-              <path d="M293.6 91.5c-50.2.1-96.4 27.3-120.9 71.1-10.4-5-21.7-7.7-33.3-7.7-37.3.1-69 27.2-75 64C25.4 235.2 0 273.4 0 315.7c.1 57.9 47 104.8 105 104.8 4.4 0 8.8-.4 13.2-.9h291.7c1.5.1 3.1.2 4.6.2s2.9-.1 4.4-.2h7v-.6c49.2-5.8 86.2-47.7 86.2-97.4v-.2c-.1-47.1-33.5-87.4-79.5-96.2-2.9-74.6-64.3-133.8-139-133.7" fill="currentColor"/>
+            <svg class="svg-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+              <path d="M200.61719 216c-10.2013.00005-22.92549.11399-30.57227 1.4668-5.04165.86085-10.12135 2.43511-14.68359 4.74414-9.17589 4.68945-16.63677 12.22007-21.3125 21.42578-2.30564 4.58551-3.72122 9.49018-4.58399 14.55273C128.26762 265.48851 128 272.19679 128 288.86133V369h768v-27.13867c0-16.66454-.26762-23.37282-1.46484-30.67188-.86277-5.06255-2.27835-9.96722-4.58399-14.55273-4.67573-9.20571-12.13661-16.73633-21.3125-21.42578-4.56224-2.30903-9.64194-3.88329-14.68359-4.74414-7.64678-1.35281-20.37097-1.46675-30.57227-1.4668H423.87172c-10.1377 0-10.8033-.29454-15.40016-.8397-5.26527-.62443-9.78169-1.89871-13.91757-3.65119-4.77454-2.0231-9.07575-5.10011-13.16998-8.73836-3.33652-2.96493-6.47978-6.05256-9.39325-9.13938-1.98342-2.10143-5.24235-5.24292-8.02276-8.07861-3.45326-3.52192-6.27691-6.57212-6.27691-6.57212-3.02864-2.91723-5.12966-4.91095-7.64055-6.62677-2.46816-1.68662-5.1612-3.24193-8.17845-4.63587-6.3326-2.92559-13.37007-4.718-24.27285-4.718Z" fill="currentColor" opacity="0.8"/>
+              <path d="M188.55859 312c-4.01188.00002-9.01617.04415-12.02343.57617-1.98274.33855-3.98121.9591-5.77539 1.86719-3.60862 1.84422-6.54203 4.80544-8.38086 8.42578-.90675 1.80335-1.46343 3.73171-1.80274 5.72266-.47082 2.87052-.57617 5.50882-.57617 12.0625V412h704v-71.3457c0-6.55368-.10535-9.19198-.57617-12.0625-.33931-1.99095-.89599-3.91931-1.80274-5.72266-1.83883-3.62034-4.77224-6.58156-8.38086-8.42578-1.79418-.90809-3.79265-1.52864-5.77539-1.86719-3.00726-.53202-8.01155-.57615-12.02343-.57617Z" fill="currentColor" opacity="0.5"/>
+              <path d="M156.55859 340c-4.01188.00002-9.01617.04415-12.02343.57617-1.98274.33855-3.98121.9591-5.77539 1.86719-3.60862 1.84422-6.54203 4.80544-8.38086 8.42578-.90675 1.80335-1.46343 3.73171-1.80274 5.72266-.47082 2.87052-.57617 5.50882-.57617 12.0625v366.15429c0 16.96879.27297 23.8001 1.49609 31.23243.88145 5.15498 2.32808 10.14912 4.6836 14.81836 4.77691 9.37378 12.39898 17.04133 21.77343 21.8164 4.66096 2.35119 9.85121 3.95351 15.00196 4.83008 7.81224 1.37751 20.81233 1.49409 31.23437 1.49414h619.6211c10.42204-.00005 23.42213-.11663 31.23437-1.49414 5.15075-.87657 10.341-2.47889 15.00196-4.83008 9.37444-4.77507 16.99652-12.44263 21.77343-21.8164 2.35552-4.66924 3.80215-9.66338 4.6836-14.81836C895.72703 758.60869 896 751.77738 896 734.80859V368.6543c0-6.55368-.10535-9.19198-.57617-12.0625-.33931-1.99095-.89599-3.91931-1.80274-5.72266-1.83883-3.62034-4.77224-6.58156-8.38086-8.42578-1.79418-.90809-3.79265-1.52864-5.77539-1.86719-3.00726-.53202-8.01155-.57615-12.02343-.57617Z" fill="currentColor" opacity="1"/>
             </svg>
             <span class="label">iCloud Drive</span>
           </a>
@@ -634,6 +682,19 @@
             <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
             <span class="label">Google Voice</span>
           </a>
+          <a class="btn" href="https://vault.bitwarden.com/" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+              <path d="M372 297V131H256v294c47-28 115-74 116-128m49-198v198c0 106-152 181-165 181S91 403 91 297V99s0-17 17-17h296s17 0 17 17" fill="currentColor"/>
+            </svg>
+            <span class="label">Bitwarden</span>
+          </a>
+          <a class="btn" href="https://ios-settings-urls.netlify.app/" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" fill="currentColor"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M10.44 2.333c.24-.889 1.48-.889 1.72 0l.36 1.333c.11.407.51.667.92.613l1.373-.187c.907-.12 1.52.947.973 1.68l-.827 1.107c-.253.333-.213.8.107 1.08l1.08.947c.72.627.413 1.8-.547 1.987l-1.36.267c-.413.08-.68.48-.613.893l.227 1.373c.147.907-.92 1.533-1.667.987l-1.12-.827c-.333-.253-.8-.213-1.08.107l-.947 1.08c-.627.72-1.8.413-1.987-.547l-.267-1.36c-.08-.413-.48-.68-.893-.613l-1.373.227c-.907.147-1.533-.92-.987-1.667l.827-1.12c.253-.333.213-.8-.107-1.08l-1.08-.947c-.72-.627-.413-1.8.547-1.987l1.36-.267c.413-.08.68-.48.613-.893l-.227-1.373c-.147-.907.92-1.533 1.667-.987l1.12.827c.333.253.8.213 1.08-.107l.947-1.08c.213-.24.52-.36.827-.36.107 0 .213.013.32.04l.36 1.333zM12 17c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" fill="currentColor"/>
+            </svg>
+            <span class="label">iOS Settings URL</span>
+          </a>
         </div>
       </div>
 
@@ -659,6 +720,12 @@
           <a class="btn" href="https://www.oracle.com/cloud/sign-in.html" target="_blank">
             <span class="si" style="-webkit-mask-image:url('icons/oracle-cloud-icon.svg');mask-image:url('icons/oracle-cloud-icon.svg')"></span>
             <span class="label">Oracle Cloud</span>
+          </a>
+          <a class="btn" href="https://dash.cloudflare.com" target="_blank">
+            <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727" fill="currentColor"/>
+            </svg>
+            <span class="label">Cloudflare</span>
           </a>
         </div>
       </div>
@@ -709,44 +776,6 @@
         </div>
       </div>
 
-      <div class="panel" id="panel-whatbox">
-        <h2 class="panel-heading">Whatbox</h2>
-        <div class="chips">
-          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
-            <span class="label">Whatbox</span>
-          </a>
-          <a class="btn" href="http://files.rchvz.dev" target="_blank">
-            <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-              <polyline points="14 2 14 8 20 8"/>
-            </svg>
-            <span class="label">Files</span>
-          </a>
-          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
-            <span class="label">Flood</span>
-          </a>
-          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
-            <span class="label">Jackett</span>
-          </a>
-          <a class="btn" href="http://prowlarr.rchvz.dev" target="_blank">
-            <svg class="svg-icon" viewBox="0 0 512 512">
-              <path fill="currentColor" d="M336.1 80c-61.8 0-112 50.2-112 112 0 22.2 6.5 42.8 17.6 60.2L112 381.9V432h50.1l129.7-129.7c17.4 11.1 38 17.6 60.2 17.6 61.8 0 112-50.2 112-112s-50.2-112-112-112zm0 176c-35.3 0-64-28.7-64-64s28.7-64 64-64 64 28.7 64 64-28.7 64-64 64z"/>
-            </svg>
-            <span class="label">Prowlarr</span>
-          </a>
-          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
-            <span class="label">ruTorrent</span>
-          </a>
-          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
-            <span class="label">Wiki</span>
-          </a>
-        </div>
-      </div>
     </main>
   </div>
 
