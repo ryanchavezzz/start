@@ -123,8 +123,7 @@
     /* ── Clock ── */
     .clock-row {
       display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
+      align-items: center;
       width: 100%;
       margin-bottom: 64px;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
@@ -139,14 +138,12 @@
       font-size: 16px;
       line-height: 1;
       flex-wrap: wrap;
-      flex: 1;
     }
 
     .clock-time-wrap {
       display: flex;
       align-items: baseline;
       gap: 3px;
-      flex: 0 0 100%;
     }
 
     .clock-time {
@@ -221,20 +218,17 @@
       gap: 8px;
       cursor: pointer;
       user-select: none;
-      flex-shrink: 0;
-      margin-left: 16px;
+      position: fixed;
+      top: 20px;
+      right: 20px;
     }
 
     @media (min-width: 600px) {
-      .clock-row {
-        align-items: center;
-      }
       .clock {
         gap: 0;
         flex-wrap: nowrap;
       }
       .clock-time-wrap {
-        flex: none;
         margin-right: 28px;
       }
       .holiday-badge {
