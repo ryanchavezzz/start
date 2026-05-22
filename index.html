@@ -123,7 +123,7 @@
     /* ── Clock ── */
     .clock-row {
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
       width: 100%;
       margin-bottom: 64px;
@@ -146,6 +146,7 @@
       display: flex;
       align-items: baseline;
       gap: 3px;
+      flex: 0 0 100%;
     }
 
     .clock-time {
@@ -225,11 +226,15 @@
     }
 
     @media (min-width: 600px) {
+      .clock-row {
+        align-items: center;
+      }
       .clock {
         gap: 0;
         flex-wrap: nowrap;
       }
       .clock-time-wrap {
+        flex: none;
         margin-right: 28px;
       }
       .holiday-badge {
