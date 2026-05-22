@@ -132,13 +132,17 @@
 
     .clock {
       display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 12px;
-      padding: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
       font-size: 16px;
       line-height: 1;
-      flex-wrap: wrap;
+    }
+
+    .clock-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
 
     .clock-time-wrap {
@@ -190,9 +194,6 @@
       font-family: "Proxima Nova", system-ui, sans-serif;
       letter-spacing: -0.01em;
       line-height: 1;
-      flex-basis: 100%;
-      align-self: flex-start;
-      margin-top: 4px;
     }
 
     .holiday-badge.visible { display: inline-flex; }
@@ -227,15 +228,11 @@
     }
 
     @media (min-width: 600px) {
-      .clock {
+      .clock-top {
         gap: 0;
-        flex-wrap: nowrap;
       }
       .clock-time-wrap {
         margin-right: 28px;
-      }
-      .holiday-badge {
-        margin-left: 0;
       }
     }
 
@@ -572,11 +569,13 @@
   <div class="wrapper">
     <div class="clock-row">
       <div class="clock">
-        <div class="clock-time-wrap">
-          <div class="clock-time" id="clockTime"></div>
-          <div class="clock-ampm" id="clockAmpm"></div>
+        <div class="clock-top">
+          <div class="clock-time-wrap">
+            <div class="clock-time" id="clockTime"></div>
+            <div class="clock-ampm" id="clockAmpm"></div>
+          </div>
+          <div class="clock-date" id="clockDate"></div>
         </div>
-        <div class="clock-date" id="clockDate"></div>
         <div class="holiday-badge" id="holidayBadge"></div>
       </div>
       <div class="theme-switch" onclick="toggleTheme()">
