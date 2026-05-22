@@ -869,7 +869,7 @@
           badge.innerHTML = `<span class="name-part">${next.name}</span>`;
         } else {
           if (diff <= 3) badge.classList.add('soon');
-          const dayText = diff === 1 ? "Tomorrow" : `${diff}d`;
+          const dayText = diff === 1 ? "Tomorrow" : `in ${diff} days`;
           badge.innerHTML = `<span class="name-part">${next.name}</span><span class="days-part">(${dayText})</span>`;
         }
       }
