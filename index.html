@@ -123,7 +123,8 @@
     /* ── Clock ── */
     .clock-row {
       display: flex;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
       margin-bottom: 64px;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
@@ -138,7 +139,7 @@
       font-size: 16px;
       line-height: 1;
       flex-wrap: wrap;
-      justify-content: flex-start;
+      flex: 1;
     }
 
     .clock-time-wrap {
@@ -219,12 +220,12 @@
       gap: 8px;
       cursor: pointer;
       user-select: none;
-      margin-left: 4px;
+      flex-shrink: 0;
+      margin-left: 16px;
     }
 
     @media (min-width: 600px) {
       .clock {
-        width: 100%;
         gap: 0;
         flex-wrap: nowrap;
       }
@@ -233,9 +234,6 @@
       }
       .holiday-badge {
         margin-left: 16px;
-      }
-      .theme-switch {
-        margin-left: auto;
       }
     }
 
@@ -578,18 +576,18 @@
         </div>
         <div class="clock-date" id="clockDate"></div>
         <div class="holiday-badge" id="holidayBadge"></div>
-        <div class="theme-switch" onclick="toggleTheme()">
-          <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
-            <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-          </svg>
-          <div class="switch-track">
-            <div class="switch-thumb"></div>
-          </div>
-          <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
-          </svg>
+      </div>
+      <div class="theme-switch" onclick="toggleTheme()">
+        <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+          <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <div class="switch-track">
+          <div class="switch-thumb"></div>
         </div>
+        <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+        </svg>
       </div>
     </div>
 
