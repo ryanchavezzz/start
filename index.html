@@ -145,27 +145,7 @@
       gap: 12px;
     }
 
-    .clock-time-wrap {
-      display: flex;
-      align-items: baseline;
-      gap: 3px;
-    }
-
-    .clock-time {
-      font-size: 16px;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .clock-ampm {
-      font-size: 8px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.04em;
-      color: var(--text-muted);
-    }
-
-    .clock-date {
+.clock-date {
       display: flex;
       align-items: baseline;
       gap: 4px;
@@ -230,9 +210,6 @@
     @media (min-width: 600px) {
       .clock-top {
         gap: 0;
-      }
-      .clock-time-wrap {
-        margin-right: 28px;
       }
     }
 
@@ -570,10 +547,6 @@
     <div class="clock-row">
       <div class="clock">
         <div class="clock-top">
-          <div class="clock-time-wrap">
-            <div class="clock-time" id="clockTime"></div>
-            <div class="clock-ampm" id="clockAmpm"></div>
-          </div>
           <div class="clock-date" id="clockDate"></div>
         </div>
         <div class="holiday-badge" id="holidayBadge"></div>
@@ -793,26 +766,14 @@
   </div>
 
   <script>
-    // Clock
-    function updateClock() {
+    // Date
+    (function() {
       const now = new Date();
-      const hours = now.getHours();
-      const h = hours % 12 || 12;
-      const m = String(now.getMinutes()).padStart(2, '0');
-      const ampm = hours >= 12 ? 'PM' : 'AM';
-      document.getElementById('clockTime').textContent = `${h}:${m}`;
-      const ampmEl = document.getElementById('clockAmpm');
-      ampmEl.textContent = ampm;
-      ampmEl.classList.toggle('am', ampm === 'AM');
-      ampmEl.classList.toggle('pm', ampm === 'PM');
       const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
       const month = now.toLocaleDateString('en-US', { month: 'short' });
       const day = now.getDate();
       document.getElementById('clockDate').innerHTML = `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
-    }
-
-    updateClock();
-    setInterval(updateClock, 1000);
+    })();
 
     // Theme
     function applyTheme() {
