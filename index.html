@@ -123,7 +123,8 @@
     /* ── Clock ── */
     .clock-row {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+      justify-content: space-between;
       width: 100%;
       margin-bottom: 64px;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", system-ui, sans-serif;
@@ -190,6 +191,7 @@
       letter-spacing: -0.01em;
       line-height: 1;
       flex-basis: 100%;
+      align-self: flex-start;
       margin-top: 4px;
     }
 
@@ -220,9 +222,8 @@
       gap: 8px;
       cursor: pointer;
       user-select: none;
-      position: fixed;
-      top: 20px;
-      right: 20px;
+      flex-shrink: 0;
+      margin-left: 16px;
     }
 
     @media (min-width: 600px) {
