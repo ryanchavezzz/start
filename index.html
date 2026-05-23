@@ -568,6 +568,41 @@
       height: 14px;
     }
 
+    .chip-pill {
+      display: flex;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 7px 12px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      color: var(--text);
+      white-space: nowrap;
+      height: 36px;
+      border-right: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .pill-btn:last-child { border-right: none; }
+    .pill-btn:hover { background: var(--hover-bg); }
+
+    .pill-btn .si {
+      width: 14px;
+      height: 14px;
+    }
+
   </style>
 </head>
 <body>
@@ -607,16 +642,16 @@
               <span class="label">Wiki</span>
             </a>
           </div>
-          <div class="chip-row">
-            <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+          <div class="chip-pill">
+            <a class="pill-btn" href="http://rtorrent.rchvz.dev" target="_blank">
               <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
               <span class="label">ruTorrent</span>
             </a>
-            <a class="btn" href="http://flood.rchvz.dev" target="_blank">
+            <a class="pill-btn" href="http://flood.rchvz.dev" target="_blank">
               <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
               <span class="label">Flood</span>
             </a>
-            <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
+            <a class="pill-btn" href="http://jackett.rchvz.dev" target="_blank">
               <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
               <span class="label">Jackett</span>
             </a>
