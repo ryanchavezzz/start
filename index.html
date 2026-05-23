@@ -542,23 +542,34 @@
 
     /* ── Whatbox floating segments ── */
     .chip-group {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .chip-row {
+      display: flex;
       gap: 4px;
     }
 
     .chip-group .btn {
+      flex: 1;
       padding: 7px 12px 7px 10px;
       font-size: 13px;
       gap: 7px;
       justify-content: center;
-      width: 100%;
     }
 
     .chip-group .btn .si,
     .chip-group .btn .si-color {
       width: 14px;
       height: 14px;
+    }
+
+    .chip-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2px 0;
     }
   </style>
 </head>
@@ -589,34 +600,42 @@
     <main class="content">
       <div class="panel" id="panel-whatbox">
         <div class="chip-group">
-          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
-            <span class="si-color" style="background-image:url('icons/whatbox-icon.svg')"></span>
-            <span class="label">Whatbox</span>
-          </a>
-          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
-            <span class="label">Wiki</span>
-          </a>
-          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
-            <span class="si-color" style="background-image:url('icons/rutorrent-icon.svg')"></span>
-            <span class="label">ruTorrent</span>
-          </a>
-          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
-            <span class="si-color" style="background-image:url('icons/flood-icon.svg')"></span>
-            <span class="label">Flood</span>
-          </a>
-          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
-            <span class="label">Jackett</span>
-          </a>
-          <a class="btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
-            <span class="label">Plex</span>
-          </a>
-          <a class="btn" href="http://stash.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/stash-icon.svg');mask-image:url('icons/stash-icon.svg')"></span>
-            <span class="label">Stash</span>
-          </a>
+          <div class="chip-row">
+            <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+              <span class="si-color" style="background-image:url('icons/whatbox-icon.svg')"></span>
+              <span class="label">Whatbox</span>
+            </a>
+            <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
+              <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
+              <span class="label">Wiki</span>
+            </a>
+          </div>
+          <div class="chip-divider"></div>
+          <div class="chip-row">
+            <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+              <span class="si-color" style="background-image:url('icons/rutorrent-icon.svg')"></span>
+              <span class="label">ruTorrent</span>
+            </a>
+            <a class="btn" href="http://flood.rchvz.dev" target="_blank">
+              <span class="si-color" style="background-image:url('icons/flood-icon.svg')"></span>
+              <span class="label">Flood</span>
+            </a>
+            <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
+              <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
+              <span class="label">Jackett</span>
+            </a>
+          </div>
+          <div class="chip-divider"></div>
+          <div class="chip-row">
+            <a class="btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
+              <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
+              <span class="label">Plex</span>
+            </a>
+            <a class="btn" href="http://stash.rchvz.dev" target="_blank">
+              <span class="si" style="-webkit-mask-image:url('icons/stash-icon.svg');mask-image:url('icons/stash-icon.svg')"></span>
+              <span class="label">Stash</span>
+            </a>
+          </div>
         </div>
       </div>
 
