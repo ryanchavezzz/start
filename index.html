@@ -542,16 +542,17 @@
 
     /* ── Whatbox floating segments ── */
     .chip-group {
-      display: flex;
-      flex-wrap: wrap;
-      row-gap: 4px;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
     }
 
     .chip-group .btn {
       padding: 7px 12px 7px 10px;
       font-size: 13px;
       gap: 7px;
+      justify-content: center;
+      width: 100%;
     }
 
     .chip-group .btn .si,
