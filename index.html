@@ -549,11 +549,12 @@
 
     .chip-row {
       display: flex;
+      justify-content: space-between;
       gap: 4px;
     }
 
     .chip-group .btn {
-      flex: 1;
+      flex: 0 0 calc((100% - 8px) / 3);
       padding: 7px 12px 7px 10px;
       font-size: 13px;
       gap: 7px;
