@@ -541,11 +541,16 @@
     }
 
     /* ── Whatbox floating segments ── */
+    .chip-group-scroll {
+      overflow-x: auto;
+      padding-bottom: 2px;
+    }
+
     .chip-group {
       display: flex;
       flex-wrap: nowrap;
       gap: 4px;
-      overflow-x: auto;
+      padding: 4px 2px;
     }
   </style>
 </head>
@@ -575,7 +580,7 @@
 
     <main class="content">
       <div class="panel" id="panel-whatbox">
-        <div class="chip-group">
+        <div class="chip-group-scroll"><div class="chip-group">
           <a class="btn" href="https://whatbox.ca/manage" target="_blank">
             <span class="si-color" style="background-image:url('icons/whatbox-icon.svg')"></span>
             <span class="label">Whatbox</span>
@@ -600,8 +605,7 @@
             <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
             <span class="label">Wiki</span>
           </a>
-        </div>
-        </div>
+        </div></div>
       </div>
 
       <div class="panel" id="panel-main">
