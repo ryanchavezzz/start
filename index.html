@@ -10,7 +10,6 @@
 <style>
 /* ── DESIGN.MD tokens ──────────────────────────────────────────────────── */
 :root {
-  /* Colors */
   --c-primary:        #171717;
   --c-on-primary:     #ffffff;
   --c-ink:            #171717;
@@ -22,8 +21,6 @@
   --c-canvas-soft:    #fafafa;
   --c-canvas-soft-2:  #f5f5f5;
   --c-link:           #0070f3;
-
-  /* Semantic */
   --bg:               var(--c-canvas-soft);
   --surface:          var(--c-canvas);
   --border:           var(--c-hairline);
@@ -33,38 +30,13 @@
   --text-muted:       var(--c-mute);
   --hover-bg:         var(--c-canvas-soft-2);
   --hover-border:     var(--c-hairline-strong);
-
-  /* Shadows — stacked small offsets + inset hairline ring */
-  --shadow-1: inset 0 0 0 1px rgba(0,0,0,0.04),
-              0 1px 2px rgba(0,0,0,0.06);
-  --shadow-2: inset 0 0 0 1px rgba(0,0,0,0.04),
-              0 1px 2px rgba(0,0,0,0.05),
-              0 4px 8px  rgba(0,0,0,0.04);
-  --shadow-3: inset 0 0 0 1px rgba(0,0,0,0.04),
-              0 1px 2px  rgba(0,0,0,0.05),
-              0 4px 12px rgba(0,0,0,0.05),
-              0 8px 24px rgba(0,0,0,0.04);
-
-  /* Rounded */
-  --r-xs:   4px;
-  --r-sm:   6px;
-  --r-md:   8px;
-  --r-lg:   12px;
-  --r-xl:   16px;
-  --r-pill: 9999px;
-
-  /* Spacing */
-  --sp-xxs: 4px;
-  --sp-xs:  8px;
-  --sp-sm:  12px;
-  --sp-md:  16px;
-  --sp-lg:  24px;
-  --sp-xl:  32px;
-  --sp-2xl: 40px;
-  --sp-3xl: 48px;
-  --sp-4xl: 64px;
-
-  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-1: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-2: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-3: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.04);
+  --r-xs: 4px; --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px; --r-pill: 9999px;
+  --sp-xxs:4px; --sp-xs:8px; --sp-sm:12px; --sp-md:16px; --sp-lg:24px;
+  --sp-xl:32px; --sp-2xl:40px; --sp-3xl:48px; --sp-4xl:64px;
+  --ease: cubic-bezier(0.4,0,0.2,1);
   --t: 0.15s var(--ease);
 }
 
@@ -78,23 +50,14 @@
   --text-muted:    #555555;
   --hover-bg:      #181818;
   --hover-border:  #333333;
-
-  --shadow-1: inset 0 0 0 1px rgba(255,255,255,0.05),
-              0 1px 2px rgba(0,0,0,0.4);
-  --shadow-2: inset 0 0 0 1px rgba(255,255,255,0.05),
-              0 1px 2px rgba(0,0,0,0.4),
-              0 4px 8px rgba(0,0,0,0.25);
-  --shadow-3: inset 0 0 0 1px rgba(255,255,255,0.05),
-              0 1px 2px  rgba(0,0,0,0.4),
-              0 4px 12px rgba(0,0,0,0.25),
-              0 8px 24px rgba(0,0,0,0.2);
+  --shadow-1: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+  --shadow-3: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.2);
 }
 
-/* ── Base ──────────────────────────────────────────────────────────────── */
+/* ── Base ─────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
 ::selection { background: var(--c-primary); color: var(--c-on-primary); }
 
 body {
@@ -106,156 +69,120 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: var(--sp-4xl) var(--sp-xl);
+  justify-content: flex-start;
+  padding-top: var(--sp-2xl);
   transition: background var(--t), color var(--t);
 }
 
+
+/* Theme toggle */
+.theme-switch {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  transition: border-color var(--t), background var(--t);
+}
+.theme-switch:hover { border-color: var(--border-strong); }
+.switch-icon { width:13px;height:13px;color:var(--text-muted);display:none; }
+.switch-icon.active { display:block; }
+
+/* ── Wrapper ──────────────────────────────────────────────────────────── */
 .wrapper {
   display: flex;
   flex-direction: column;
   gap: var(--sp-lg);
   width: 100%;
   max-width: 740px;
+  padding: 0 var(--sp-lg) var(--sp-4xl);
 }
 
-/* ── Clock row ─────────────────────────────────────────────────────────── */
-.clock-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+/* ── Hero ─────────────────────────────────────────────────────────────── */
+.hero {
   width: 100%;
-  margin-bottom: var(--sp-4xl);
+  max-width: 740px;
+  padding: var(--sp-md) var(--sp-lg) var(--sp-lg);
+  position: relative;
+  overflow: hidden;
 }
 
-.clock {
+/* Mesh gradient — hero scale only, per DESIGN.MD */
+/* caption-mono eyebrow */
+.hero-meta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 8px;
+  width: 100%;
 }
-
-.clock-top {
+.hero-top {
   display: flex;
   align-items: center;
-  gap: var(--sp-sm);
+  justify-content: space-between;
+  width: 100%;
 }
 
-/* display-sm scale for the date */
+/* date — display-sm scale */
 .clock-date {
   display: flex;
   align-items: baseline;
-  gap: 4px;
-  font-size: 16px;
+  gap: 6px;
+  font-size: 22px;
   color: var(--text);
 }
+.clock-date strong { font-weight: 600; font-size: 22px; letter-spacing: -0.8px; }
+.clock-date span   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 
-.clock-date strong {
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -0.4px;
-}
-
-.clock-date span {
-  font-weight: 400;
-  font-size: 16px;
-  color: var(--text-muted);
-  letter-spacing: -0.3px;
-}
-
-/* Holiday badge — caption-mono */
+/* Holiday badge */
 .holiday-badge {
   display: none;
   align-items: center;
-  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
   overflow: hidden;
-  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 16px;
-  letter-spacing: 0.04em;
-}
-
-.holiday-badge.visible { display: inline-flex; }
-
-.holiday-badge .name-part {
-  padding: 3px var(--sp-xs);
-  background: var(--text-muted);
-  color: var(--bg);
-  font-weight: 500;
-}
-
-.holiday-badge .days-part {
-  padding: 3px var(--sp-xs);
-  background: var(--text);
-  color: var(--bg);
-  font-weight: 500;
-}
-
-.holiday-badge.today .name-part {
-  padding: 3px 9px;
-  background: var(--text);
-}
-
-/* Theme toggle */
-.theme-switch {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-xs);
-  cursor: pointer;
-  user-select: none;
-  flex-shrink: 0;
-  margin-left: var(--sp-md);
-}
-
-.switch-icon {
-  width: 13px;
-  height: 13px;
-  color: var(--text-muted);
-  transition: color 0.2s;
-  flex-shrink: 0;
-}
-
-.switch-icon.active { color: var(--text); }
-
-.switch-track {
-  width: 34px;
-  height: 18px;
-  background: var(--border);
-  border-radius: var(--r-pill);
-  position: relative;
-  transition: background 0.25s;
-  flex-shrink: 0;
-}
-
-[data-theme="dark"] .switch-track { background: var(--text-muted); }
-
-.switch-thumb {
-  width: 12px;
-  height: 12px;
   background: var(--surface);
-  border-radius: 50%;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  transition: transform 0.25s var(--ease);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-1);
+  font-family: "Geist", system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1;
 }
+.holiday-badge.visible { display: inline-flex; }
+.holiday-badge .name-part {
+  padding: 5px 8px;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+.holiday-badge .days-part {
+  padding: 5px 8px;
+  border-left: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+.holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
+.holiday-badge.today .days-part { display: none; }
 
-[data-theme="dark"] .switch-thumb { transform: translateX(16px); }
-
-/* ── Panels ────────────────────────────────────────────────────────────── */
+/* ── Panels ───────────────────────────────────────────────────────────── */
 .content {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-2xl);
+  gap: var(--sp-xl);
   width: 100%;
 }
 
 .panel {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-md);
+  gap: var(--sp-sm);
 }
 
 /* caption-mono panel heading */
@@ -269,22 +196,28 @@ body {
   color: var(--text-muted);
   padding-bottom: var(--sp-xs);
   border-bottom: 1px solid var(--border);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+  padding-top: var(--sp-xs);
 }
 
-/* ── Chips / buttons ───────────────────────────────────────────────────── */
+
+/* ── Chips / buttons ──────────────────────────────────────────────────── */
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 4px;
 }
 
-/* nav-cta scale: body-sm-strong, 6px radius (Vercel --geist-radius) */
+/* nav-cta scale: body-sm-strong, 6px radius */
 .btn {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-xs);
-  padding: 6px 12px 6px 10px;
+  padding: 6px 12px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-sm);
@@ -299,14 +232,14 @@ body {
   transition: background var(--t), border-color var(--t), box-shadow var(--t);
   white-space: nowrap;
   position: relative;
+  height: 32px;
+  justify-content: flex-start;
 }
-
 .btn:hover {
   background: var(--hover-bg);
   border-color: var(--hover-border);
   box-shadow: var(--shadow-2);
 }
-
 .btn:active {
   background: var(--c-canvas-soft-2);
   box-shadow: var(--shadow-1);
@@ -315,24 +248,18 @@ body {
 /* Icons */
 .si {
   display: inline-block;
-  width: 16px;
-  height: 16px;
+  width: 16px; height: 16px;
   background-color: var(--text);
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
   flex-shrink: 0;
   opacity: 0.7;
   transition: opacity var(--t);
 }
-
 .si-color {
   display: inline-block;
-  width: 18px;
-  height: 18px;
+  width: 18px; height: 18px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -340,35 +267,28 @@ body {
   opacity: 0.85;
   transition: opacity var(--t);
 }
-
-.btn:hover .si,
-.btn:hover .si-color { opacity: 1; }
+.btn:hover .si, .btn:hover .si-color { opacity: 1; }
 
 .fav {
-  width: 16px;
-  height: 16px;
+  width: 16px; height: 16px;
   border-radius: 2px;
   filter: grayscale(1) opacity(0.5);
   transition: all var(--t);
 }
-
 .btn:hover .fav { filter: none; opacity: 1; }
 
 .svg-icon {
-  width: 16px;
-  height: 16px;
+  width: 16px; height: 16px;
   flex-shrink: 0;
   opacity: 0.7;
   color: var(--text);
   transition: opacity var(--t);
 }
-
 .btn:hover .svg-icon { opacity: 1; }
 
-/* ── Search overlay ────────────────────────────────────────────────────── */
+/* ── Search overlay ───────────────────────────────────────────────────── */
 .srch-overlay {
-  position: fixed;
-  inset: 0;
+  position: fixed; inset: 0;
   background: rgba(0,0,0,0.06);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -381,251 +301,132 @@ body {
   pointer-events: none;
   transition: opacity 0.15s var(--ease);
 }
-
 [data-theme="dark"] .srch-overlay { background: rgba(0,0,0,0.22); }
+.srch-overlay.open { opacity: 1; pointer-events: all; }
 
-.srch-overlay.open {
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* card-marketing-large scale */
 .srch-modal {
-  width: 100%;
-  max-width: 560px;
+  width: 100%; max-width: 560px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-3);
   overflow: hidden;
   transform: translateY(-8px) scale(0.99);
-  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1.1);
+  transition: transform 0.2s cubic-bezier(0.2,0,0,1.1);
 }
-
 .srch-overlay.open .srch-modal { transform: translateY(0) scale(1); }
 
 .srch-input-row {
-  display: flex;
-  align-items: center;
+  display: flex; align-items: center;
   gap: var(--sp-sm);
   padding: var(--sp-md) var(--sp-lg);
 }
+.srch-input-icon { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
 
-.srch-input-icon {
-  width: 14px;
-  height: 14px;
-  color: var(--text-muted);
-  flex-shrink: 0;
-}
-
-/* form-input style */
 .srch-input {
-  flex: 1;
-  border: none;
-  outline: none;
-  background: transparent;
+  flex: 1; border: none; outline: none; background: transparent;
   font-family: "Geist", system-ui, sans-serif;
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--text);
-  letter-spacing: -0.28px;
+  font-size: 15px; font-weight: 400;
+  color: var(--text); letter-spacing: -0.28px;
 }
-
 .srch-input::placeholder { color: var(--text-muted); }
 
-.srch-sep {
-  height: 1px;
-  background: var(--border);
-}
+.srch-sep { height: 1px; background: var(--border); }
 
 .srch-results {
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
   padding: var(--sp-xxs) 0;
-  max-height: 380px;
-  overflow-y: auto;
+  max-height: 380px; overflow-y: auto;
 }
-
 .srch-result {
-  display: flex;
-  align-items: center;
+  display: flex; align-items: center;
   gap: var(--sp-sm);
   padding: 9px var(--sp-lg);
   cursor: pointer;
   transition: background 0.1s;
 }
-
-.srch-result:hover,
-.srch-result.active { background: var(--hover-bg); }
+.srch-result:hover, .srch-result.active { background: var(--hover-bg); }
 
 .srch-icon {
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   border-radius: var(--r-md);
   background: var(--bg);
   border: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
-
-.srch-icon .si {
-  width: 13px;
-  height: 13px;
-  background-color: var(--text);
-  opacity: 0.55;
-  -webkit-mask-size: contain;
-  mask-size: contain;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.srch-icon .fav {
-  width: 13px;
-  height: 13px;
-  border-radius: 2px;
-  filter: grayscale(1) opacity(0.5);
-}
-
-.srch-icon .svg-icon {
-  width: 13px;
-  height: 13px;
-  opacity: 0.55;
-  color: var(--text);
-}
+.srch-icon .si  { width:13px;height:13px;background-color:var(--text);opacity:0.55;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center; }
+.srch-icon .fav { width:13px;height:13px;border-radius:2px;filter:grayscale(1) opacity(0.5); }
+.srch-icon .svg-icon { width:13px;height:13px;opacity:0.55;color:var(--text); }
 
 .srch-text { flex: 1; min-width: 0; }
+.srch-label { font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.28px; }
+.srch-sub   { font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
+.srch-hint  { padding:var(--sp-sm) var(--sp-lg);font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
 
-/* body-sm-strong */
-.srch-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  letter-spacing: -0.28px;
-}
-
-/* caption-mono */
-.srch-sub {
-  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
-
-.srch-hint {
-  padding: var(--sp-sm) var(--sp-lg);
-  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 11px;
-  color: var(--text-muted);
-  text-align: center;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* ── Whatbox segment group ─────────────────────────────────────────────── */
-.chip-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-xxs);
-}
-
-.chip-row {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--sp-xxs);
-}
-
-.chip-group .btn {
-  flex: 1;
-  padding: 5px var(--sp-xs);
-  font-size: 13px;
-  gap: 6px;
-  justify-content: center;
-}
-
-.chip-group .btn .si,
-.chip-group .btn .si-color {
-  width: 14px;
-  height: 14px;
-}
 </style>
 </head>
 <body>
 
-<div class="wrapper">
-  <div class="clock-row">
-    <div class="clock">
-      <div class="clock-top">
+
+<!-- ── Hero with mesh gradient ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-meta">
+      <div class="hero-top">
         <div class="clock-date" id="clockDate"></div>
+        <div class="theme-switch" onclick="toggleTheme()">
+          <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+            <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+          </svg>
+        </div>
       </div>
       <div class="holiday-badge" id="holidayBadge"></div>
     </div>
-    <div class="theme-switch" onclick="toggleTheme()">
-      <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
-        <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-      </svg>
-      <div class="switch-track">
-        <div class="switch-thumb"></div>
-      </div>
-      <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
-      </svg>
-    </div>
   </div>
+</div>
 
+<div class="wrapper">
   <main class="content">
     <div class="panel" id="panel-whatbox">
-      <div class="chip-group">
-        <div class="chip-row">
-          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg');width:28px;height:28px"></span>
-            <span class="label">Whatbox</span>
-          </a>
-          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
-            <span class="label">Wiki</span>
-          </a>
-        </div>
-        <div class="chip-row">
-          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
-            <span class="label">ruTorrent</span>
-          </a>
-          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
-            <span class="label">Flood</span>
-          </a>
-          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
-            <span class="label">Jackett</span>
-          </a>
-        </div>
-        <div class="chip-row">
-          <a class="btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
-            <span class="label">Plex</span>
-          </a>
-          <a class="btn" href="http://stash.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/stash-icon.svg');mask-image:url('icons/stash-icon.svg')"></span>
-            <span class="label">Stash</span>
-          </a>
-          <a class="btn" href="https://tmm.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/tmm-icon.svg');mask-image:url('icons/tmm-icon.svg')"></span>
-            <span class="label">Tiny Media Manager</span>
-          </a>
-        </div>
+      <h2 class="panel-heading">Whatbox</h2>
+      <div class="chips">
+        <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
+          <span class="label">Whatbox</span>
+        </a>
+        <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
+          <span class="label">Whatbox Wiki</span>
+        </a>
+        <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
+          <span class="label">ruTorrent</span>
+        </a>
+        <a class="btn" href="http://flood.rchvz.dev" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
+          <span class="label">Flood</span>
+        </a>
+        <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
+          <span class="label">Jackett</span>
+        </a>
+        <a class="btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
+          <span class="label">Plex</span>
+        </a>
+        <a class="btn" href="http://stash.rchvz.dev" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/stash-icon.svg');mask-image:url('icons/stash-icon.svg')"></span>
+          <span class="label">Stash</span>
+        </a>
+        <a class="btn" href="https://tmm.rchvz.dev" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('icons/tmm-icon.svg');mask-image:url('icons/tmm-icon.svg')"></span>
+          <span class="label">TMM</span>
+        </a>
       </div>
     </div>
 
@@ -634,7 +435,7 @@ body {
       <div class="chips">
         <a class="btn" href="https://drive.google.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googledrive');mask-image:url('https://cdn.simpleicons.org/googledrive')"></span>
-          <span class="label">Drive</span>
+          <span class="label">Google Drive</span>
         </a>
         <a class="btn" href="https://www.icloud.com/iclouddrive/" target="_blank">
           <svg class="svg-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -642,7 +443,7 @@ body {
             <path d="M188.55859 312c-4.01188.00002-9.01617.04415-12.02343.57617-1.98274.33855-3.98121.9591-5.77539 1.86719-3.60862 1.84422-6.54203 4.80544-8.38086 8.42578-.90675 1.80335-1.46343 3.73171-1.80274 5.72266-.47082 2.87052-.57617 5.50882-.57617 12.0625V412h704v-71.3457c0-6.55368-.10535-9.19198-.57617-12.0625-.33931-1.99095-.89599-3.91931-1.80274-5.72266-1.83883-3.62034-4.77224-6.58156-8.38086-8.42578-1.79418-.90809-3.79265-1.52864-5.77539-1.86719-3.00726-.53202-8.01155-.57615-12.02343-.57617Z" fill="currentColor" opacity="0.5"/>
             <path d="M156.55859 340c-4.01188.00002-9.01617.04415-12.02343.57617-1.98274.33855-3.98121.9591-5.77539 1.86719-3.60862 1.84422-6.54203 4.80544-8.38086 8.42578-.90675 1.80335-1.46343 3.73171-1.80274 5.72266-.47082 2.87052-.57617 5.50882-.57617 12.0625v366.15429c0 16.96879.27297 23.8001 1.49609 31.23243.88145 5.15498 2.32808 10.14912 4.6836 14.81836 4.77691 9.37378 12.39898 17.04133 21.77343 21.8164 4.66096 2.35119 9.85121 3.95351 15.00196 4.83008 7.81224 1.37751 20.81233 1.49409 31.23437 1.49414h619.6211c10.42204-.00005 23.42213-.11663 31.23437-1.49414 5.15075-.87657 10.341-2.47889 15.00196-4.83008 9.37444-4.77507 16.99652-12.44263 21.77343-21.8164 2.35552-4.66924 3.80215-9.66338 4.6836-14.81836C895.72703 758.60869 896 751.77738 896 734.80859V368.6543c0-6.55368-.10535-9.19198-.57617-12.0625-.33931-1.99095-.89599-3.91931-1.80274-5.72266-1.83883-3.62034-4.77224-6.58156-8.38086-8.42578-1.79418-.90809-3.79265-1.52864-5.77539-1.86719-3.00726-.53202-8.01155-.57615-12.02343-.57617Z" fill="currentColor" opacity="1"/>
           </svg>
-          <span class="label">iCloud Drive</span>
+          <span class="label">iCloud</span>
         </a>
         <a class="btn" href="https://youtube.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
@@ -654,19 +455,11 @@ body {
         </a>
         <a class="btn" href="https://news.ycombinator.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/ycombinator');mask-image:url('https://cdn.simpleicons.org/ycombinator')"></span>
-          <span class="label">Hacker News</span>
+          <span class="label">HN</span>
         </a>
         <a class="btn" href="https://brutalist.report" target="_blank">
           <span class="si" style="-webkit-mask-image:url('icons/brutalist-report-icon.svg');mask-image:url('icons/brutalist-report-icon.svg')"></span>
-          <span class="label">Brutalist Report</span>
-        </a>
-        <a class="btn" href="https://app.plex.tv" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
-          <span class="label">Plex</span>
-        </a>
-        <a class="btn" href="https://whatbox.ca/manage" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
-          <span class="label">Whatbox</span>
+          <span class="label">Brutalist</span>
         </a>
         <a class="btn" href="https://claude.ai/new" target="_blank">
           <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/claude');mask-image:url('https://cdn.simpleicons.org/claude')"></span>
@@ -692,7 +485,7 @@ body {
         </a>
         <a class="btn" href="https://voice.google.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
-          <span class="label">Google Voice</span>
+          <span class="label">Voice</span>
         </a>
         <a class="btn" href="https://vault.bitwarden.com/" target="_blank">
           <svg class="svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -705,7 +498,11 @@ body {
             <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" fill="currentColor"/>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M10.44 2.333c.24-.889 1.48-.889 1.72 0l.36 1.333c.11.407.51.667.92.613l1.373-.187c.907-.12 1.52.947.973 1.68l-.827 1.107c-.253.333-.213.8.107 1.08l1.08.947c.72.627.413 1.8-.547 1.987l-1.36.267c-.413.08-.68.48-.613.893l.227 1.373c.147.907-.92 1.533-1.667.987l-1.12-.827c-.333-.253-.8-.213-1.08.107l-.947 1.08c-.627.72-1.8.413-1.987-.547l-.267-1.36c-.08-.413-.48-.68-.893-.613l-1.373.227c-.907.147-1.533-.92-.987-1.667l.827-1.12c.253-.333.213-.8-.107-1.08l-1.08-.947c-.72-.627-.413-1.8.547-1.987l1.36-.267c.413-.08.68-.48.613-.893l-.227-1.373c-.147-.907.92-1.533 1.667-.987l1.12.827c.333.253.8.213 1.08-.107l.947-1.08c.213-.24.52-.36.827-.36.107 0 .213.013.32.04l.36 1.333zM12 17c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" fill="currentColor"/>
           </svg>
-          <span class="label">iOS Settings URL</span>
+          <span class="label">Deep Links</span>
+        </a>
+        <a class="btn" href="https://github.com/ryanchavezzz" target="_blank">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/github');mask-image:url('https://cdn.simpleicons.org/github')"></span>
+          <span class="label">GitHub</span>
         </a>
       </div>
     </div>
@@ -813,6 +610,7 @@ body {
   const day = now.getDate();
   document.getElementById('clockDate').innerHTML =
     `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
+
 })();
 
 // Theme
