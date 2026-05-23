@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Link Layout Demo — rchvz.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Silkscreen:wght@700&display=swap" rel="stylesheet">
+  <style>
+    @font-face { font-family:"Proxima Nova"; src:url('fonts/proxima-nova-light.otf') format('opentype'); font-weight:300; }
+    @font-face { font-family:"Proxima Nova"; src:url('fonts/proxima-nova-regular.otf') format('opentype'); font-weight:400; }
+    @font-face { font-family:"Proxima Nova"; src:url('fonts/proxima-nova-semibold.otf') format('opentype'); font-weight:600; }
+    @font-face { font-family:"Proxima Nova"; src:url('fonts/proxima-nova-bold.otf') format('opentype'); font-weight:700 900; }
+
+    /* ─── Tokens ─── */
+    :root {
+      --bg: #f5f5f4;
+      --surface: #ffffff;
+      --border: #e2e2e0;
+      --text: #1a1a18;
+      --text-muted: #71716a;
+      --hover-bg: #f0f0ee;
+      --hover-border: #d4d4d2;
+      --shadow: 0 1px 2px rgba(0,0,0,.05), 0 4px 12px rgba(0,0,0,.03);
+      --accent: #4b709d;
+      --tr: 0.18s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-theme="dark"] {
+      --bg: #0c0c0b;
+      --surface: #141413;
+      --border: #262624;
+      --text: #e5e5e0;
+      --text-muted: #8c8c82;
+      --hover-bg: #1e1e1d;
+      --hover-border: #333331;
+      --shadow: 0 4px 16px rgba(0,0,0,.4);
+      --accent: #8fb1e0;
+    }
+
+    *  { box-sizing:border-box; margin:0; padding:0; }
+    html { -webkit-font-smoothing:antialiased; }
+    body {
+      font-family:"Proxima Nova","Inter",system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      transition:background var(--tr), color var(--tr);
+    }
+
+    /* ─── Top bar ─── */
+    .bar {
+      position:sticky; top:0; z-index:100;
+      background:var(--surface);
+      border-bottom:1px solid var(--border);
+      padding:10px 20px;
+      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+      backdrop-filter:blur(12px);
+      -webkit-backdrop-filter:blur(12px);
+    }
+    .bar-label {
+      font-size:10.5px; font-weight:700; letter-spacing:.08em;
+      text-transform:uppercase; color:var(--text-muted);
+      white-space:nowrap; margin-right:2px;
+      font-family:"Silkscreen",sans-serif;
+    }
+    .lbtn {
+      padding:5px 13px; border-radius:999px;
+      border:1px solid var(--border); background:transparent;
+      color:var(--text-muted); font-size:12.5px; font-weight:500;
+      cursor:pointer; transition:all .15s; font-family:inherit;
+      white-space:nowrap;
+    }
+    .lbtn:hover { background:var(--hover-bg); color:var(--text); }
+    .lbtn.on { background:var(--text); color:var(--bg); border-color:var(--text); }
+    .bar-spacer { flex:1; }
+    .theme-btn {
+      width:30px; height:30px; border-radius:50%;
+      border:1px solid var(--border); background:transparent;
+      color:var(--text-muted); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .15s; flex-shrink:0;
+    }
+    .theme-btn:hover { background:var(--hover-bg); color:var(--text); }
+
+    /* Layout description pill */
+    .layout-desc {
+      width:100%; padding:10px 20px;
+      background:color-mix(in srgb,var(--accent) 10%,transparent);
+      border-bottom:1px solid color-mix(in srgb,var(--accent) 20%,transparent);
+      font-size:12px; color:var(--text-muted);
+      display:flex; align-items:center; gap:8px;
+    }
+    .layout-desc strong { color:var(--text); font-weight:600; }
+    .layout-desc-dot {
+      width:6px; height:6px; border-radius:50%;
+      background:var(--accent); flex-shrink:0;
+    }
+
+    /* ─── Page shell ─── */
+    .page {
+      padding:36px 28px 60px;
+      max-width:800px; margin:0 auto;
+    }
+    @media(max-width:520px) { .page { padding:24px 14px 48px; } }
+
+    .panel { margin-bottom:40px; }
+    .panel-heading {
+      font-family:"Silkscreen",sans-serif;
+      font-size:10.5px; font-weight:700;
+      text-transform:uppercase; letter-spacing:.1em;
+      color:var(--text-muted); line-height:1;
+      padding-bottom:8px;
+      border-bottom:1px solid var(--border);
+      margin-bottom:14px;
+    }
+
+    /* ─── Icon base ─── */
+    .si {
+      display:inline-block;
+      background-color:var(--text);
+      -webkit-mask-size:contain; mask-size:contain;
+      -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+      -webkit-mask-position:center; mask-position:center;
+      flex-shrink:0; transition:opacity var(--tr);
+    }
+    .si-color {
+      display:inline-block;
+      background-size:contain; background-repeat:no-repeat;
+      background-position:center;
+      flex-shrink:0; transition:opacity var(--tr);
+    }
+    .fav {
+      border-radius:2px;
+      filter:grayscale(1) opacity(.6);
+      flex-shrink:0; transition:all var(--tr);
+    }
+    .svg-icon {
+      flex-shrink:0; opacity:.7;
+      color:var(--text); transition:opacity var(--tr);
+    }
+
+    /* ══════════════════════════════════════════════════
+       LAYOUT 1 — CHIPS  (pill chips, flex-wrap)
+       Default look — familiar and space-efficient
+    ══════════════════════════════════════════════════ */
+    [data-layout="chips"] .chips {
+      display:flex; flex-wrap:wrap; gap:9px 8px;
+    }
+    [data-layout="chips"] .btn {
+      display:inline-flex; align-items:center; gap:9px;
+      padding:9px 16px 9px 13px;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:999px; text-decoration:none;
+      color:var(--text); font-size:14px; font-weight:500;
+      letter-spacing:-.01em; box-shadow:var(--shadow);
+      transition:all var(--tr); white-space:nowrap;
+    }
+    [data-layout="chips"] .btn:hover {
+      background:var(--hover-bg); border-color:var(--hover-border);
+      transform:translateY(-2px);
+      box-shadow:0 4px 14px rgba(0,0,0,.07);
+    }
+    [data-layout="chips"] .btn:active { transform:translateY(0); }
+    [data-layout="chips"] .si { width:16px; height:16px; opacity:.7; }
+    [data-layout="chips"] .si-color { width:18px; height:18px; opacity:.9; }
+    [data-layout="chips"] .fav { width:16px; height:16px; }
+    [data-layout="chips"] .svg-icon { width:16px; height:16px; }
+    [data-layout="chips"] .btn:hover .si,
+    [data-layout="chips"] .btn:hover .si-color { opacity:1; }
+    [data-layout="chips"] .btn:hover .fav { filter:none; }
+    [data-layout="chips"] .btn:hover .svg-icon { opacity:1; }
+
+    /* ══════════════════════════════════════════════════
+       LAYOUT 2 — CARDS  (square cards, icon on top)
+       Scannable grid — works great for app launchers
+    ══════════════════════════════════════════════════ */
+    [data-layout="cards"] .chips {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(100px, 1fr));
+      gap:10px;
+    }
+    [data-layout="cards"] .btn {
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:flex-start;
+      gap:10px; padding:18px 10px 14px;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:16px; text-decoration:none;
+      color:var(--text); text-align:center;
+      box-shadow:var(--shadow); transition:all var(--tr);
+      min-height:88px;
+    }
+    [data-layout="cards"] .btn:hover {
+      background:var(--hover-bg); border-color:var(--hover-border);
+      transform:translateY(-3px);
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+    }
+    [data-layout="cards"] .btn:active { transform:translateY(0); }
+    [data-layout="cards"] .si  { width:22px; height:22px; opacity:.75; }
+    [data-layout="cards"] .si-color { width:24px; height:24px; opacity:.9; }
+    [data-layout="cards"] .fav { width:22px; height:22px; }
+    [data-layout="cards"] .svg-icon { width:22px; height:22px; }
+    [data-layout="cards"] .label { font-size:11.5px; line-height:1.3; font-weight:500; }
+    [data-layout="cards"] .btn:hover .si,
+    [data-layout="cards"] .btn:hover .si-color { opacity:1; }
+    [data-layout="cards"] .btn:hover .fav { filter:none; }
+    [data-layout="cards"] .btn:hover .svg-icon { opacity:1; }
+
+    /* ══════════════════════════════════════════════════
+       LAYOUT 3 — LIST  (dense rows, no card chrome)
+       Max density — like a Raycast / spotlight list
+    ══════════════════════════════════════════════════ */
+    [data-layout="list"] .chips {
+      display:flex; flex-direction:column; gap:0;
+    }
+    [data-layout="list"] .btn {
+      display:flex; align-items:center; gap:12px;
+      padding:9px 10px; border-radius:8px;
+      border:none; background:transparent; box-shadow:none;
+      text-decoration:none; color:var(--text);
+      font-size:14px; font-weight:500;
+      width:100%; transition:all var(--tr);
+    }
+    [data-layout="list"] .btn:hover {
+      background:var(--hover-bg);
+      transform:none; box-shadow:none;
+    }
+    [data-layout="list"] .si  { width:15px; height:15px; opacity:.6; }
+    [data-layout="list"] .si-color { width:17px; height:17px; opacity:.85; }
+    [data-layout="list"] .fav { width:15px; height:15px; }
+    [data-layout="list"] .svg-icon { width:15px; height:15px; }
+    [data-layout="list"] .btn:hover .si { opacity:.9; }
+    [data-layout="list"] .btn:hover .si-color { opacity:1; }
+    [data-layout="list"] .btn:hover .fav { filter:none; }
+    [data-layout="list"] .btn:hover .svg-icon { opacity:.9; }
+    /* Dividers between items */
+    [data-layout="list"] .btn + .btn {
+      border-top:1px solid transparent;
+    }
+
+    /* ══════════════════════════════════════════════════
+       LAYOUT 4 — ICONS  (iOS-style tiles, icon + label)
+       Touch-first, large tap targets, homescreen feel
+    ══════════════════════════════════════════════════ */
+    [data-layout="icons"] .chips {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(72px, 1fr));
+      gap:14px 10px;
+    }
+    [data-layout="icons"] .btn {
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:8px; padding:16px 6px 12px;
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:22px; text-decoration:none;
+      color:var(--text); text-align:center;
+      box-shadow:var(--shadow); transition:all var(--tr);
+      aspect-ratio:1 / 1.15;
+    }
+    [data-layout="icons"] .btn:hover {
+      background:var(--hover-bg); border-color:var(--hover-border);
+      transform:scale(1.06);
+      box-shadow:0 6px 20px rgba(0,0,0,.1);
+    }
+    [data-layout="icons"] .btn:active { transform:scale(1); }
+    [data-layout="icons"] .si  { width:26px; height:26px; opacity:.8; }
+    [data-layout="icons"] .si-color { width:28px; height:28px; opacity:.9; }
+    [data-layout="icons"] .fav { width:26px; height:26px; border-radius:4px; }
+    [data-layout="icons"] .svg-icon { width:26px; height:26px; }
+    [data-layout="icons"] .label {
+      font-size:10px; line-height:1.2; font-weight:500;
+      overflow:hidden; text-overflow:ellipsis;
+      white-space:nowrap; max-width:100%; color:var(--text-muted);
+    }
+    [data-layout="icons"] .btn:hover .si,
+    [data-layout="icons"] .btn:hover .si-color { opacity:1; }
+    [data-layout="icons"] .btn:hover .fav { filter:none; }
+    [data-layout="icons"] .btn:hover .svg-icon { opacity:1; }
+    [data-layout="icons"] .btn:hover .label { color:var(--text); }
+
+    /* ══════════════════════════════════════════════════
+       LAYOUT 5 — ROWS  (2-column compact grid rows)
+       Efficient scanning, wide labels, keyboard-friendly
+    ══════════════════════════════════════════════════ */
+    [data-layout="rows"] .chips {
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:3px;
+    }
+    @media(max-width:460px) {
+      [data-layout="rows"] .chips { grid-template-columns:1fr; }
+    }
+    [data-layout="rows"] .btn {
+      display:flex; align-items:center; gap:10px;
+      padding:8px 11px; border-radius:8px;
+      border:1px solid transparent; background:transparent;
+      box-shadow:none; text-decoration:none;
+      color:var(--text); font-size:13.5px; font-weight:500;
+      transition:all var(--tr); overflow:hidden;
+    }
+    [data-layout="rows"] .btn:hover {
+      background:var(--hover-bg); border-color:var(--border);
+      transform:none; box-shadow:none;
+    }
+    [data-layout="rows"] .si  { width:14px; height:14px; opacity:.6; flex-shrink:0; }
+    [data-layout="rows"] .si-color { width:16px; height:16px; opacity:.85; flex-shrink:0; }
+    [data-layout="rows"] .fav { width:14px; height:14px; }
+    [data-layout="rows"] .svg-icon { width:14px; height:14px; }
+    [data-layout="rows"] .label {
+      overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;
+    }
+    [data-layout="rows"] .btn:hover .si { opacity:.9; }
+    [data-layout="rows"] .btn:hover .si-color { opacity:1; }
+    [data-layout="rows"] .btn:hover .fav { filter:none; }
+    [data-layout="rows"] .btn:hover .svg-icon { opacity:.9; }
+    /* Domain badge */
+    [data-layout="rows"] .btn::after {
+      content:attr(data-domain);
+      font-size:11px; color:var(--text-muted);
+      white-space:nowrap; flex-shrink:0;
+    }
+  </style>
+</head>
+<body data-layout="chips">
+
+  <!-- ─── Top bar ─── -->
+  <nav class="bar">
+    <span class="bar-label">Layout</span>
+    <button class="lbtn on" data-l="chips">① Chips</button>
+    <button class="lbtn" data-l="cards">② Cards</button>
+    <button class="lbtn" data-l="list">③ List</button>
+    <button class="lbtn" data-l="icons">④ Icons</button>
+    <button class="lbtn" data-l="rows">⑤ Rows</button>
+    <div class="bar-spacer"></div>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="layout-desc" id="layoutDesc">
+    <div class="layout-desc-dot"></div>
+    <span id="layoutDescText"><strong>① Chips</strong> — Pill-shaped flex chips. Space-efficient, wraps naturally on any width.</span>
+  </div>
+
+  <!-- ─── Content ─── -->
+  <div class="page">
+
+    <!-- Media / Whatbox -->
+    <div class="panel">
+      <h2 class="panel-heading">Media Server</h2>
+      <div class="chips">
+        <a class="btn" href="https://whatbox.ca/manage" target="_blank" data-domain="whatbox.ca">
+          <span class="si" style="-webkit-mask-image:url('icons/whatbox-icon.svg');mask-image:url('icons/whatbox-icon.svg')"></span>
+          <span class="label">Whatbox</span>
+        </a>
+        <a class="btn" href="https://whatbox.ca/wiki" target="_blank" data-domain="whatbox.ca">
+          <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
+          <span class="label">Wiki</span>
+        </a>
+        <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank" data-domain="rchvz.dev">
+          <span class="si" style="-webkit-mask-image:url('icons/rutorrent-icon.svg');mask-image:url('icons/rutorrent-icon.svg')"></span>
+          <span class="label">ruTorrent</span>
+        </a>
+        <a class="btn" href="http://flood.rchvz.dev" target="_blank" data-domain="rchvz.dev">
+          <span class="si" style="-webkit-mask-image:url('icons/flood-icon.svg');mask-image:url('icons/flood-icon.svg')"></span>
+          <span class="label">Flood</span>
+        </a>
+        <a class="btn" href="http://jackett.rchvz.dev" target="_blank" data-domain="rchvz.dev">
+          <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
+          <span class="label">Jackett</span>
+        </a>
+        <a class="btn" href="https://app.plex.tv" target="_blank" data-domain="plex.tv">
+          <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
+          <span class="label">Plex</span>
+        </a>
+        <a class="btn" href="http://stash.rchvz.dev" target="_blank" data-domain="rchvz.dev">
+          <span class="si" style="-webkit-mask-image:url('icons/stash-icon.svg');mask-image:url('icons/stash-icon.svg')"></span>
+          <span class="label">Stash</span>
+        </a>
+        <a class="btn" href="https://tmm.rchvz.dev" target="_blank" data-domain="rchvz.dev">
+          <span class="si" style="-webkit-mask-image:url('icons/tmm-icon.svg');mask-image:url('icons/tmm-icon.svg')"></span>
+          <span class="label">Tiny Media Manager</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Links -->
+    <div class="panel">
+      <h2 class="panel-heading">Links</h2>
+      <div class="chips">
+        <a class="btn" href="https://drive.google.com" target="_blank" data-domain="google.com">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googledrive');mask-image:url('https://cdn.simpleicons.org/googledrive')"></span>
+          <span class="label">Drive</span>
+        </a>
+        <a class="btn" href="https://www.icloud.com/iclouddrive/" target="_blank" data-domain="icloud.com">
+          <svg class="svg-icon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M200.61719 216c-10.2013.00005-22.92549.11399-30.57227 1.4668-5.04165.86085-10.12135 2.43511-14.68359 4.74414-9.17589 4.68945-16.63677 12.22007-21.3125 21.42578-2.30564 4.58551-3.72122 9.49018-4.58399 14.55273C128.26762 265.48851 128 272.19679 128 288.86133V369h768v-27.13867c0-16.66454-.26762-23.37282-1.46484-30.67188-.86277-5.06255-2.27835-9.96722-4.58399-14.55273-4.67573-9.20571-12.13661-16.73633-21.3125-21.42578-4.56224-2.30903-9.64194-3.88329-14.68359-4.74414-7.64678-1.35281-20.37097-1.46675-30.57227-1.4668H423.87172c-10.1377 0-10.8033-.29454-15.40016-.8397-5.26527-.62443-9.78169-1.89871-13.91757-3.65119-4.77454-2.0231-9.07575-5.10011-13.16998-8.73836-3.33652-2.96493-6.47978-6.05256-9.39325-9.13938-1.98342-2.10143-5.24235-5.24292-8.02276-8.07861-3.45326-3.52192-6.27691-6.57212-6.27691-6.57212-3.02864-2.91723-5.12966-4.91095-7.64055-6.62677-2.46816-1.68662-5.1612-3.24193-8.17845-4.63587-6.3326-2.92559-13.37007-4.718-24.27285-4.718Z" fill="currentColor" opacity=".8"/>
+            <path d="M188.55859 312c-4.01188.00002-9.01617.04415-12.02343.57617-1.98274.33855-3.98121.9591-5.77539 1.86719-3.60862 1.84422-6.54203 4.80544-8.38086 8.42578-.90675 1.80335-1.46343 3.73171-1.80274 5.72266-.47082 2.87052-.57617 5.50882-.57617 12.0625V412h704v-71.3457c0-6.55368-.10535-9.19198-.57617-12.0625-.33931-1.99095-.89599-3.91931-1.80274-5.72266-1.83883-3.62034-4.77224-6.58156-8.38086-8.42578-1.79418-.90809-3.79265-1.52864-5.77539-1.86719-3.00726-.53202-8.01155-.57615-12.02343-.57617Z" fill="currentColor" opacity=".5"/>
+            <path d="M156.55859 340c-4.01188.00002-9.01617.04415-12.02343.57617-1.98274.33855-3.98121.9591-5.77539 1.86719-3.60862 1.84422-6.54203 4.80544-8.38086 8.42578-.90675 1.80335-1.46343 3.73171-1.80274 5.72266-.47082 2.87052-.57617 5.50882-.57617 12.0625v366.15429c0 16.96879.27297 23.8001 1.49609 31.23243.88145 5.15498 2.32808 10.14912 4.6836 14.81836 4.77691 9.37378 12.39898 17.04133 21.77343 21.8164 4.66096 2.35119 9.85121 3.95351 15.00196 4.83008 7.81224 1.37751 20.81233 1.49409 31.23437 1.49414h619.6211c10.42204-.00005 23.42213-.11663 31.23437-1.49414 5.15075-.87657 10.341-2.47889 15.00196-4.83008 9.37444-4.77507 16.99652-12.44263 21.77343-21.8164 2.35552-4.66924 3.80215-9.66338 4.6836-14.81836C895.72703 758.60869 896 751.77738 896 734.80859V368.6543c0-6.55368-.10535-9.19198-.57617-12.0625-.33931-1.99095-.89599-3.91931-1.80274-5.72266-1.83883-3.62034-4.77224-6.58156-8.38086-8.42578-1.79418-.90809-3.79265-1.52864-5.77539-1.86719-3.00726-.53202-8.01155-.57615-12.02343-.57617Z" fill="currentColor"/>
+          </svg>
+          <span class="label">iCloud Drive</span>
+        </a>
+        <a class="btn" href="https://youtube.com" target="_blank" data-domain="youtube.com">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
+          <span class="label">YouTube</span>
+        </a>
+        <a class="btn" href="https://sniffies.com" target="_blank" data-domain="sniffies.com">
+          <span class="si" style="-webkit-mask-image:url('https://ryanc.vercel.app/sniffies.svg');mask-image:url('https://ryanc.vercel.app/sniffies.svg')"></span>
+          <span class="label">Sniffies</span>
+        </a>
+        <a class="btn" href="https://news.ycombinator.com" target="_blank" data-domain="ycombinator.com">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/ycombinator');mask-image:url('https://cdn.simpleicons.org/ycombinator')"></span>
+          <span class="label">Hacker News</span>
+        </a>
+        <a class="btn" href="https://brutalist.report" target="_blank" data-domain="brutalist.report">
+          <span class="si" style="-webkit-mask-image:url('icons/brutalist-report-icon.svg');mask-image:url('icons/brutalist-report-icon.svg')"></span>
+          <span class="label">Brutalist Report</span>
+        </a>
+        <a class="btn" href="https://claude.ai/new" target="_blank" data-domain="claude.ai">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/claude');mask-image:url('https://cdn.simpleicons.org/claude')"></span>
+          <span class="label">Claude</span>
+        </a>
+        <a class="btn" href="https://chatgpt.com" target="_blank" data-domain="chatgpt.com">
+          <span class="si" style="-webkit-mask-image:url('icons/chatgpt-icon.svg');mask-image:url('icons/chatgpt-icon.svg')"></span>
+          <span class="label">ChatGPT</span>
+        </a>
+        <a class="btn" href="https://gemini.google.com/app" target="_blank" data-domain="google.com">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googlegemini');mask-image:url('https://cdn.simpleicons.org/googlegemini')"></span>
+          <span class="label">Gemini</span>
+        </a>
+        <a class="btn" href="https://mail.google.com" target="_blank" data-domain="google.com">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
+          <span class="label">Gmail</span>
+        </a>
+        <a class="btn" href="https://fastmail.com" target="_blank" data-domain="fastmail.com">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+          <span class="label">Fastmail</span>
+        </a>
+        <a class="btn" href="https://voice.google.com" target="_blank" data-domain="google.com">
+          <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
+          <span class="label">Google Voice</span>
+        </a>
+        <a class="btn" href="https://vault.bitwarden.com/" target="_blank" data-domain="bitwarden.com">
+          <svg class="svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+            <path d="M372 297V131H256v294c47-28 115-74 116-128m49-198v198c0 106-152 181-165 181S91 403 91 297V99s0-17 17-17h296s17 0 17 17" fill="currentColor"/>
+          </svg>
+          <span class="label">Bitwarden</span>
+        </a>
+        <a class="btn" href="https://ios-settings-urls.netlify.app/" target="_blank" data-domain="netlify.app">
+          <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z" fill="currentColor"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M10.44 2.333c.24-.889 1.48-.889 1.72 0l.36 1.333c.11.407.51.667.92.613l1.373-.187c.907-.12 1.52.947.973 1.68l-.827 1.107c-.253.333-.213.8.107 1.08l1.08.947c.72.627.413 1.8-.547 1.987l-1.36.267c-.413.08-.68.48-.613.893l.227 1.373c.147.907-.92 1.533-1.667.987l-1.12-.827c-.333-.253-.8-.213-1.08.107l-.947 1.08c-.627.72-1.8.413-1.987-.547l-.267-1.36c-.08-.413-.48-.68-.893-.613l-1.373.227c-.907.147-1.533-.92-.987-1.667l.827-1.12c.253-.333.213-.8-.107-1.08l-1.08-.947c-.72-.627-.413-1.8.547-1.987l1.36-.267c.413-.08.68-.48.613-.893l-.227-1.373c-.147-.907.92-1.533 1.667-.987l1.12.827c.333.253.8.213 1.08-.107l.947-1.08c.213-.24.52-.36.827-.36.107 0 .213.013.32.04l.36 1.333zM12 17c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" fill="currentColor"/>
+          </svg>
+          <span class="label">iOS Settings URL</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Network & Infra -->
+    <div class="panel">
+      <h2 class="panel-heading">Network &amp; Infra</h2>
+      <div class="chips">
+        <a class="btn" href="https://speed.cloudflare.com" target="_blank" data-domain="cloudflare.com">
+          <span class="si" style="-webkit-mask-image:url('icons/cloudflare-speed-icon.svg');mask-image:url('icons/cloudflare-speed-icon.svg')"></span>
+          <span class="label">Speed Test</span>
+        </a>
+        <a class="btn" href="https://my.nextdns.io/8584eb/logs" target="_blank" data-domain="nextdns.io">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/nextdns');mask-image:url('https://cdn.simpleicons.org/nextdns')"></span>
+          <span class="label">NextDNS</span>
+        </a>
+        <a class="btn" href="https://wifiman.com/" target="_blank" data-domain="wifiman.com">
+          <span class="si" style="-webkit-mask-image:url('icons/wifiman-icon.svg');mask-image:url('icons/wifiman-icon.svg')"></span>
+          <span class="label">WiFiMan</span>
+        </a>
+        <a class="btn" href="https://vercel.com/ryanchavezzz" target="_blank" data-domain="vercel.com">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/vercel');mask-image:url('https://cdn.simpleicons.org/vercel')"></span>
+          <span class="label">Vercel</span>
+        </a>
+        <a class="btn" href="https://www.oracle.com/cloud/sign-in.html" target="_blank" data-domain="oracle.com">
+          <svg class="svg-icon" viewBox="0 0 32 20" xmlns="http://www.w3.org/2000/svg" style="width:22px;height:14px">
+            <path fill="none" stroke="currentColor" stroke-width="4" d="M10 2a8 8 0 1 0 0 16h12a8 8 0 1 0 0-16z"/>
+          </svg>
+          <span class="label">Oracle Cloud</span>
+        </a>
+        <a class="btn" href="https://dash.cloudflare.com" target="_blank" data-domain="cloudflare.com">
+          <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.5088 16.8447c.1475-.5068.0908-.9707-.1553-1.3154-.2246-.3164-.6045-.499-1.0615-.5205l-8.6592-.1123a.1559.1559 0 0 1-.1333-.0713c-.0283-.042-.0351-.0986-.021-.1553.0278-.084.1123-.1484.2036-.1562l8.7359-.1123c1.0351-.0489 2.1601-.8868 2.5537-1.9136l.499-1.3013c.0215-.0561.0293-.1128.0147-.168-.5625-2.5463-2.835-4.4453-5.5499-4.4453-2.5039 0-4.6284 1.6177-5.3876 3.8614-.4927-.3658-1.1187-.5625-1.794-.499-1.2026.119-2.1665 1.083-2.2861 2.2856-.0283.31-.0069.6128.0635.894C1.5683 13.171 0 14.7754 0 16.752c0 .1748.0142.3515.0352.5273.0141.083.0844.1475.1689.1475h15.9814c.0909 0 .1758-.0645.2032-.1553l.12-.4268zm2.7568-5.5634c-.0771 0-.1611 0-.2383.0112-.0566 0-.1054.0415-.127.0976l-.3378 1.1744c-.1475.5068-.0918.9707.1543 1.3164.2256.3164.6055.498 1.0625.5195l1.8437.1133c.0557 0 .1055.0263.1329.0703.0283.043.0351.1074.0214.1562-.0283.084-.1132.1485-.204.1553l-1.921.1123c-1.041.0488-2.1582.8867-2.5527 1.914l-.1406.3585c-.0283.0713.0215.1416.0986.1416h6.5977c.0771 0 .1474-.0489.169-.126.1122-.4082.1757-.837.1757-1.2803 0-2.6025-2.125-4.727-4.7344-4.727" fill="currentColor"/>
+          </svg>
+          <span class="label">Cloudflare</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Files & Sharing -->
+    <div class="panel">
+      <h2 class="panel-heading">Files &amp; Sharing</h2>
+      <div class="chips">
+        <a class="btn" href="https://file.pizza/" target="_blank" data-domain="file.pizza">
+          <span class="si" style="-webkit-mask-image:url('icons/filepizza-icon.svg');mask-image:url('icons/filepizza-icon.svg')"></span>
+          <span class="label">FilePizza</span>
+        </a>
+        <a class="btn" href="https://url.town/" target="_blank" data-domain="url.town">
+          <svg class="svg-icon" viewBox="0 0 16 16" fill="none">
+            <path d="M6.5 9.5a3.182 3.182 0 0 0 4.5 0l1.5-1.5a3.182 3.182 0 0 0-4.5-4.5L7 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            <path d="M9.5 6.5a3.182 3.182 0 0 0-4.5 0L3.5 8A3.182 3.182 0 0 0 8 12.5L9 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          <span class="label">url.town</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="panel">
+      <h2 class="panel-heading">Resources</h2>
+      <div class="chips">
+        <a class="btn" href="https://trash-guides.info/" target="_blank" data-domain="trash-guides.info">
+          <img class="fav" src="https://www.google.com/s2/favicons?domain=trash-guides.info&sz=64" alt="">
+          <span class="label">TRaSH Guides</span>
+        </a>
+        <a class="btn" href="https://dashboardicons.com" target="_blank" data-domain="dashboardicons.com">
+          <svg class="svg-icon" viewBox="0 0 24 24" fill="none">
+            <rect x="1.5" y="1.5" width="21" height="21" rx="4" stroke="currentColor" stroke-width="1.75"/>
+            <rect x="3.25" y="3.25" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+            <rect x="9.5" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+            <rect x="15.75" y="9.5" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+            <rect x="9.5" y="15.75" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+            <rect x="15.75" y="15.75" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.25"/>
+            <rect x="9.5" y="3.25" width="5" height="5" rx="1" fill="currentColor"/>
+            <circle cx="18.25" cy="5.75" r="2.5" fill="currentColor"/>
+            <circle cx="5.75" cy="12" r="2.5" fill="currentColor"/>
+            <rect x="3.25" y="15.75" width="5" height="5" rx="1" fill="currentColor"/>
+          </svg>
+          <span class="label">Dashboard Icons</span>
+        </a>
+        <a class="btn" href="https://elax46.github.io/custom-brand-icons/" target="_blank" data-domain="github.io">
+          <span class="si" style="-webkit-mask-image:url('icons/custom-brand-icons-icon.svg');mask-image:url('icons/custom-brand-icons-icon.svg')"></span>
+          <span class="label">Custom Brand Icons</span>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+  <script>
+    // Theme
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let isDark = prefersDark;
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    function toggleTheme() {
+      isDark = !isDark;
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    }
+
+    // Layout switcher
+    const descriptions = {
+      chips:  '<strong>① Chips</strong> — Pill-shaped flex chips. Space-efficient, wraps naturally on any screen width.',
+      cards:  '<strong>② Cards</strong> — Square card grid, icon on top. Great visual scanning, familiar app-launcher feel.',
+      list:   '<strong>③ List</strong> — Dense rows, no card chrome. Maximum density, fast keyboard/eye scanning.',
+      icons:  '<strong>④ Icons</strong> — Large iOS-style tiles, icon dominant, tiny label. Touch-first, minimal text.',
+      rows:   '<strong>⑤ Rows</strong> — 2-column compact rows with domain badge. Efficient for long link lists.'
+    };
+
+    document.querySelectorAll('.lbtn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lbtn').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        const l = btn.dataset.l;
+        document.body.setAttribute('data-layout', l);
+        document.getElementById('layoutDescText').innerHTML = descriptions[l];
+      });
+    });
+  </script>
+</body>
+</html>
