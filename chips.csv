@@ -13,7 +13,7 @@ Main,Fastmail,https://fastmail.com,inline,[envelope SVG]
 Main,Google Voice,https://voice.google.com,local,google-voice-icon.svg
 Networking,Speed Test,https://speed.cloudflare.com,local,cloudflare-speed-icon.svg
 Networking,NextDNS,https://my.nextdns.io/8584eb/logs,simpleicons,nextdns
-Networking,WiFiMan,https://wifiman.com/,simpleicons,ubiquiti
+Networking,WiFiMan,https://wifiman.com/,si,wifiman-icon.svg
 Networking,Vercel,https://vercel.com/ryanchavezzz,simpleicons,vercel
 Networking,Oracle Cloud,https://www.oracle.com/cloud/sign-in.html,inline,[Oracle pill SVG]
 Utilities,FilePizza,https://file.pizza/,local,filepizza-icon.svg
