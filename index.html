@@ -539,6 +539,37 @@
       letter-spacing: 0.02em;
       text-transform: uppercase;
     }
+
+    /* ── Whatbox segmented pill ── */
+    .whatbox-pill {
+      display: inline-flex;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .wb-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      white-space: nowrap;
+      border-right: 1px solid var(--border);
+      transition: background var(--transition);
+      flex-shrink: 0;
+    }
+
+    .wb-btn:last-child { border-right: none; }
+    .wb-btn:hover { background: var(--hover-bg); }
   </style>
 </head>
 <body>
@@ -567,32 +598,32 @@
 
     <main class="content">
       <div class="panel" id="panel-whatbox">
-        <h2 class="panel-heading">Whatbox</h2>
-        <div class="chips">
-          <a class="btn" href="https://whatbox.ca/manage" target="_blank">
+        <div class="whatbox-pill">
+          <a class="wb-btn" href="https://whatbox.ca/manage" target="_blank">
             <span class="si-color" style="background-image:url('icons/whatbox-icon.svg')"></span>
-            <span class="label">Whatbox</span>
+            <span>Whatbox</span>
           </a>
-          <a class="btn" href="http://flood.rchvz.dev" target="_blank">
-            <span class="si-color" style="background-image:url('icons/flood-icon.svg')"></span>
-            <span class="label">Flood</span>
-          </a>
-          <a class="btn" href="http://jackett.rchvz.dev" target="_blank">
-            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
-            <span class="label">Jackett</span>
-          </a>
-          <a class="btn" href="http://rtorrent.rchvz.dev" target="_blank">
+          <a class="wb-btn" href="http://rtorrent.rchvz.dev" target="_blank">
             <span class="si-color" style="background-image:url('icons/rutorrent-icon.svg')"></span>
-            <span class="label">ruTorrent</span>
+            <span>ruTorrent</span>
           </a>
-          <a class="btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
+          <a class="wb-btn" href="http://flood.rchvz.dev" target="_blank">
+            <span class="si-color" style="background-image:url('icons/flood-icon.svg')"></span>
+            <span>Flood</span>
+          </a>
+          <a class="wb-btn" href="http://jackett.rchvz.dev" target="_blank">
+            <span class="si" style="-webkit-mask-image:url('icons/jackett-icon.svg');mask-image:url('icons/jackett-icon.svg')"></span>
+            <span>Jackett</span>
+          </a>
+          <a class="wb-btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
             <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
-            <span class="label">Plex (direct)</span>
+            <span>Plex</span>
           </a>
-          <a class="btn" href="https://whatbox.ca/wiki" target="_blank">
+          <a class="wb-btn" href="https://whatbox.ca/wiki" target="_blank">
             <span class="si" style="-webkit-mask-image:url('icons/whatbox-wiki-icon.svg');mask-image:url('icons/whatbox-wiki-icon.svg')"></span>
-            <span class="label">Wiki</span>
+            <span>Wiki</span>
           </a>
+        </div>
         </div>
       </div>
 
