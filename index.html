@@ -20,7 +20,9 @@
   --c-canvas:         #ffffff;
   --c-canvas-soft:    #fafafa;
   --c-canvas-soft-2:  #f5f5f5;
-  --c-link:           #0070f3;
+  --c-link:           var(--accent);
+  --accent:           #5a8a7a;
+  --accent-2:         #8a8f92;
   --bg:               var(--c-canvas-soft);
   --surface:          var(--c-canvas);
   --border:           var(--c-hairline);
@@ -50,6 +52,8 @@
   --text-muted:    #555555;
   --hover-bg:      #181818;
   --hover-border:  #333333;
+  --accent:        #6fa898;
+  --accent-2:      #a4a9ac;
   --shadow-1: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4);
   --shadow-2: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
   --shadow-3: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.2);
@@ -58,7 +62,7 @@
 /* ── Base ─────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-::selection { background: var(--c-primary); color: var(--c-on-primary); }
+::selection { background: var(--accent); color: #ffffff; }
 
 body {
   font-family: "Geist", system-ui, -apple-system, sans-serif;
@@ -164,11 +168,11 @@ body {
 .holiday-badge .days-part {
   padding: 5px 8px;
   border-left: 1px solid var(--border);
-  color: var(--text);
+  color: var(--accent);
   font-weight: 600;
   letter-spacing: -0.2px;
 }
-.holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
+.holiday-badge.today .name-part { color: var(--accent); font-weight: 500; }
 .holiday-badge.today .days-part { display: none; }
 
 /* ── Panels ───────────────────────────────────────────────────────────── */
@@ -345,7 +349,8 @@ body {
   cursor: pointer;
   transition: background 0.1s;
 }
-.srch-result:hover, .srch-result.active { background: var(--hover-bg); }
+.srch-result:hover { background: var(--hover-bg); }
+.srch-result.active { background: rgba(90,138,122,0.08); border-left: 2px solid var(--accent); padding-left: calc(var(--sp-lg) - 2px); }
 
 .srch-icon {
   width: 30px; height: 30px;
