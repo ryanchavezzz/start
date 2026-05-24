@@ -145,6 +145,16 @@ body {
 .clock-date strong { font-weight: 600; font-size: 22px; letter-spacing: -0.8px; color: var(--accent); }
 .clock-date span   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 
+.clock-time {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.6px;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.clock-time .colon { color: var(--text-muted); }
+.clock-time .ampm  { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-left: 3px; letter-spacing: 0; }
+
 /* Holiday badge */
 .holiday-badge {
   display: none;
@@ -379,6 +389,7 @@ body {
     <div class="hero-meta">
       <div class="hero-top">
         <div class="clock-date" id="clockDate"></div>
+        <div class="clock-time" id="clockTime"></div>
         <div class="theme-switch" onclick="toggleTheme()">
           <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
@@ -608,15 +619,25 @@ body {
 </div>
 
 <script>
-// Date
+// Clock
 (function() {
-  const now = new Date();
-  const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
-  const month = now.toLocaleDateString('en-US', { month: 'short' });
-  const day = now.getDate();
-  document.getElementById('clockDate').innerHTML =
-    `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
+  function updateClock() {
+    const now = new Date();
+    const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
+    const month   = now.toLocaleDateString('en-US', { month: 'short' });
+    const day     = now.getDate();
+    document.getElementById('clockDate').innerHTML =
+      `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
 
+    const h   = now.getHours();
+    const m   = String(now.getMinutes()).padStart(2, '0');
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const h12  = h % 12 || 12;
+    document.getElementById('clockTime').innerHTML =
+      `${h12}<span class="colon">:</span>${m}<span class="ampm">${ampm}</span>`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
 })();
 
 // Theme
