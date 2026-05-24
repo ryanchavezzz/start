@@ -20,7 +20,7 @@
   --c-canvas:         #ffffff;
   --c-canvas-soft:    #fafafa;
   --c-canvas-soft-2:  #f5f5f5;
-  --c-link:           var(--accent);
+  --c-link:           #0070f3;
   --accent:           #5a8a7a;
   --accent-2:         #8a8f92;
   --bg:               var(--c-canvas-soft);
@@ -62,7 +62,7 @@
 /* ── Base ─────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-::selection { background: var(--accent); color: #ffffff; }
+::selection { background: var(--c-primary); color: var(--c-on-primary); }
 
 body {
   font-family: "Geist", system-ui, -apple-system, sans-serif;
@@ -143,7 +143,6 @@ body {
   color: var(--text);
 }
 .clock-date strong { font-weight: 600; font-size: 22px; letter-spacing: -0.8px; }
-.clock-date strong.accent-day { color: var(--accent); }
 .clock-date span   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 
 /* Holiday badge */
@@ -169,11 +168,11 @@ body {
 .holiday-badge .days-part {
   padding: 5px 8px;
   border-left: 1px solid var(--border);
-  color: var(--accent);
+  color: var(--text);
   font-weight: 600;
   letter-spacing: -0.2px;
 }
-.holiday-badge.today .name-part { color: var(--accent); font-weight: 500; }
+.holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
 .holiday-badge.today .days-part { display: none; }
 
 /* ── Panels ───────────────────────────────────────────────────────────── */
@@ -350,8 +349,7 @@ body {
   cursor: pointer;
   transition: background 0.1s;
 }
-.srch-result:hover { background: var(--hover-bg); }
-.srch-result.active { background: rgba(90,138,122,0.08); border-left: 2px solid var(--accent); padding-left: calc(var(--sp-lg) - 2px); }
+.srch-result:hover, .srch-result.active { background: var(--hover-bg); }
 
 .srch-icon {
   width: 30px; height: 30px;
@@ -616,9 +614,8 @@ body {
   const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
   const month = now.toLocaleDateString('en-US', { month: 'short' });
   const day = now.getDate();
-  const isSat = weekday === 'Sat';
   document.getElementById('clockDate').innerHTML =
-    `<strong${isSat ? ' class="accent-day"' : ''}>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
+    `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
 
 })();
 
