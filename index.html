@@ -197,7 +197,8 @@ body {
   color: var(--text);
 }
 .clock-date strong { font-weight: 700; font-size: 22px; letter-spacing: -0.8px; color: var(--accent); }
-.clock-date span   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
+.clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
+.clock-date .day-num { font-weight: 900; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
 /* Holiday badge */
 .holiday-badge {
@@ -670,7 +671,7 @@ body {
     const month   = now.toLocaleDateString('en-US', { month: 'short' });
     const day     = now.getDate();
     document.getElementById('clockDate').innerHTML =
-      `<strong>${weekday}</strong><span>${month}&nbsp;${day}</span>`;
+      `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
 
   }
   updateClock();
