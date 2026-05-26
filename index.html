@@ -6,31 +6,53 @@
 <title>Start</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <style>
+/* ── Local Geist fonts ─────────────────────────────────────────────────── */
 @font-face {
-  font-family: "Proxima Nova";
-  src: url("fonts/proxima-nova-light.otf") format("opentype");
-  font-weight: 300;
+  font-family: "Geist";
+  src: url("fonts/geist/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Proxima Nova";
-  src: url("fonts/proxima-nova-regular.otf") format("opentype");
+  font-family: "Geist Mono";
+  src: url("fonts/geist/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Pixel Square";
+  src: url("fonts/geist/GeistPixel-Square.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Proxima Nova";
-  src: url("fonts/proxima-nova-semibold.otf") format("opentype");
-  font-weight: 600;
+  font-family: "Geist Pixel Grid";
+  src: url("fonts/geist/GeistPixel-Grid.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
-  font-family: "Proxima Nova";
-  src: url("fonts/proxima-nova-bold.otf") format("opentype");
-  font-weight: 700;
+  font-family: "Geist Pixel Circle";
+  src: url("fonts/geist/GeistPixel-Circle.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Pixel Triangle";
+  src: url("fonts/geist/GeistPixel-Triangle.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Pixel Line";
+  src: url("fonts/geist/GeistPixel-Line.woff2") format("woff2");
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -96,7 +118,7 @@ html {
 ::selection { background: var(--c-primary); color: var(--c-on-primary); }
 
 body {
-  font-family: "Proxima Nova", system-ui, -apple-system, sans-serif;
+  font-family: "Geist", system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
@@ -195,7 +217,7 @@ body {
   overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-1);
-  font-family: "Proxima Nova", system-ui, sans-serif;
+  font-family: "Geist", system-ui, sans-serif;
   font-size: 12px;
   line-height: 1;
 }
@@ -232,7 +254,7 @@ body {
 
 /* caption-mono panel heading */
 .panel-heading {
-  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Code", monospace;
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -268,7 +290,7 @@ body {
   border-radius: var(--r-sm);
   text-decoration: none;
   color: var(--text);
-  font-family: "Proxima Nova", system-ui, sans-serif;
+  font-family: "Geist", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -370,7 +392,7 @@ body {
 
 .srch-input {
   flex: 1; border: none; outline: none; background: transparent;
-  font-family: "Proxima Nova", system-ui, sans-serif;
+  font-family: "Geist", system-ui, sans-serif;
   font-size: 15px; font-weight: 400;
   color: var(--text); letter-spacing: -0.28px;
 }
@@ -406,8 +428,8 @@ body {
 
 .srch-text { flex: 1; min-width: 0; }
 .srch-label { font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.28px; }
-.srch-sub   { font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Cascadia Code",monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
-.srch-hint  { padding:var(--sp-sm) var(--sp-lg);font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Cascadia Code",monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
+.srch-sub   { font-family:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
+.srch-hint  { padding:var(--sp-sm) var(--sp-lg);font-family:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
 
 </style>
 </head>
