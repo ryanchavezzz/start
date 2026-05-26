@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geist Pixel — All Styles</title>
+<style>
+  @font-face { font-family: "Geist Pixel Square";   src: url("fonts/geist/GeistPixel-Square.woff2")   format("woff2"); font-display: swap; }
+  @font-face { font-family: "Geist Pixel Grid";     src: url("fonts/geist/GeistPixel-Grid.woff2")     format("woff2"); font-display: swap; }
+  @font-face { font-family: "Geist Pixel Circle";   src: url("fonts/geist/GeistPixel-Circle.woff2")   format("woff2"); font-display: swap; }
+  @font-face { font-family: "Geist Pixel Triangle"; src: url("fonts/geist/GeistPixel-Triangle.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Geist Pixel Line";     src: url("fonts/geist/GeistPixel-Line.woff2")     format("woff2"); font-display: swap; }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #ededed;
+    font-family: system-ui, sans-serif;
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid #1e1e1e;
+  }
+  .row:first-child { border-top: 1px solid #1e1e1e; }
+
+  .meta {
+    width: 120px;
+    flex-shrink: 0;
+  }
+  .meta .name {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #555;
+  }
+  .meta .variant {
+    font-size: 11px;
+    color: #333;
+    margin-top: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  .samples {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+  }
+
+  .big   { font-size: 36px; line-height: 1; color: #5a8a7a; }
+  .med   { font-size: 20px; line-height: 1; color: #ededed; }
+  .small { font-size: 13px; line-height: 1.4; color: #888; letter-spacing: 0.04em; }
+
+  .square   { font-family: "Geist Pixel Square";   }
+  .grid     { font-family: "Geist Pixel Grid";     }
+  .circle   { font-family: "Geist Pixel Circle";   }
+  .triangle { font-family: "Geist Pixel Triangle"; }
+  .line     { font-family: "Geist Pixel Line";     }
+</style>
+</head>
+<body>
+
+  <div class="row">
+    <div class="meta"><div class="name">Square</div></div>
+    <div class="samples">
+      <div class="big square">10:42 AM</div>
+      <div class="med square">rchvz.dev — Start Page</div>
+      <div class="small square">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="meta"><div class="name">Grid</div></div>
+    <div class="samples">
+      <div class="big grid">10:42 AM</div>
+      <div class="med grid">rchvz.dev — Start Page</div>
+      <div class="small grid">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="meta"><div class="name">Circle</div></div>
+    <div class="samples">
+      <div class="big circle">10:42 AM</div>
+      <div class="med circle">rchvz.dev — Start Page</div>
+      <div class="small circle">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="meta"><div class="name">Triangle</div></div>
+    <div class="samples">
+      <div class="big triangle">10:42 AM</div>
+      <div class="med triangle">rchvz.dev — Start Page</div>
+      <div class="small triangle">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="meta"><div class="name">Line</div></div>
+    <div class="samples">
+      <div class="big line">10:42 AM</div>
+      <div class="med line">rchvz.dev — Start Page</div>
+      <div class="small line">ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789</div>
+    </div>
+  </div>
+
+</body>
+</html>
