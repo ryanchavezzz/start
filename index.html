@@ -5,9 +5,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Start</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/font.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/mono.css">
 <style>
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("fonts/proxima-nova-light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("fonts/proxima-nova-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("fonts/proxima-nova-semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("fonts/proxima-nova-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /* ── DESIGN.MD tokens ──────────────────────────────────────────────────── */
 :root {
   --c-primary:        #171717;
@@ -61,11 +87,16 @@
 
 /* ── Base ─────────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-optical-sizing: auto;
+}
 ::selection { background: var(--c-primary); color: var(--c-on-primary); }
 
 body {
-  font-family: "Geist", system-ui, -apple-system, sans-serif;
+  font-family: "Proxima Nova", system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
@@ -164,7 +195,7 @@ body {
   overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-1);
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "Proxima Nova", system-ui, sans-serif;
   font-size: 12px;
   line-height: 1;
 }
@@ -201,7 +232,7 @@ body {
 
 /* caption-mono panel heading */
 .panel-heading {
-  font-family: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Code", monospace;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -237,7 +268,7 @@ body {
   border-radius: var(--r-sm);
   text-decoration: none;
   color: var(--text);
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "Proxima Nova", system-ui, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
@@ -339,7 +370,7 @@ body {
 
 .srch-input {
   flex: 1; border: none; outline: none; background: transparent;
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "Proxima Nova", system-ui, sans-serif;
   font-size: 15px; font-weight: 400;
   color: var(--text); letter-spacing: -0.28px;
 }
@@ -375,8 +406,8 @@ body {
 
 .srch-text { flex: 1; min-width: 0; }
 .srch-label { font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.28px; }
-.srch-sub   { font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
-.srch-hint  { padding:var(--sp-sm) var(--sp-lg);font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
+.srch-sub   { font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Cascadia Code",monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
+.srch-hint  { padding:var(--sp-sm) var(--sp-lg);font-family:ui-monospace,"SF Mono",SFMono-Regular,Menlo,"Cascadia Code",monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
 
 </style>
 </head>
