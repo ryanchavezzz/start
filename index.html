@@ -332,7 +332,6 @@
 
   <div class="clock">
     <div class="clock-date" id="clockDate"></div>
-    <div class="clock-time" id="clockTime"></div>
   </div>
 
   <div class="layout">
@@ -539,14 +538,11 @@
     // Clock
     function updateClock() {
       const now = new Date();
-      const h = now.getHours() % 12 || 12;
-      const m = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById('clockTime').textContent = `${h}:${m}`;
       document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
     }
 
     updateClock();
-    setInterval(updateClock, 1000);
+    setInterval(updateClock, 60000);
 
     // Theme
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
