@@ -284,10 +284,10 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-xs);
-  padding: 6px 12px;
+  padding: 8px 14px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   text-decoration: none;
   color: var(--text);
   font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
@@ -295,17 +295,16 @@ body {
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.28px;
-  box-shadow: var(--shadow-1);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t);
+  box-shadow: var(--shadow-2);
+  transition: box-shadow 0.15s var(--ease), transform 0.15s var(--ease);
   white-space: nowrap;
   position: relative;
-  height: 32px;
+  height: 36px;
   justify-content: flex-start;
 }
 .btn:hover {
-  background: var(--hover-bg);
-  border-color: var(--hover-border);
-  box-shadow: var(--shadow-2);
+  box-shadow: var(--shadow-3);
+  transform: translateY(-1px);
 }
 .btn:active {
   background: var(--c-canvas-soft-2);
