@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Button Style Preview</title>
+<style>
+@font-face {
+  font-family: "MonoLisa";
+  src: url("fonts/MonoLisa-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "MonoLisa", system-ui, sans-serif;
+  background: #f5f5f5;
+  color: #171717;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+h1 { font-size: 13px; font-weight: 500; color: #888; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: -32px; }
+.row { display: flex; flex-direction: column; gap: 10px; }
+.label { font-size: 11px; color: #999; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+a { text-decoration: none; cursor: default; }
+
+/* ── shared icon placeholder ── */
+.ico { width: 14px; height: 14px; border-radius: 2px; background: currentColor; opacity: 0.5; flex-shrink: 0; }
+
+/* ─── 1. Current default ─── */
+.s1 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; height: 32px;
+  background: #fff; border: 1px solid #ebebeb; border-radius: 6px;
+  color: #171717; font-size: 14px; font-weight: 500; line-height: 20px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+}
+.s1:hover { background: #f5f5f5; border-color: #a1a1a1; }
+
+/* ─── 2. Pill / rounded ─── */
+.s2 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; height: 32px;
+  background: #fff; border: 1px solid #ebebeb; border-radius: 9999px;
+  color: #171717; font-size: 14px; font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+  white-space: nowrap; transition: background 0.15s, border-color 0.15s;
+}
+.s2:hover { background: #f5f5f5; border-color: #a1a1a1; }
+
+/* ─── 3. Ghost / flat ─── */
+.s3 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; height: 32px;
+  background: transparent; border: none; border-radius: 6px;
+  color: #4d4d4d; font-size: 14px; font-weight: 500;
+  white-space: nowrap; transition: background 0.15s, color 0.15s;
+}
+.s3:hover { background: #ebebeb; color: #171717; }
+
+/* ─── 4. Solid dark ─── */
+.s4 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; height: 32px;
+  background: #171717; border: 1px solid #171717; border-radius: 6px;
+  color: #fff; font-size: 14px; font-weight: 500;
+  white-space: nowrap; transition: background 0.15s;
+}
+.s4:hover { background: #333; border-color: #333; }
+
+/* ─── 5. Tinted soft ─── */
+.s5 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; height: 32px;
+  background: #f0f4ff; border: 1px solid #d0dcff; border-radius: 6px;
+  color: #2a4db5; font-size: 14px; font-weight: 500;
+  white-space: nowrap; transition: background 0.15s, border-color 0.15s;
+}
+.s5:hover { background: #e4eaff; border-color: #a8bcff; }
+
+/* ─── 6. Underline only ─── */
+.s6 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 0; height: 32px;
+  background: transparent; border: none;
+  border-bottom: 1px solid #d4d4d4;
+  border-radius: 0;
+  color: #171717; font-size: 14px; font-weight: 500;
+  white-space: nowrap; transition: border-color 0.15s, color 0.15s;
+}
+.s6:hover { border-color: #171717; color: #000; }
+
+/* ─── 7. Outlined accent ─── */
+.s7 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; height: 32px;
+  background: transparent; border: 1.5px solid #4a6fa5; border-radius: 6px;
+  color: #4a6fa5; font-size: 14px; font-weight: 500;
+  white-space: nowrap; transition: background 0.15s, color 0.15s;
+}
+.s7:hover { background: #4a6fa5; color: #fff; }
+
+/* ─── 8. Card / elevated ─── */
+.s8 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; height: 36px;
+  background: #fff; border: 1px solid #e4e4e4; border-radius: 8px;
+  color: #171717; font-size: 14px; font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+  white-space: nowrap; transition: box-shadow 0.15s, transform 0.15s;
+}
+.s8:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.06); transform: translateY(-1px); }
+
+/* ─── 9. Minimal text ─── */
+.s9 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 4px; height: 32px;
+  background: transparent; border: none; border-radius: 4px;
+  color: #888; font-size: 14px; font-weight: 400;
+  white-space: nowrap; transition: color 0.15s;
+}
+.s9:hover { color: #171717; }
+
+/* ─── 10. Brutalist / thick border ─── */
+.s10 {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 11px; height: 32px;
+  background: #fff; border: 2px solid #171717; border-radius: 4px;
+  color: #171717; font-size: 14px; font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 3px 3px 0 #171717;
+  transition: box-shadow 0.1s, transform 0.1s;
+}
+.s10:hover { box-shadow: 1px 1px 0 #171717; transform: translate(2px, 2px); }
+</style>
+</head>
+<body>
+
+<h1>Button Style Options</h1>
+
+<div class="row">
+  <div class="label">1 — Default (current)</div>
+  <div class="chips">
+    <a href="#" class="s1"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s1"><span class="ico"></span>Figma</a>
+    <a href="#" class="s1"><span class="ico"></span>Linear</a>
+    <a href="#" class="s1">Notion</a>
+    <a href="#" class="s1">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">2 — Pill</div>
+  <div class="chips">
+    <a href="#" class="s2"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s2"><span class="ico"></span>Figma</a>
+    <a href="#" class="s2"><span class="ico"></span>Linear</a>
+    <a href="#" class="s2">Notion</a>
+    <a href="#" class="s2">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">3 — Ghost / flat</div>
+  <div class="chips">
+    <a href="#" class="s3"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s3"><span class="ico"></span>Figma</a>
+    <a href="#" class="s3"><span class="ico"></span>Linear</a>
+    <a href="#" class="s3">Notion</a>
+    <a href="#" class="s3">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">4 — Solid dark</div>
+  <div class="chips">
+    <a href="#" class="s4"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s4"><span class="ico"></span>Figma</a>
+    <a href="#" class="s4"><span class="ico"></span>Linear</a>
+    <a href="#" class="s4">Notion</a>
+    <a href="#" class="s4">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">5 — Tinted soft</div>
+  <div class="chips">
+    <a href="#" class="s5"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s5"><span class="ico"></span>Figma</a>
+    <a href="#" class="s5"><span class="ico"></span>Linear</a>
+    <a href="#" class="s5">Notion</a>
+    <a href="#" class="s5">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">6 — Underline only</div>
+  <div class="chips">
+    <a href="#" class="s6"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s6"><span class="ico"></span>Figma</a>
+    <a href="#" class="s6"><span class="ico"></span>Linear</a>
+    <a href="#" class="s6">Notion</a>
+    <a href="#" class="s6">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">7 — Outlined accent (fills on hover)</div>
+  <div class="chips">
+    <a href="#" class="s7"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s7"><span class="ico"></span>Figma</a>
+    <a href="#" class="s7"><span class="ico"></span>Linear</a>
+    <a href="#" class="s7">Notion</a>
+    <a href="#" class="s7">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">8 — Card / elevated (lifts on hover)</div>
+  <div class="chips">
+    <a href="#" class="s8"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s8"><span class="ico"></span>Figma</a>
+    <a href="#" class="s8"><span class="ico"></span>Linear</a>
+    <a href="#" class="s8">Notion</a>
+    <a href="#" class="s8">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">9 — Minimal text</div>
+  <div class="chips">
+    <a href="#" class="s9"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s9"><span class="ico"></span>Figma</a>
+    <a href="#" class="s9"><span class="ico"></span>Linear</a>
+    <a href="#" class="s9">Notion</a>
+    <a href="#" class="s9">Vercel</a>
+  </div>
+</div>
+
+<div class="row">
+  <div class="label">10 — Brutalist</div>
+  <div class="chips">
+    <a href="#" class="s10"><span class="ico"></span>GitHub</a>
+    <a href="#" class="s10"><span class="ico"></span>Figma</a>
+    <a href="#" class="s10"><span class="ico"></span>Linear</a>
+    <a href="#" class="s10">Notion</a>
+    <a href="#" class="s10">Vercel</a>
+  </div>
+</div>
+
+</body>
+</html>
