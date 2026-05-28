@@ -201,7 +201,7 @@ body {
   align-items: baseline;
   gap: 6px;
   font-size: 22px;
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
   color: var(--text);
 }
 .clock-date strong { font-weight: 700; font-size: 22px; letter-spacing: -0.8px; color: var(--accent); }
@@ -217,7 +217,7 @@ body {
   overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-1);
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
   font-size: 12px;
   line-height: 1;
 }
@@ -284,28 +284,27 @@ body {
   display: inline-flex;
   align-items: center;
   gap: var(--sp-xs);
-  padding: 6px 12px;
+  padding: 8px 14px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--r-sm);
+  border-radius: var(--r-md);
   text-decoration: none;
   color: var(--text);
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 20px;
   letter-spacing: -0.28px;
-  box-shadow: var(--shadow-1);
-  transition: background var(--t), border-color var(--t), box-shadow var(--t);
+  box-shadow: var(--shadow-2);
+  transition: box-shadow 0.15s var(--ease), transform 0.15s var(--ease);
   white-space: nowrap;
   position: relative;
-  height: 32px;
+  height: 36px;
   justify-content: flex-start;
 }
 .btn:hover {
-  background: var(--hover-bg);
-  border-color: var(--hover-border);
-  box-shadow: var(--shadow-2);
+  box-shadow: var(--shadow-3);
+  transform: translateY(-1px);
 }
 .btn:active {
   background: var(--c-canvas-soft-2);
@@ -392,7 +391,7 @@ body {
 
 .srch-input {
   flex: 1; border: none; outline: none; background: transparent;
-  font-family: "Geist", system-ui, sans-serif;
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
   font-size: 15px; font-weight: 400;
   color: var(--text); letter-spacing: -0.28px;
 }
