@@ -225,13 +225,24 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
-/* Fastmail unread badge */
+/* Fastmail unread indicator (hero top bar) */
+.fm-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--text-muted);
+  opacity: 0.55;
+  transition: opacity 0.15s;
+}
+.fm-indicator:hover { opacity: 1; }
+.fm-indicator svg { width: 18px; height: 18px; flex-shrink: 0; }
 .fm-badge {
   display: none;
   align-items: center;
   justify-content: center;
-  min-width: 18px;
-  height: 18px;
+  min-width: 17px;
+  height: 17px;
   padding: 0 5px;
   background: var(--accent);
   color: #fff;
@@ -476,6 +487,10 @@ body {
     <div class="hero-meta">
       <div class="hero-top">
         <div class="clock-date" id="clockDate"></div>
+        <a class="fm-indicator" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Right-click to set API token">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          <span class="fm-badge" id="fmBadge"></span>
+        </a>
         <div class="hero-controls">
           <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
@@ -593,7 +608,6 @@ body {
             <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
           </svg>
           <span class="label">Fastmail</span>
-          <span class="fm-badge" id="fmBadge"></span>
         </a>
         <a class="btn" href="https://voice.google.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
@@ -877,7 +891,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
 (function() {
   const TOKEN_KEY = 'fm_api_token';
   const badge = document.getElementById('fmBadge');
-  const btn   = document.getElementById('fastmailBtn');
+  const btn   = document.getElementById('fmIndicator');
 
   async function fetchUnread(token) {
     // 1. Discover session
