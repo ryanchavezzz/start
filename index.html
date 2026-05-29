@@ -225,6 +225,24 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
+/* Fastmail unread badge */
+.fm-badge {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9px;
+  line-height: 1;
+  letter-spacing: 0;
+}
+.fm-badge.visible { display: inline-flex; }
+
 /* Holiday badge */
 .holiday-badge {
   display: none;
@@ -570,11 +588,12 @@ body {
           <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
           <span class="label">Gmail</span>
         </a>
-        <a class="btn" href="https://fastmail.com" target="_blank">
+        <a class="btn" id="fastmailBtn" href="https://fastmail.com" target="_blank">
           <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
           </svg>
           <span class="label">Fastmail</span>
+          <span class="fm-badge" id="fmBadge"></span>
         </a>
         <a class="btn" href="https://voice.google.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
@@ -852,6 +871,92 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   document.getElementById('srchOverlay').addEventListener('click', e => {
     if (e.target === e.currentTarget) close();
   });
+})();
+
+// Fastmail unread count (JMAP)
+(function() {
+  const TOKEN_KEY = 'fm_api_token';
+  const badge = document.getElementById('fmBadge');
+  const btn   = document.getElementById('fastmailBtn');
+
+  async function fetchUnread(token) {
+    // 1. Discover session
+    const sess = await fetch('https://api.fastmail.com/jmap/session', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if (!sess.ok) return null;
+    const { apiUrl, primaryAccounts } = await sess.json();
+    const accountId = primaryAccounts['urn:ietf:params:jmap:mail'];
+    if (!accountId) return null;
+
+    // 2. Get Inbox mailbox id
+    const mbRes = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        using: ['urn:ietf:params:jmap:core', 'urn:ietf:params:jmap:mail'],
+        methodCalls: [[
+          'Mailbox/query', { accountId, filter: { role: 'inbox' } }, '0'
+        ]]
+      })
+    });
+    const mbData = await mbRes.json();
+    const mbId = mbData.methodResponses?.[0]?.[1]?.ids?.[0];
+    if (!mbId) return null;
+
+    // 3. Get unread count
+    const cntRes = await fetch(apiUrl, {
+      method: 'POST',
+      headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        using: ['urn:ietf:params:jmap:core', 'urn:ietf:params:jmap:mail'],
+        methodCalls: [[
+          'Mailbox/get', { accountId, ids: [mbId], properties: ['unreadEmails'] }, '0'
+        ]]
+      })
+    });
+    const cntData = await cntRes.json();
+    return cntData.methodResponses?.[0]?.[1]?.list?.[0]?.unreadEmails ?? null;
+  }
+
+  function showBadge(count) {
+    if (count > 0) {
+      badge.textContent = count > 99 ? '99+' : count;
+      badge.classList.add('visible');
+    } else {
+      badge.classList.remove('visible');
+    }
+  }
+
+  async function refresh() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
+    try {
+      const count = await fetchUnread(token);
+      if (count !== null) showBadge(count);
+    } catch (e) { /* network error — stay silent */ }
+  }
+
+  // Right-click the Fastmail button to set / clear the token
+  btn.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    const current = localStorage.getItem(TOKEN_KEY);
+    const token = prompt(
+      'Fastmail API token (leave blank to remove):\n\nGenerate one at: Fastmail → Settings → Privacy & Security → App Passwords',
+      current || ''
+    );
+    if (token === null) return; // cancelled
+    if (token.trim() === '') {
+      localStorage.removeItem(TOKEN_KEY);
+      badge.classList.remove('visible');
+    } else {
+      localStorage.setItem(TOKEN_KEY, token.trim());
+      refresh();
+    }
+  });
+
+  refresh();
+  setInterval(refresh, 5 * 60 * 1000); // re-poll every 5 min
 })();
 
 // Auto-refresh
