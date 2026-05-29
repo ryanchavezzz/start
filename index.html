@@ -229,28 +229,33 @@ body {
 .fm-indicator {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  position: relative;
   text-decoration: none;
   color: var(--text-muted);
   opacity: 0.55;
   transition: opacity 0.15s;
 }
 .fm-indicator:hover { opacity: 1; }
-.fm-indicator svg { width: 18px; height: 18px; flex-shrink: 0; }
+.fm-indicator svg { width: 20px; height: 20px; flex-shrink: 0; }
 .fm-badge {
   display: none;
   align-items: center;
   justify-content: center;
-  min-width: 17px;
-  height: 17px;
-  padding: 0 5px;
-  background: var(--accent);
+  position: absolute;
+  top: -6px;
+  right: -7px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: #ff3b30;
   color: #fff;
   font-size: 10px;
   font-weight: 700;
-  border-radius: 9px;
+  border-radius: 8px;
   line-height: 1;
   letter-spacing: 0;
+  border: 1.5px solid var(--bg);
+  font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
 }
 .fm-badge.visible { display: inline-flex; }
 
