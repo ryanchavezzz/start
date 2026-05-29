@@ -121,8 +121,9 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
   font-optical-sizing: auto;
+  font-synthesis: none;
 }
 ::selection { background: var(--c-primary); color: var(--c-on-primary); }
 
@@ -248,7 +249,7 @@ body {
   padding: 5px 8px;
   border-left: 1px solid var(--border);
   color: var(--text);
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: -0.2px;
 }
 .holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
@@ -308,7 +309,7 @@ body {
   color: var(--text);
   font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 20px;
   letter-spacing: -0.28px;
   box-shadow: var(--shadow-2);
