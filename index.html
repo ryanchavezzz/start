@@ -225,20 +225,63 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
-/* Fastmail unread badge */
+/* Mail row */
+.mail-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mail-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: border-color var(--t), background var(--t), box-shadow var(--t);
+  position: relative;
+  white-space: nowrap;
+  box-shadow: var(--shadow-1);
+}
+.mail-chip:hover {
+  border-color: var(--border-strong);
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0,0,0,.10);
+}
+.mail-chip .mail-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: inline-block;
+}
+.mail-chip .mail-icon svg { width: 14px; height: 14px; display: block; }
+.mail-chip--fm:hover  { border-color: #147efb55; }
+.mail-chip--gm:hover  { border-color: #ea433555; }
+.mail-chip--pm:hover  { border-color: #6d4aff55; }
+.mail-chip--fm .mail-icon { color: #147efb; }
+.mail-chip--gm .mail-icon { color: #ea4335; }
+.mail-chip--pm .mail-icon { color: #6d4aff; }
+
+/* Unread badge */
 .fm-badge {
   display: none;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: -6px;
-  right: -7px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 5px;
+  top: -5px;
+  right: -6px;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
   background: #ff3b30;
   color: #fff;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   border-radius: 8px;
   line-height: 1;
@@ -481,16 +524,22 @@ body {
     <div class="hero-meta">
       <div class="hero-top">
         <div class="clock-date" id="clockDate"></div>
-        <a class="btn" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Right-click to set API token" style="position:relative;">
-          <svg class="svg-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-          <span class="label">Fastmail</span>
-          <span class="fm-badge" id="fmBadge"></span>
-        </a>
-        <a class="btn" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Right-click to connect Google account" style="position:relative;">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
-          <span class="label">Gmail</span>
-          <span class="fm-badge" id="gmBadge"></span>
-        </a>
+        <div class="mail-row">
+          <a class="mail-chip mail-chip--fm" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Right-click to set API token">
+            <span class="mail-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></span>
+            <span>Fastmail</span>
+            <span class="fm-badge" id="fmBadge"></span>
+          </a>
+          <a class="mail-chip mail-chip--gm" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Right-click to connect Google account">
+            <span class="mail-icon" style="width:14px;height:14px;-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;background:currentColor;"></span>
+            <span>Gmail</span>
+            <span class="fm-badge" id="gmBadge"></span>
+          </a>
+          <a class="mail-chip mail-chip--pm" href="https://mail.proton.me" target="_blank">
+            <span class="mail-icon" style="width:14px;height:14px;-webkit-mask-image:url('https://cdn.simpleicons.org/proton');mask-image:url('https://cdn.simpleicons.org/proton');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;background:currentColor;"></span>
+            <span>Proton</span>
+          </a>
+        </div>
         <div class="hero-controls">
           <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
