@@ -265,7 +265,7 @@ body {
 .mail-chip--gm:hover  { border-color: #ea433555; }
 .mail-chip--pm:hover  { border-color: #6d4aff55; }
 .mail-chip--fm .mail-icon { color: #147efb; }
-.mail-chip--gm .mail-icon { color: #ea4335; }
+/* Gmail icon is full-color SVG, no color override needed */
 .mail-chip--pm .mail-icon { color: #6d4aff; }
 
 /* Unread badge */
@@ -531,7 +531,7 @@ body {
             <span class="fm-badge" id="fmBadge"></span>
           </a>
           <a class="mail-chip mail-chip--gm" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Right-click to connect Google account">
-            <span class="mail-icon" style="width:14px;height:14px;-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;background:currentColor;"></span>
+            <span class="mail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none"><path fill="url(#gm-a)" d="M146 44h38v110c0 6.627-5.373 12-12 12h-20a6 6 0 0 1-6-6z"/><path fill="#fc413d" d="M46 44H8v110c0 6.627 5.373 12 12 12h20a6 6 0 0 0 6-6z"/><path fill="url(#gm-b)" d="M39.226 30.456c-8.033-6.752-20.018-5.714-26.77 2.319-6.752 8.032-5.714 20.017 2.319 26.77l76.078 63.949a8 8 0 0 0 10.295 0l76.078-63.95c8.032-6.752 9.07-18.737 2.318-26.77-6.752-8.032-18.737-9.07-26.769-2.318L96 78.18z"/><defs><linearGradient id="gm-a" x1="165" x2="165" y1="44" y2="166" gradientUnits="userSpaceOnUse"><stop stop-color="#60d673"/><stop offset=".17" stop-color="#42c868"/><stop offset=".39" stop-color="#0ebc5f"/><stop offset=".62" stop-color="#00a9bb"/><stop offset=".86" stop-color="#3c90ff"/><stop offset="1" stop-color="#3186ff"/></linearGradient><linearGradient id="gm-b" x1="8" x2="184" y1="46.13" y2="46.13" gradientUnits="userSpaceOnUse"><stop offset=".08" stop-color="#ff63a0"/><stop offset=".3" stop-color="#fc413d"/><stop offset=".5" stop-color="#fc413d"/><stop offset=".65" stop-color="#fc413d"/><stop offset=".72" stop-color="#fc5c30"/><stop offset=".86" stop-color="#feb10c"/><stop offset=".91" stop-color="#fec700"/><stop offset=".96" stop-color="#ffdb0f"/></linearGradient></defs></svg></span>
             <span>Gmail</span>
             <span class="fm-badge" id="gmBadge"></span>
           </a>
