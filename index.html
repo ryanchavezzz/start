@@ -486,6 +486,11 @@ body {
           <span class="label">Fastmail</span>
           <span class="fm-badge" id="fmBadge"></span>
         </a>
+        <a class="btn" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Right-click to connect Google account" style="position:relative;">
+          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
+          <span class="label">Gmail</span>
+          <span class="fm-badge" id="gmBadge"></span>
+        </a>
         <div class="hero-controls">
           <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
@@ -593,10 +598,6 @@ body {
         <a class="btn" href="https://gemini.google.com/app" target="_blank">
           <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googlegemini');mask-image:url('https://cdn.simpleicons.org/googlegemini')"></span>
           <span class="label">Gemini</span>
-        </a>
-        <a class="btn" href="https://mail.google.com" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
-          <span class="label">Gmail</span>
         </a>
         <a class="btn" href="https://voice.google.com" target="_blank">
           <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
@@ -983,6 +984,98 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   window.toggleRefresh = function() { setActive(!btn.classList.contains('active')); };
 
   if (localStorage.getItem(KEY) === '1') setActive(true);
+})();
+
+// Gmail unread count (OAuth 2.0 implicit flow)
+(function() {
+  const CLIENT_KEY = 'gm_client_id';
+  const TOKEN_KEY  = 'gm_access_token';
+  const badge = document.getElementById('gmBadge');
+  const btn   = document.getElementById('gmIndicator');
+
+  // OAuth callback: if this page loaded with #access_token in hash (popup return)
+  const hash = new URLSearchParams(window.location.hash.replace('#', ''));
+  if (hash.get('access_token')) {
+    const token = hash.get('access_token');
+    localStorage.setItem(TOKEN_KEY, token);
+    history.replaceState(null, '', window.location.pathname);
+    if (window.opener) { window.opener.postMessage({ gmToken: token }, window.location.origin); window.close(); }
+  }
+  window.addEventListener('message', e => {
+    if (e.origin !== window.location.origin || !e.data?.gmToken) return;
+    localStorage.setItem(TOKEN_KEY, e.data.gmToken);
+    refresh();
+  });
+
+  async function fetchUnread(token) {
+    const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/labels/INBOX', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    if (res.status === 401) { localStorage.removeItem(TOKEN_KEY); return null; }
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.messagesUnread ?? null;
+  }
+
+  function showBadge(count) {
+    if (count > 0) {
+      badge.textContent = count > 999 ? '999+' : count;
+      badge.classList.add('visible');
+    } else {
+      badge.classList.remove('visible');
+    }
+  }
+
+  function startOAuth(clientId) {
+    const params = new URLSearchParams({
+      client_id: clientId,
+      redirect_uri: window.location.origin + window.location.pathname,
+      response_type: 'token',
+      scope: 'https://www.googleapis.com/auth/gmail.readonly',
+      prompt: 'select_account'
+    });
+    window.open('https://accounts.google.com/o/oauth2/v2/auth?' + params,
+      'gmauth', 'width=500,height=620,left=200,top=100');
+  }
+
+  async function refresh() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return;
+    try {
+      const count = await fetchUnread(token);
+      if (count !== null) showBadge(count);
+    } catch (e) {}
+  }
+
+  btn.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    const current = localStorage.getItem(CLIENT_KEY);
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (token) {
+      // Already authed — offer to re-auth or disconnect
+      const action = prompt('Gmail is connected.\n\nType "disconnect" to remove, or leave blank and OK to re-authenticate.');
+      if (action === null) return;
+      if (action.trim().toLowerCase() === 'disconnect') {
+        localStorage.removeItem(CLIENT_KEY);
+        localStorage.removeItem(TOKEN_KEY);
+        badge.classList.remove('visible');
+        return;
+      }
+      const clientId = localStorage.getItem(CLIENT_KEY);
+      if (clientId) startOAuth(clientId);
+      return;
+    }
+    const clientId = prompt(
+      'Google OAuth Client ID:\n\n1. Go to console.cloud.google.com\n2. APIs & Services → Credentials → Create OAuth 2.0 Client ID (Web application)\n3. Add https://rchvz.dev as an Authorized JavaScript origin\n4. Paste the Client ID here',
+      current || ''
+    );
+    if (!clientId || !clientId.trim()) return;
+    localStorage.setItem(CLIENT_KEY, clientId.trim());
+    startOAuth(clientId.trim());
+  });
+
+  refresh();
+  setInterval(refresh, 5 * 60 * 1000);
 })();
 </script>
 </body>
