@@ -263,15 +263,23 @@ body {
   padding: 0 10px 0 7px;
   gap: 6px;
   justify-content: flex-start;
+  background: #deedf8;
+  border-color: #b8d8f0;
 }
+.mail-chip--fm:hover { background: #cfe4f4; border-color: #96c4e8; }
 .mail-chip--fm .fm-wordmark {
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #333e48;
+  color: #1a3a55;
   line-height: 1;
 }
-[data-theme="dark"] .mail-chip--fm .fm-wordmark { color: #c8cdd3; }
+[data-theme="dark"] .mail-chip--fm {
+  background: #0d2035;
+  border-color: #1a3a55;
+}
+[data-theme="dark"] .mail-chip--fm:hover { background: #112843; border-color: #1f4a6e; }
+[data-theme="dark"] .mail-chip--fm .fm-wordmark { color: #90c4e8; }
 .mail-chip--gm:hover  { border-color: #ea433555; }
 .mail-chip--pm:hover  { border-color: #6d4aff55; }
 .mail-chip--pm .mail-icon { color: #6d4aff; }
