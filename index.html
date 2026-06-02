@@ -225,14 +225,11 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
-/* Mail segmented bar */
+/* Mail buttons */
 .mail-bar {
   display: inline-flex;
-  align-items: stretch;
-  height: 30px;
-  border-radius: var(--r-sm);
-  overflow: hidden;
-  box-shadow: var(--shadow-1);
+  align-items: center;
+  gap: 3px;
   flex-shrink: 0;
 }
 .mail-seg {
@@ -240,34 +237,27 @@ body {
   align-items: center;
   gap: 6px;
   padding: 0 9px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  border: 1px solid #333;
+  background: #1a1a1a;
   text-decoration: none;
   color: #fff;
-  transition: filter var(--t);
-  position: relative;
+  transition: background var(--t), border-color var(--t);
   white-space: nowrap;
+  box-shadow: var(--shadow-1);
 }
-.mail-seg:hover { filter: brightness(1.12); }
-.mail-seg + .mail-seg::before {
-  content: '';
-  position: absolute;
-  left: 0; top: 15%; height: 70%;
-  width: 1px;
-  background: rgba(255,255,255,0.2);
-}
+.mail-seg:hover { background: #2a2a2a; border-color: #444; }
 .mail-seg .mail-icon { display: inline-block; flex-shrink: 0; }
 .mail-seg .mail-icon svg { display: block; }
-.mail-seg--fm { background: #0067b9; }
 .mail-seg--fm .mail-icon { width: 20px; height: 20px; }
 .mail-seg--fm .mail-icon svg { width: 20px; height: 20px; }
-.mail-seg--gm { background: #1d1d1f; }
 .mail-seg--gm .mail-icon { width: 16px; height: 16px; }
 .mail-seg--gm .mail-icon svg { width: 16px; height: 16px; }
-.mail-seg--pm { background: #6d4aff; }
 .mail-seg--pm .mail-icon { width: 16px; height: 16px; }
 .mail-seg--pm .mail-icon svg { width: 16px; height: 16px; }
-[data-theme="dark"] .mail-seg--fm { background: #0d2035; }
-[data-theme="dark"] .mail-seg--gm { background: #1a1a1a; }
-[data-theme="dark"] .mail-seg--pm { background: #3d2a99; }
+[data-theme="dark"] .mail-seg { background: #111; border-color: #2a2a2a; }
+[data-theme="dark"] .mail-seg:hover { background: #1e1e1e; border-color: #3a3a3a; }
 /* Inline count pill */
 .mail-pill {
   display: none;
