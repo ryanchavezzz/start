@@ -225,61 +225,49 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
-/* Mail row */
-.mail-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-.mail-chip {
+/* Mail segmented bar */
+.mail-bar {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
+  align-items: stretch;
   height: 30px;
   border-radius: var(--r-sm);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  text-decoration: none;
-  color: var(--text);
-  transition: border-color var(--t), background var(--t), box-shadow var(--t);
-  position: relative;
+  overflow: hidden;
   box-shadow: var(--shadow-1);
   flex-shrink: 0;
 }
-.mail-chip:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 2px 8px rgba(0,0,0,.10);
-}
-.mail-chip .mail-icon {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
-  display: inline-block;
-}
-.mail-chip .mail-icon svg { width: 16px; height: 16px; display: block; }
-.mail-chip--fm,
-.mail-chip--gm {
-  width: auto;
-  padding: 0 7px;
+.mail-seg {
+  display: inline-flex;
+  align-items: center;
   gap: 6px;
-  justify-content: flex-start;
+  padding: 0 9px;
+  text-decoration: none;
+  color: #fff;
+  transition: filter var(--t);
+  position: relative;
+  white-space: nowrap;
 }
-.mail-chip--fm { background: #0067b9; border-color: #005aa0; }
-.mail-chip--fm:hover { background: #005aa0; border-color: #004d8a; }
-.mail-chip--fm .mail-icon { color: #fff; width: 20px; height: 20px; }
-.mail-chip--fm .mail-icon svg { width: 20px; height: 20px; }
-[data-theme="dark"] .mail-chip--fm { background: #0d2035; border-color: #1a3a55; }
-[data-theme="dark"] .mail-chip--fm:hover { background: #112843; border-color: #1f4a6e; }
-[data-theme="dark"] .mail-chip--fm .mail-icon { color: #fff; }
-.mail-chip--gm { background: #1d1d1f; border-color: #3a3a3c; }
-.mail-chip--gm:hover { background: #2c2c2e; border-color: #555; }
-.mail-chip--gm .mail-icon { color: #fff; }
-[data-theme="dark"] .mail-chip--gm { background: var(--surface); border-color: var(--border); }
-[data-theme="dark"] .mail-chip--gm:hover { border-color: var(--border-strong); }
-[data-theme="dark"] .mail-chip--gm .mail-icon { color: var(--text); }
-.mail-chip--pm:hover  { border-color: #6d4aff55; }
-.mail-chip--pm .mail-icon { color: #6d4aff; }
+.mail-seg:hover { filter: brightness(1.12); }
+.mail-seg + .mail-seg::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 15%; height: 70%;
+  width: 1px;
+  background: rgba(255,255,255,0.2);
+}
+.mail-seg .mail-icon { display: inline-block; flex-shrink: 0; }
+.mail-seg .mail-icon svg { display: block; }
+.mail-seg--fm { background: #0067b9; }
+.mail-seg--fm .mail-icon { width: 20px; height: 20px; }
+.mail-seg--fm .mail-icon svg { width: 20px; height: 20px; }
+.mail-seg--gm { background: #1d1d1f; }
+.mail-seg--gm .mail-icon { width: 16px; height: 16px; }
+.mail-seg--gm .mail-icon svg { width: 16px; height: 16px; }
+.mail-seg--pm { background: #6d4aff; }
+.mail-seg--pm .mail-icon { width: 16px; height: 16px; }
+.mail-seg--pm .mail-icon svg { width: 16px; height: 16px; }
+[data-theme="dark"] .mail-seg--fm { background: #0d2035; }
+[data-theme="dark"] .mail-seg--gm { background: #1a1a1a; }
+[data-theme="dark"] .mail-seg--pm { background: #3d2a99; }
 /* Inline count pill */
 .mail-pill {
   display: none;
@@ -297,8 +285,6 @@ body {
   white-space: nowrap;
 }
 .mail-pill.visible { display: inline-flex; }
-[data-theme="dark"] .mail-chip--gm .mail-pill { background: rgba(255,255,255,0.15); }
-[data-theme="dark"] .mail-chip--gm .mail-pill { color: var(--text); background: var(--hover-bg); border: 1px solid var(--border); }
 
 
 /* Holiday badge */
@@ -534,17 +520,17 @@ body {
     <div class="hero-meta">
       <div class="hero-top">
         <div class="clock-date" id="clockDate"></div>
-        <div class="mail-row">
-          <a class="mail-chip mail-chip--fm" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
+        <div class="mail-bar">
+          <a class="mail-seg mail-seg--fm" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
             <span class="mail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="M469.5 114.9c-.2-.2-.4-.4-.6-.7v-.3C423 45.3 344.8 0 256 0 114.7 0 0 114.7 0 256c0 52.6 15.8 101.3 43 142.1h.2c.3.3.5.8.5 1C89.8 467.2 167.7 512 256 512c141.3 0 256-114.7 256-256 0-52.1-15.6-100.6-42.5-141.1M256 458.2c-69.7 0-131.3-35.2-167.5-89-.3-.3-.5-.8-.5-1l-.2.2v-.3c-21.4-32.1-34-70.6-34-112.1 0-111.7 90.5-202.2 202.2-202.2 70.2 0 131.9 35.7 168.1 89.9l-.1.1c.3.3.5.5.8 1 21.1 31.9 33.4 70.2 33.4 111.2 0 111.7-90.5 202.2-202.2 202.2m121.8-283.4v153.6c0 4.8-3.8 8.6-8.6 8.6H134.3V174.8L256 256z"/></svg></span>
             <span class="mail-pill" id="fmPill"></span>
           </a>
-          <a class="mail-chip mail-chip--gm" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
+          <a class="mail-seg mail-seg--gm" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
             <span class="mail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="m512 157.3-53 39.8-53 39.8V98.3l30.8-23c14.6-10.9 33-12.6 49.3-4.5s26 23.9 26 42.1zm-106.1 96.2v192.8h77c16.1 0 29.1-13.1 29.1-29.1V174l-53 39.8zM0 417.4c0 16 13.1 29 29.1 29h77V253.5L0 174zm0-304.6v44.5l106.1 79.5V98.3L75.3 75.2c-14.6-11-33-12.6-49.3-4.5C9.7 78.9 0 94.6 0 112.8m256 97.9L119.4 108.3v138.5L256 349.3l136.6-102.4V108.3z"/></svg></span>
             <span class="mail-pill" id="gmPill"></span>
           </a>
-          <a class="mail-chip mail-chip--pm" href="https://mail.proton.me" target="_blank" title="Proton Mail">
-            <span class="mail-icon" style="width:16px;height:16px;-webkit-mask-image:url('https://cdn.simpleicons.org/proton');mask-image:url('https://cdn.simpleicons.org/proton');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;background:currentColor;"></span>
+          <a class="mail-seg mail-seg--pm" href="https://mail.proton.me" target="_blank" title="Proton Mail">
+            <span class="mail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M403.1 126.3v337.4H459c29.2 0 52.9-24 52.9-53.6V60.2c0-10.1-11.6-15.6-19.3-9.2zm-78 65.7L223 283.3c-17.4 15.6-43.4 15.9-61.3.9L0 148.1V60.3c0-10.1 11.6-15.7 19.3-9.2l202.9 170.5c19.6 16.5 48.1 16.5 67.7 0z" style="opacity:.5;fill-rule:evenodd;clip-rule:evenodd;fill:#fff"/><path d="m403.1 126.4-78 65.6h.1L223 283.3c-17.4 15.6-43.4 15.9-61.3.9L0 148.1v262c0 29.6 23.7 53.6 52.9 53.6h350.2z" style="fill:#fff"/></svg></span>
           </a>
         </div>
         <div class="hero-controls">
@@ -1073,9 +1059,8 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   }
 
   function showCount(count) {
-    const label = count > 99 ? '99+' : String(count);
     if (count > 0) {
-      pill.textContent = label;
+      pill.textContent = String(count);
       pill.classList.add('visible');
     } else {
       pill.classList.remove('visible');
