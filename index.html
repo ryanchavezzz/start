@@ -267,7 +267,8 @@ body {
 }
 .mail-chip--fm { background: #0067b9; border-color: #005aa0; }
 .mail-chip--fm:hover { background: #005aa0; border-color: #004d8a; }
-.mail-chip--fm .mail-icon { color: #fff; }
+.mail-chip--fm .mail-icon { color: #fff; width: 20px; height: 20px; }
+.mail-chip--fm .mail-icon svg { width: 20px; height: 20px; }
 [data-theme="dark"] .mail-chip--fm { background: #0d2035; border-color: #1a3a55; }
 [data-theme="dark"] .mail-chip--fm:hover { background: #112843; border-color: #1f4a6e; }
 [data-theme="dark"] .mail-chip--fm .mail-icon { color: #fff; }
@@ -979,9 +980,8 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   }
 
   function showCount(count) {
-    const label = count > 99 ? '99+' : String(count);
     if (count > 0) {
-      pill.textContent = label;
+      pill.textContent = String(count);
       pill.classList.add('visible');
     } else {
       pill.classList.remove('visible');
