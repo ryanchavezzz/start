@@ -280,7 +280,18 @@ body {
 }
 [data-theme="dark"] .mail-chip--fm:hover { background: #112843; border-color: #1f4a6e; }
 [data-theme="dark"] .mail-chip--fm .fm-wordmark { color: #90c4e8; }
-.mail-chip--gm:hover  { border-color: #ea433555; }
+.mail-chip--gm {
+  background: #1d1d1f;
+  border-color: #3a3a3c;
+}
+.mail-chip--gm:hover  { background: #2c2c2e; border-color: #555; }
+.mail-chip--gm .mail-icon { color: #fff; }
+[data-theme="dark"] .mail-chip--gm {
+  background: var(--surface);
+  border-color: var(--border);
+}
+[data-theme="dark"] .mail-chip--gm:hover { border-color: var(--border-strong); }
+[data-theme="dark"] .mail-chip--gm .mail-icon { color: var(--text); }
 .mail-chip--pm:hover  { border-color: #6d4aff55; }
 .mail-chip--pm .mail-icon { color: #6d4aff; }
 
@@ -547,7 +558,7 @@ body {
             <span class="fm-badge" id="fmBadge"></span>
           </a>
           <a class="mail-chip mail-chip--gm" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
-            <span class="mail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" fill="none"><path fill="url(#gm-a)" d="M146 44h38v110c0 6.627-5.373 12-12 12h-20a6 6 0 0 1-6-6z"/><path fill="#fc413d" d="M46 44H8v110c0 6.627 5.373 12 12 12h20a6 6 0 0 0 6-6z"/><path fill="url(#gm-b)" d="M39.226 30.456c-8.033-6.752-20.018-5.714-26.77 2.319-6.752 8.032-5.714 20.017 2.319 26.77l76.078 63.949a8 8 0 0 0 10.295 0l76.078-63.95c8.032-6.752 9.07-18.737 2.318-26.77-6.752-8.032-18.737-9.07-26.769-2.318L96 78.18z"/><defs><linearGradient id="gm-a" x1="165" x2="165" y1="44" y2="166" gradientUnits="userSpaceOnUse"><stop stop-color="#60d673"/><stop offset=".17" stop-color="#42c868"/><stop offset=".39" stop-color="#0ebc5f"/><stop offset=".62" stop-color="#00a9bb"/><stop offset=".86" stop-color="#3c90ff"/><stop offset="1" stop-color="#3186ff"/></linearGradient><linearGradient id="gm-b" x1="8" x2="184" y1="46.13" y2="46.13" gradientUnits="userSpaceOnUse"><stop offset=".08" stop-color="#ff63a0"/><stop offset=".3" stop-color="#fc413d"/><stop offset=".5" stop-color="#fc413d"/><stop offset=".65" stop-color="#fc413d"/><stop offset=".72" stop-color="#fc5c30"/><stop offset=".86" stop-color="#feb10c"/><stop offset=".91" stop-color="#fec700"/><stop offset=".96" stop-color="#ffdb0f"/></linearGradient></defs></svg></span>
+            <span class="mail-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="currentColor"><path d="m512 157.3-53 39.8-53 39.8V98.3l30.8-23c14.6-10.9 33-12.6 49.3-4.5s26 23.9 26 42.1zm-106.1 96.2v192.8h77c16.1 0 29.1-13.1 29.1-29.1V174l-53 39.8zM0 417.4c0 16 13.1 29 29.1 29h77V253.5L0 174zm0-304.6v44.5l106.1 79.5V98.3L75.3 75.2c-14.6-11-33-12.6-49.3-4.5C9.7 78.9 0 94.6 0 112.8m256 97.9L119.4 108.3v138.5L256 349.3l136.6-102.4V108.3z"/></svg></span>
             <span class="fm-badge" id="gmBadge"></span>
           </a>
           <a class="mail-chip mail-chip--pm" href="https://mail.proton.me" target="_blank" title="Proton Mail">
