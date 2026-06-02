@@ -987,7 +987,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   }
 
   function showBadge(count) {
-    const label = count > 999 ? '999+' : String(count);
+    const label = count > 99 ? '99+' : String(count);
     if (count > 0) {
       badge.textContent = label;
       badge.classList.add('visible');
@@ -1005,7 +1005,6 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     } catch (e) { /* network error — stay silent */ }
   }
 
-  // Right-click the Fastmail button to set / clear the token
   btn.addEventListener('contextmenu', e => {
     e.preventDefault();
     const current = localStorage.getItem(TOKEN_KEY);
