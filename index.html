@@ -251,7 +251,7 @@ body {
 .mail-seg .mail-icon { display: inline-block; flex-shrink: 0; }
 .mail-seg .mail-icon svg { display: block; }
 .mail-seg--fm { padding: 0 10px; }
-.mail-seg--fm .fm-logo { height: 15px; width: auto; display: block; flex-shrink: 0; }
+.mail-seg--fm .fm-logo { height: 12px; width: auto; display: block; flex-shrink: 0; }
 .mail-seg--gm .mail-icon { width: 16px; height: 16px; }
 .mail-seg--gm .mail-icon svg { width: 16px; height: 16px; }
 .mail-seg--pm { width: auto; padding: 0 10px; gap: 7px; }
@@ -260,9 +260,11 @@ body {
 .mail-seg--pm .pm-wordmark { height: 13px; width: auto; display: block; flex-shrink: 0; }
 .mail-seg--gv .mail-icon { width: 16px; height: 16px; }
 .mail-seg--gv .mail-icon svg { width: 16px; height: 16px; }
-[data-theme="dark"] .mail-seg { background: #111; border-color: #2a2a2a; }
-[data-theme="dark"] .mail-seg:hover { background: #1e1e1e; border-color: #3a3a3a; }
-[data-theme="dark"] .mail-seg:hover { background: #1e1e1e; border-color: #3a3a3a; }
+[data-theme="dark"] .mail-seg { background: #fff; border-color: #ddd; color: #000; }
+[data-theme="dark"] .mail-seg:hover { background: #f0f0f0; border-color: #ccc; }
+[data-theme="dark"] .mail-seg .mail-icon { color: #000; }
+[data-theme="dark"] .mail-seg .mail-pill { background: rgba(0,0,0,0.12); color: #000; }
+[data-theme="dark"] .mail-seg--fm .fm-logo { filter: invert(1); }
 /* Second hero row — AI chips */
 .hero-second {
   display: flex;
@@ -288,8 +290,8 @@ body {
 .ai-chip:hover { background: #2a2a2a; border-color: #444; }
 .ai-icon { width: 15px; height: 15px; flex-shrink: 0; display: block; }
 .ai-wordmark { height: 13px; width: auto; display: block; flex-shrink: 0; }
-[data-theme="dark"] .ai-chip { background: #111; border-color: #2a2a2a; }
-[data-theme="dark"] .ai-chip:hover { background: #1e1e1e; border-color: #3a3a3a; }
+[data-theme="dark"] .ai-chip { background: #fff; border-color: #ddd; color: #000; }
+[data-theme="dark"] .ai-chip:hover { background: #f0f0f0; border-color: #ccc; }
 
 /* Inline count pill */
 .mail-pill {
