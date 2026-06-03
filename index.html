@@ -1166,22 +1166,24 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   const pill = document.getElementById('gvPill');
 
   async function fetchUnread(token) {
-    // Google Voice messages arrive in Gmail under a label named "Google Voice"
-    // First find the label ID
     const labelsRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/labels', {
       headers: { Authorization: 'Bearer ' + token }
     });
     if (!labelsRes.ok) return null;
     const { labels } = await labelsRes.json();
-    const gvLabel = labels?.find(l => l.name === 'Google Voice');
-    if (!gvLabel) return 0;
+    // Match "Google Voice" and any sublabels like "Google Voice/Missed"
+    const gvLabels = labels?.filter(l => l.name === 'Google Voice' || l.name.startsWith('Google Voice/'));
+    if (!gvLabels?.length) return 0;
 
-    const res = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/labels/${gvLabel.id}`, {
-      headers: { Authorization: 'Bearer ' + token }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data.messagesUnread ?? 0;
+    const counts = await Promise.all(gvLabels.map(async lbl => {
+      const res = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/labels/${lbl.id}`, {
+        headers: { Authorization: 'Bearer ' + token }
+      });
+      if (!res.ok) return 0;
+      const data = await res.json();
+      return data.messagesUnread ?? 0;
+    }));
+    return counts.reduce((a, b) => a + b, 0);
   }
 
   function showCount(count) {
