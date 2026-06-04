@@ -1160,6 +1160,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     );
     if (!res.ok) return null;
     const data = await res.json();
+    console.log('[gv] raw:', JSON.stringify(data).slice(0, 200));
     return (data.messages || []).length;
   }
 
@@ -1177,8 +1178,9 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     if (!token) return;
     try {
       const count = await fetchUnread(token);
+      console.log('[gv] count:', count);
       if (count !== null) showCount(count);
-    } catch (e) {}
+    } catch (e) { console.error('[gv]', e); }
   }
 
   refresh();
