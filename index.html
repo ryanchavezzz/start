@@ -1060,9 +1060,11 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   }
 
   function showCount(count) {
+    console.log('[gmail] showCount', count, 'pill:', pill, 'classes:', pill?.className);
     if (count > 0) {
       pill.textContent = String(count);
       pill.classList.add('visible');
+      console.log('[gmail] after add, computed display:', getComputedStyle(pill).display);
     } else {
       pill.classList.remove('visible');
     }
@@ -1115,7 +1117,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
         count = await fetchUnread(token);
       }
       if (count !== null && count !== 'expired') showCount(count);
-    } catch (e) {}
+    } catch (e) { console.error('[gmail]', e); }
   }
 
   btn.addEventListener('contextmenu', e => {
