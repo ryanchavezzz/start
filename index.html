@@ -225,43 +225,53 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 22px; color: var(--text-muted); letter-spacing: -0.6px; }
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
-/* Mail pill */
-.mail-bar { display: inline-flex; align-items: center; background: #1c1c1e; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; overflow: hidden; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(0,0,0,0.3); }
-.mail-seg { display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; height: 32px; text-decoration: none; color: rgba(255,255,255,0.9); transition: background var(--t), color var(--t); white-space: nowrap; flex-shrink: 0; }
-.mail-seg:hover { background: rgba(255,255,255,0.1); color: #fff; }
-.mail-seg svg { display: block; flex-shrink: 0; }
-.mail-icon-mask { width: 16px; height: 16px; display: block; flex-shrink: 0; background-color: currentColor; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
-.mail-div { width: 1px; height: 18px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
-.mail-pill { display: none; align-items: center; justify-content: center; padding: 1px 5px; border-radius: 999px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.95); font-size: 10px; font-weight: 700; line-height: 1.4; font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; white-space: nowrap; }
-.mail-pill.visible { display: inline-flex; }
-[data-theme="dark"] .mail-bar { background: #2c2c2e; border-color: rgba(255,255,255,0.15); }
-/* Second hero row — AI chips */
-.hero-second {
-  display: flex;
+/* Mail chips + AI chips — shared hero chip style */
+.mail-bar { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.mail-chip {
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  width: 100%;
+  gap: 6px;
+  padding: 0 9px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  transition: background var(--t), border-color var(--t);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
+.mail-chip:hover { background: var(--hover-bg); border-color: var(--hover-border); }
+.mail-chip-icon {
+  width: 15px; height: 15px;
+  display: block; flex-shrink: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.mail-pill { display: none; font-size: 11px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; line-height: 1; }
+.mail-pill.visible { display: block; }
+/* Second hero row — AI chips */
+.hero-second { display: flex; align-items: center; gap: 4px; width: 100%; }
 .ai-chip {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 0 10px;
-  height: 30px;
+  gap: 6px;
+  padding: 0 9px;
+  height: 28px;
   border-radius: var(--r-sm);
-  border: 1px solid #333;
-  background: #1a1a1a;
+  border: 1px solid var(--border);
+  background: var(--surface);
   text-decoration: none;
-  color: #fff;
-  transition: background var(--t), border-color var(--t);
+  color: var(--text);
   box-shadow: var(--shadow-1);
+  transition: background var(--t), border-color var(--t);
   flex-shrink: 0;
 }
-.ai-chip:hover { background: #2a2a2a; border-color: #444; }
+.ai-chip:hover { background: var(--hover-bg); border-color: var(--hover-border); }
 .ai-icon { width: 15px; height: 15px; flex-shrink: 0; display: block; }
 .ai-wordmark { height: 13px; width: auto; display: block; flex-shrink: 0; }
-[data-theme="dark"] .ai-chip { background: #fff; border-color: #ddd; color: #000; }
-[data-theme="dark"] .ai-chip:hover { background: #f0f0f0; border-color: #ccc; }
 
 
 
@@ -499,22 +509,19 @@ body {
       <div class="hero-top">
         <div class="clock-date" id="clockDate"></div>
         <div class="mail-bar">
-          <a class="mail-seg" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail-light.svg')"></span>
+          <a class="mail-chip" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
+            <span class="mail-chip-icon" style="background-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg')"></span>
             <span class="mail-pill" id="fmPill"></span>
           </a>
-          <span class="mail-div"></span>
-          <a class="mail-seg" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail-light.svg')"></span>
+          <a class="mail-chip" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
+            <span class="mail-chip-icon" style="background-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg')"></span>
             <span class="mail-pill" id="gmPill"></span>
           </a>
-          <span class="mail-div"></span>
-          <a class="mail-seg" href="https://mail.proton.me" target="_blank" title="Proton Mail">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail-light.svg')"></span>
+          <a class="mail-chip" href="https://mail.proton.me" target="_blank" title="Proton Mail">
+            <span class="mail-chip-icon" style="background-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail.svg')"></span>
           </a>
-          <span class="mail-div"></span>
-          <a class="mail-seg" id="gvIndicator" href="https://voice.google.com" target="_blank" title="Google Voice — uses Gmail OAuth">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice-light.svg')"></span>
+          <a class="mail-chip" id="gvIndicator" href="https://voice.google.com" target="_blank" title="Google Voice — uses Gmail OAuth">
+            <span class="mail-chip-icon" style="background-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg')"></span>
             <span class="mail-pill" id="gvPill"></span>
           </a>
         </div>
@@ -1160,7 +1167,6 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     );
     if (!res.ok) return null;
     const data = await res.json();
-    console.log('[gv] raw:', JSON.stringify(data).slice(0, 200));
     return (data.messages || []).length;
   }
 
@@ -1178,9 +1184,8 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     if (!token) return;
     try {
       const count = await fetchUnread(token);
-      console.log('[gv] count:', count);
       if (count !== null) showCount(count);
-    } catch (e) { console.error('[gv]', e); }
+    } catch (e) {}
   }
 
   refresh();
