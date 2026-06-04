@@ -1108,6 +1108,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     }
     try {
       let count = await fetchUnread(token);
+      console.log('[gmail] token present:', !!token, 'count:', count);
       if (count === 'expired') {
         token = await silentRefresh();
         if (!token) return;
