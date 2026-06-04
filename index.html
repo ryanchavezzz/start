@@ -500,21 +500,21 @@ body {
         <div class="clock-date" id="clockDate"></div>
         <div class="mail-bar">
           <a class="mail-seg" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.simpleicons.org/fastmail');mask-image:url('https://cdn.simpleicons.org/fastmail')"></span>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail-light.svg')"></span>
             <span class="mail-pill" id="fmPill"></span>
           </a>
           <span class="mail-div"></span>
           <a class="mail-seg" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail-light.svg')"></span>
             <span class="mail-pill" id="gmPill"></span>
           </a>
           <span class="mail-div"></span>
           <a class="mail-seg" href="https://mail.proton.me" target="_blank" title="Proton Mail">
-            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.simpleicons.org/protonmail');mask-image:url('https://cdn.simpleicons.org/protonmail')"></span>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail-light.svg')"></span>
           </a>
           <span class="mail-div"></span>
           <a class="mail-seg" id="gvIndicator" href="https://voice.google.com" target="_blank" title="Google Voice — uses Gmail OAuth">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.46 2.33.7 3.58.7.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.26.2 2.47.57 3.6.11.35.02.74-.22 1.01L6.6 10.8z"/></svg>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice-light.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice-light.svg')"></span>
             <span class="mail-pill" id="gvPill"></span>
           </a>
         </div>
@@ -1060,11 +1060,9 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   }
 
   function showCount(count) {
-    console.log('[gmail] showCount', count, 'pill:', pill, 'classes:', pill?.className);
     if (count > 0) {
       pill.textContent = String(count);
       pill.classList.add('visible');
-      console.log('[gmail] after add, computed display:', getComputedStyle(pill).display);
     } else {
       pill.classList.remove('visible');
     }
@@ -1110,14 +1108,13 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     }
     try {
       let count = await fetchUnread(token);
-      console.log('[gmail] token present:', !!token, 'count:', count);
       if (count === 'expired') {
         token = await silentRefresh();
         if (!token) return;
         count = await fetchUnread(token);
       }
       if (count !== null && count !== 'expired') showCount(count);
-    } catch (e) { console.error('[gmail]', e); }
+    } catch (e) {}
   }
 
   btn.addEventListener('contextmenu', e => {
