@@ -226,17 +226,15 @@ body {
 .clock-date .day-num { font-weight: 700; font-size: 22px; color: var(--text-muted); letter-spacing: -0.8px; }
 
 /* Mail pill */
-.mail-bar { display: inline-flex; align-items: center; background: #1a1a1a; border: 1px solid #333; border-radius: 999px; overflow: hidden; flex-shrink: 0; box-shadow: var(--shadow-1); }
-.mail-seg { display: inline-flex; align-items: center; gap: 6px; padding: 0 11px; height: 30px; text-decoration: none; color: #fff; transition: background var(--t); white-space: nowrap; flex-shrink: 0; }
-.mail-seg:hover { background: rgba(255,255,255,0.1); }
+.mail-bar { display: inline-flex; align-items: center; background: #1c1c1e; border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; overflow: hidden; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 0.5px rgba(0,0,0,0.3); }
+.mail-seg { display: inline-flex; align-items: center; gap: 7px; padding: 0 12px; height: 32px; text-decoration: none; color: rgba(255,255,255,0.9); transition: background var(--t), color var(--t); white-space: nowrap; flex-shrink: 0; }
+.mail-seg:hover { background: rgba(255,255,255,0.1); color: #fff; }
 .mail-seg svg { display: block; flex-shrink: 0; }
-.mail-div { width: 1px; height: 16px; background: #333; flex-shrink: 0; }
-.mail-pill { display: none; align-items: center; justify-content: center; padding: 1px 5px; border-radius: 999px; background: rgba(255,255,255,0.2); color: #fff; font-size: 10px; font-weight: 700; line-height: 1.4; font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; white-space: nowrap; }
+.mail-icon-mask { width: 16px; height: 16px; display: block; flex-shrink: 0; background-color: currentColor; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; mask-size: contain; mask-repeat: no-repeat; mask-position: center; }
+.mail-div { width: 1px; height: 18px; background: rgba(255,255,255,0.12); flex-shrink: 0; }
+.mail-pill { display: none; align-items: center; justify-content: center; padding: 1px 5px; border-radius: 999px; background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.95); font-size: 10px; font-weight: 700; line-height: 1.4; font-family: -apple-system, "SF Pro Text", system-ui, sans-serif; white-space: nowrap; }
 .mail-pill.visible { display: inline-flex; }
-[data-theme="dark"] .mail-bar { background: #f0f0f0; border-color: #ddd; }
-[data-theme="dark"] .mail-seg:hover { background: rgba(0,0,0,0.07); }
-[data-theme="dark"] .mail-div { background: #ddd; }
-[data-theme="dark"] .mail-pill { background: rgba(0,0,0,0.12); color: #222; }
+[data-theme="dark"] .mail-bar { background: #2c2c2e; border-color: rgba(255,255,255,0.15); }
 /* Second hero row — AI chips */
 .hero-second {
   display: flex;
@@ -519,21 +517,21 @@ body {
         <div class="clock-date" id="clockDate"></div>
         <div class="mail-bar">
           <a class="mail-seg" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
-            <svg width="16" height="16" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M469.5 114.9c-.3-.3-.5-.5-.8-1L424 143.8c.3.3.5.5.8 1 21.1 31.9 33.4 70.2 33.4 111.2 0 111.7-90.5 202.2-202.2 202.2-69.7 0-131.3-35.2-167.5-89-.3-.3-.5-.8-.5-1l-44.8 29.9c.3.3.5.8.5 1C89.8 467.2 167.7 512 256 512c141.3 0 256-114.7 256-256 0-52.1-15.6-100.6-42.5-141.1" style="fill:#69b3e7"/><path d="m43.2 398.1 44.6-29.7v-.3c-21.4-32.1-34-70.6-34-112.1 0-111.7 90.5-202.2 202.2-202.2 70.2 0 131.9 35.7 168.1 89.9l44.6-29.8c.1.1.1.2.2.3v-.3C423 45.3 344.8 0 256 0 114.7 0 0 114.7 0 256c0 52.6 15.8 101.3 43 142.1z" style="fill:#0067b9"/><path d="m256 256-121.7-81.2V337c1.3-.8 2.3-1.5 0 0l76.4-23.6z" style="fill:#ffc107"/><path d="M134.3 337h234.9c4.8 0 8.6-3.8 8.6-8.6V174.8z" style="fill:#333e48"/></svg>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.simpleicons.org/fastmail');mask-image:url('https://cdn.simpleicons.org/fastmail')"></span>
             <span class="mail-pill" id="fmPill"></span>
           </a>
           <span class="mail-div"></span>
           <a class="mail-seg" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
-            <svg width="16" height="16" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M34.9 448h81.5V250.2L0 163v250.2C0 432.5 15.7 448 34.9 448" style="fill:#4285f4"/><path d="M395.6 448h81.5c19.3 0 34.9-15.7 34.9-34.9V163l-116.4 87.3" style="fill:#34a853"/><path d="M395.6 99v151.3L512 163v-46.5c0-43.2-49.3-67.8-83.8-41.9" style="fill:#fbbc04"/><path d="M116.4 250.2V99L256 203.7 395.6 99v151.3L256 355" style="fill:#ea4335"/><path d="M0 116.4V163l116.4 87.3V99L83.8 74.5C49.2 48.6 0 73.2 0 116.4" style="fill:#c5221f"/></svg>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.simpleicons.org/gmail');mask-image:url('https://cdn.simpleicons.org/gmail')"></span>
             <span class="mail-pill" id="gmPill"></span>
           </a>
           <span class="mail-div"></span>
           <a class="mail-seg" href="https://mail.proton.me" target="_blank" title="Proton Mail">
-            <svg width="16" height="16" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><defs><linearGradient id="di-pm-a" x1="512.82" x2="408.125" y1="1064.761" y2="25.506" gradientTransform="translate(0 -254)" gradientUnits="userSpaceOnUse"><stop offset=".271" style="stop-color:#e3d9ff"/><stop offset="1" style="stop-color:#7341ff"/></linearGradient><linearGradient id="di-pm-b" x1="241.782" x2="28.86" y1="736.939" y2="-103.892" gradientTransform="translate(0 -254)" gradientUnits="userSpaceOnUse"><stop offset="0" style="stop-color:#e3d9ff"/><stop offset="1" style="stop-color:#7341ff"/></linearGradient><radialGradient id="di-pm-c" cx="-1116.597" cy="-152.012" r="4.83" gradientTransform="matrix(123.614 0 0 125.045 138536.75 19107.547)" gradientUnits="userSpaceOnUse"><stop offset=".556" style="stop-color:#6d4aff"/><stop offset=".994" style="stop-color:#aa8eff"/></radialGradient></defs><path d="M403.1 126.3v337.4H459c29.2 0 52.9-24 52.9-53.6V60.2c0-10.1-11.6-15.6-19.3-9.2z" style="fill-rule:evenodd;clip-rule:evenodd;fill:url(#di-pm-a)"/><path d="M325.1 192 223 283.3c-17.4 15.6-43.4 15.9-61.3.9L0 148.1V60.3c0-10.1 11.6-15.7 19.3-9.2l202.9 170.5c19.6 16.5 48.1 16.5 67.7 0z" style="fill-rule:evenodd;clip-rule:evenodd;fill:url(#di-pm-b)"/><path d="m403.1 126.4-78 65.6h.1L223 283.3c-17.4 15.6-43.4 15.9-61.3.9L0 148.1v262c0 29.6 23.7 53.6 52.9 53.6h350.2z" style="fill:url(#di-pm-c)"/></svg>
+            <span class="mail-icon-mask" style="-webkit-mask-image:url('https://cdn.simpleicons.org/protonmail');mask-image:url('https://cdn.simpleicons.org/protonmail')"></span>
           </a>
           <span class="mail-div"></span>
           <a class="mail-seg" id="gvIndicator" href="https://voice.google.com" target="_blank" title="Google Voice — uses Gmail OAuth">
-            <svg width="16" height="16" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" xml:space="preserve"><path d="M269.7 225.3V102.4c75.4.1 136.5 61.2 136.5 136.6H283.4c-7.6 0-13.7-6.1-13.7-13.7m14.2 164.2-.6-.3-72.9 72.7-.2.4c66.5 39.7 136 56.7 193.3 47.3l-.4-.7zM126.3 232 5.9 111.8c-9.4 57.3 7.4 126.8 47.3 193.3l.4-.2z" style="fill:#00832d"/><path d="M290.1 0c-11.3 0-20.5 9.2-20.5 20.5v81.9c75.4 0 136.6 61.2 136.6 136.6h81.9c11.3 0 20.5-9.2 20.5-20.5C508.6 97.9 410.8 0 290.1 0m199.1 462.4a27.05 27.05 0 0 0 1-38.3l-98.7-105.3c-10.9-10.2-27.6-10-38.1.4l-70 69.8 120.2 120.2c32.6-4.7 56.9-18.6 79-40.7zM53.4 305.1c18 29.9 42 60 69.2 87.2s57.9 51.6 87.8 69.6l73.1-72.9-157.2-157m52.7-51 11.3-10.9c13.3-13.3 13.3-35.2 0-48.5L97.5 28.9c-13.3-13.3-35.2-13.3-48.5 0l-3.3 2.3C24.2 52.6 11.3 80.5 5.9 111.8L126.3 232z" style="fill:#34a853"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.27-.27.67-.36 1.02-.22 1.12.46 2.33.7 3.58.7.55 0 1 .45 1 1V20c0 .55-.45 1-1 1C10.29 21 3 13.71 3 5c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.26.2 2.47.57 3.6.11.35.02.74-.22 1.01L6.6 10.8z"/></svg>
             <span class="mail-pill" id="gvPill"></span>
           </a>
         </div>
@@ -1048,25 +1046,31 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   const pill = document.getElementById('gmPill');
   const btn  = document.getElementById('gmIndicator');
 
-  // OAuth callback: if this page loaded with #access_token in hash (popup return)
+  // OAuth callback: if this page loaded with #access_token or #error in hash (popup return)
   const hash = new URLSearchParams(window.location.hash.replace('#', ''));
   if (hash.get('access_token')) {
     const token = hash.get('access_token');
+    const exp = parseInt(hash.get('expires_in') || '3600', 10);
     localStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(TOKEN_KEY + '_exp', String(Date.now() + (exp - 120) * 1000));
     history.replaceState(null, '', window.location.pathname);
     if (window.opener) { window.opener.postMessage({ gmToken: token }, window.location.origin); window.close(); }
+  } else if (hash.get('error')) {
+    history.replaceState(null, '', window.location.pathname);
+    if (window.opener) { window.opener.postMessage({ gmError: hash.get('error') }, window.location.origin); window.close(); }
   }
+
   window.addEventListener('message', e => {
-    if (e.origin !== window.location.origin || !e.data?.gmToken) return;
-    localStorage.setItem(TOKEN_KEY, e.data.gmToken);
-    refresh();
+    if (e.origin !== window.location.origin) return;
+    if (e.data?.gmToken) { localStorage.setItem(TOKEN_KEY, e.data.gmToken); refresh(); }
+    else if (e.data?.gmError) { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(TOKEN_KEY + '_exp'); }
   });
 
   async function fetchUnread(token) {
     const res = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/labels/INBOX', {
       headers: { Authorization: 'Bearer ' + token }
     });
-    if (res.status === 401) { localStorage.removeItem(TOKEN_KEY); return null; }
+    if (res.status === 401) return 'expired';
     if (!res.ok) return null;
     const data = await res.json();
     return data.messagesUnread ?? null;
@@ -1081,24 +1085,52 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     }
   }
 
-  function startOAuth(clientId) {
+  function openOAuth(clientId, silent) {
     const params = new URLSearchParams({
       client_id: clientId,
       redirect_uri: window.location.origin + window.location.pathname,
       response_type: 'token',
       scope: 'https://www.googleapis.com/auth/gmail.readonly',
-      prompt: 'select_account'
+      prompt: silent ? 'none' : 'select_account'
     });
-    window.open('https://accounts.google.com/o/oauth2/v2/auth?' + params,
-      'gmauth', 'width=500,height=620,left=200,top=100');
+    const dims = silent ? 'width=1,height=1,left=-100,top=-100' : 'width=500,height=620,left=200,top=100';
+    return window.open('https://accounts.google.com/o/oauth2/v2/auth?' + params, 'gmauth', dims);
+  }
+
+  function silentRefresh() {
+    const clientId = localStorage.getItem(CLIENT_KEY);
+    if (!clientId) return Promise.resolve(null);
+    return new Promise(resolve => {
+      openOAuth(clientId, true);
+      const t = setTimeout(() => { window.removeEventListener('message', h); resolve(null); }, 8000);
+      function h(e) {
+        if (e.origin !== window.location.origin) return;
+        if (e.data?.gmToken || e.data?.gmError) {
+          clearTimeout(t); window.removeEventListener('message', h);
+          resolve(e.data?.gmToken || null);
+        }
+      }
+      window.addEventListener('message', h);
+    });
   }
 
   async function refresh() {
-    const token = localStorage.getItem(TOKEN_KEY);
+    let token = localStorage.getItem(TOKEN_KEY);
     if (!token) return;
+    // Proactively refresh if within 2 min of expiry
+    const exp = parseInt(localStorage.getItem(TOKEN_KEY + '_exp') || '0', 10);
+    if (exp && Date.now() >= exp) {
+      token = await silentRefresh();
+      if (!token) return;
+    }
     try {
-      const count = await fetchUnread(token);
-      if (count !== null) showCount(count);
+      let count = await fetchUnread(token);
+      if (count === 'expired') {
+        token = await silentRefresh();
+        if (!token) return;
+        count = await fetchUnread(token);
+      }
+      if (count !== null && count !== 'expired') showCount(count);
     } catch (e) {}
   }
 
@@ -1117,7 +1149,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
         return;
       }
       const clientId = localStorage.getItem(CLIENT_KEY);
-      if (clientId) startOAuth(clientId);
+      if (clientId) openOAuth(clientId);
       return;
     }
     const clientId = prompt(
@@ -1126,7 +1158,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     );
     if (!clientId || !clientId.trim()) return;
     localStorage.setItem(CLIENT_KEY, clientId.trim());
-    startOAuth(clientId.trim());
+    openOAuth(clientId.trim());
   });
 
   refresh();
@@ -1139,24 +1171,13 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   const pill = document.getElementById('gvPill');
 
   async function fetchUnread(token) {
-    const labelsRes = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/labels', {
-      headers: { Authorization: 'Bearer ' + token }
-    });
-    if (!labelsRes.ok) return null;
-    const { labels } = await labelsRes.json();
-    // Match "Google Voice" and any sublabels like "Google Voice/Missed"
-    const gvLabels = labels?.filter(l => l.name === 'Google Voice' || l.name.startsWith('Google Voice/'));
-    if (!gvLabels?.length) return 0;
-
-    const counts = await Promise.all(gvLabels.map(async lbl => {
-      const res = await fetch(`https://gmail.googleapis.com/gmail/v1/users/me/labels/${lbl.id}`, {
-        headers: { Authorization: 'Bearer ' + token }
-      });
-      if (!res.ok) return 0;
-      const data = await res.json();
-      return data.messagesUnread ?? 0;
-    }));
-    return counts.reduce((a, b) => a + b, 0);
+    const res = await fetch(
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?q=is:unread+label:google-voice&maxResults=500',
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    return (data.messages || []).length;
   }
 
   function showCount(count) {
