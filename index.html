@@ -1238,9 +1238,9 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     if (!token) return;
     try {
       const [vm, sms, missed] = await Promise.all([
-        fetchCount(token, 'is:unread label:google-voice "New voicemail"'),
-        fetchCount(token, 'is:unread label:google-voice "New text message"'),
-        fetchCount(token, 'is:unread label:google-voice "Missed call"')
+        fetchCount(token, 'is:unread label:gv-voicemail'),
+        fetchCount(token, 'is:unread label:gv-text'),
+        fetchCount(token, 'is:unread label:gv-call')
       ]);
       if (vm     !== null) showCount(vmItem,     vmCount,     vm);
       if (sms    !== null) showCount(smsItem,    smsCount,    sms);
