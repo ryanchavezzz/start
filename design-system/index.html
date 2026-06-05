@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System — rchvz.dev</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── Font faces (mirrored from index.html) ──────────────────────────────── */
+@font-face {
+  font-family: "MonoLisa";
+  src: url("../fonts/MonoLisa-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "Geist";
+  src: url("../fonts/geist/Geist-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Geist Mono";
+  src: url("../fonts/geist/GeistMono-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ── Design tokens (identical to index.html) ────────────────────────────── */
+:root {
+  --c-primary:        #171717;
+  --c-on-primary:     #ffffff;
+  --c-ink:            #171717;
+  --c-body:           #4d4d4d;
+  --c-mute:           #888888;
+  --c-hairline:       #ebebeb;
+  --c-hairline-strong:#a1a1a1;
+  --c-canvas:         #ffffff;
+  --c-canvas-soft:    #fafafa;
+  --c-canvas-soft-2:  #f5f5f5;
+  --c-link:           #0070f3;
+  --accent:           #4a6fa5;
+  --accent-2:         #8a8f92;
+  --bg:               var(--c-canvas-soft);
+  --surface:          var(--c-canvas);
+  --border:           var(--c-hairline);
+  --border-strong:    var(--c-hairline-strong);
+  --text:             var(--c-ink);
+  --text-body:        var(--c-body);
+  --text-muted:       var(--c-mute);
+  --hover-bg:         var(--c-canvas-soft-2);
+  --hover-border:     var(--c-hairline-strong);
+  --shadow-1: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-2: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.04);
+  --shadow-3: inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.04);
+  --r-xs: 4px; --r-sm: 6px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px; --r-pill: 9999px;
+  --sp-xxs:4px; --sp-xs:8px; --sp-sm:12px; --sp-md:16px; --sp-lg:24px;
+  --sp-xl:32px; --sp-2xl:40px; --sp-3xl:48px; --sp-4xl:64px;
+  --ease: cubic-bezier(0.4,0,0.2,1);
+  --t: 0.15s var(--ease);
+
+  /* ds-specific */
+  --sidebar-w: 220px;
+}
+
+[data-theme="dark"] {
+  --bg:            #0a0a0a;
+  --surface:       #111111;
+  --border:        #222222;
+  --border-strong: #333333;
+  --text:          #ededed;
+  --text-body:     #999999;
+  --text-muted:    #555555;
+  --hover-bg:      #181818;
+  --hover-border:  #333333;
+  --accent:        #6b8fc4;
+  --accent-2:      #a4a9ac;
+  --shadow-1: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);
+  --shadow-3: inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.2);
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+::selection { background: var(--c-primary); color: var(--c-on-primary); }
+
+body {
+  font-family: "MonoLisa", ui-monospace, "SF Mono", Menlo, monospace;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  transition: background var(--t), color var(--t);
+}
+
+/* ── Layout ─────────────────────────────────────────────────────────────── */
+.ds-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+.ds-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  padding: var(--sp-lg) 0 var(--sp-4xl);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: background var(--t), border-color var(--t);
+}
+
+.ds-sidebar-header {
+  padding: 0 var(--sp-md) var(--sp-lg);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: var(--sp-sm);
+}
+
+.ds-wordmark {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.ds-wordmark span {
+  display: block;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.ds-nav-group {
+  padding: var(--sp-sm) var(--sp-md) var(--sp-xs);
+}
+
+.ds-nav-group-label {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-xxs);
+  padding-left: 2px;
+}
+
+.ds-nav-link {
+  display: block;
+  padding: 5px 8px;
+  border-radius: var(--r-sm);
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-body);
+  text-decoration: none;
+  letter-spacing: -0.1px;
+  transition: background var(--t), color var(--t);
+  cursor: pointer;
+}
+.ds-nav-link:hover { background: var(--hover-bg); color: var(--text); }
+.ds-nav-link.active { background: var(--hover-bg); color: var(--accent); }
+
+/* ── Main content ───────────────────────────────────────────────────────── */
+.ds-main {
+  min-width: 0;
+  padding: var(--sp-4xl) var(--sp-4xl) 120px;
+  max-width: 900px;
+}
+
+/* ── Page header ────────────────────────────────────────────────────────── */
+.ds-page-header {
+  margin-bottom: var(--sp-4xl);
+  padding-bottom: var(--sp-xl);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-lg);
+}
+
+.ds-page-title {
+  font-family: "Geist", system-ui, sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.8px;
+  color: var(--text);
+  line-height: 1.2;
+}
+.ds-page-title small {
+  display: block;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* Theme toggle */
+.ds-theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  cursor: pointer;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  box-shadow: var(--shadow-1);
+  transition: border-color var(--t), background var(--t);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.ds-theme-toggle:hover { border-color: var(--border-strong); color: var(--text); }
+.ds-theme-toggle svg { width: 12px; height: 12px; }
+
+/* ── Section ────────────────────────────────────────────────────────────── */
+.ds-section {
+  margin-bottom: var(--sp-4xl);
+  scroll-margin-top: var(--sp-lg);
+}
+
+.ds-section-label {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: var(--sp-xs);
+}
+
+.ds-section-title {
+  font-family: "Geist", system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin-bottom: var(--sp-md);
+}
+
+.ds-section-desc {
+  font-size: 13px;
+  color: var(--text-body);
+  line-height: 1.6;
+  margin-bottom: var(--sp-lg);
+  max-width: 560px;
+}
+
+/* ── Token card ─────────────────────────────────────────────────────────── */
+.ds-token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--sp-xs);
+}
+
+.ds-color-swatch {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+.ds-swatch-block {
+  height: 52px;
+}
+.ds-swatch-meta {
+  padding: 8px 10px;
+  border-top: 1px solid var(--border);
+}
+.ds-swatch-name {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.1px;
+  margin-bottom: 2px;
+}
+.ds-swatch-value {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Semantic color group */
+.ds-semantic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--sp-xs);
+  margin-top: var(--sp-sm);
+}
+.ds-semantic-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+.ds-semantic-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: var(--r-xs);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.ds-semantic-info { flex: 1; min-width: 0; }
+.ds-semantic-name {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text);
+  letter-spacing: -0.1px;
+}
+.ds-semantic-alias {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ── Typography specimens ────────────────────────────────────────────────── */
+.ds-type-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+.ds-type-table th, .ds-type-table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+.ds-type-table th {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  background: var(--bg);
+  font-weight: 400;
+}
+.ds-type-table tr:last-child td { border-bottom: none; }
+.ds-type-table td:first-child { width: 40%; }
+.ds-type-table td:nth-child(2) { width: 40%; }
+.ds-type-table td:last-child {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.ds-font-sample { color: var(--text); }
+
+/* ── Spacing rail ───────────────────────────────────────────────────────── */
+.ds-spacing-list { display: flex; flex-direction: column; gap: var(--sp-xs); }
+.ds-spacing-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+.ds-spacing-token {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text);
+  width: 80px;
+  flex-shrink: 0;
+}
+.ds-spacing-bar-wrap { flex: 1; }
+.ds-spacing-bar {
+  height: 8px;
+  background: var(--accent);
+  border-radius: var(--r-pill);
+  opacity: 0.5;
+}
+.ds-spacing-val {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── Radius grid ────────────────────────────────────────────────────────── */
+.ds-radius-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+}
+.ds-radius-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-xs);
+  padding: var(--sp-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-1);
+  min-width: 100px;
+}
+.ds-radius-demo {
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  opacity: 0.15;
+  border: 2px solid var(--accent);
+}
+.ds-radius-token {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text);
+  text-align: center;
+}
+.ds-radius-val {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* ── Shadow cards ───────────────────────────────────────────────────────── */
+.ds-shadow-grid {
+  display: flex;
+  gap: var(--sp-md);
+  flex-wrap: wrap;
+}
+.ds-shadow-card {
+  padding: var(--sp-lg) var(--sp-xl);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  min-width: 180px;
+}
+.ds-shadow-token {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text);
+}
+.ds-shadow-desc {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+}
+
+/* ── Motion demo ────────────────────────────────────────────────────────── */
+.ds-motion-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: var(--sp-md);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  margin-bottom: var(--sp-xs);
+}
+.ds-motion-label {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text);
+  width: 100px;
+  flex-shrink: 0;
+}
+.ds-motion-value {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  flex: 1;
+}
+.ds-motion-demo {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-sm);
+  background: var(--accent);
+  opacity: 0.3;
+  cursor: pointer;
+  transition: opacity var(--t), transform var(--t);
+}
+.ds-motion-demo:hover { opacity: 0.9; transform: scale(1.15); }
+
+/* ── Preview canvas ─────────────────────────────────────────────────────── */
+.ds-preview {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--bg);
+  padding: var(--sp-xl);
+  box-shadow: var(--shadow-1);
+  margin-bottom: var(--sp-sm);
+}
+.ds-preview-label {
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-top: var(--sp-md);
+  margin-bottom: var(--sp-xs);
+}
+.ds-preview-label:first-child { margin-top: 0; }
+
+/* ── Code block ─────────────────────────────────────────────────────────── */
+.ds-code {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: var(--sp-sm) var(--sp-md);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  overflow-x: auto;
+  white-space: pre;
+  margin-bottom: var(--sp-sm);
+}
+.ds-code .tok-selector { color: var(--accent); }
+.ds-code .tok-prop { color: var(--text); }
+.ds-code .tok-val { color: var(--text-muted); }
+
+/* ── Divider ─────────────────────────────────────────────────────────────── */
+.ds-divider {
+  height: 1px;
+  background: var(--border);
+  margin: var(--sp-xl) 0;
+}
+
+/* ── Component previews — exact copies from index.html ──────────────────── */
+
+/* .btn */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-xs);
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  color: var(--text);
+  font-family: "MonoLisa", ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+  box-shadow: var(--shadow-2);
+  transition: box-shadow 0.15s var(--ease), transform 0.15s var(--ease);
+  white-space: nowrap;
+  position: relative;
+  height: 36px;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+.btn:hover { box-shadow: var(--shadow-3); transform: translateY(-1px); }
+.btn:active { background: var(--c-canvas-soft-2); box-shadow: var(--shadow-1); }
+
+.si {
+  display: inline-block;
+  width: 16px; height: 16px;
+  background-color: var(--text);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity var(--t);
+}
+.si-color {
+  display: inline-block;
+  width: 18px; height: 18px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity var(--t);
+}
+.btn:hover .si, .btn:hover .si-color { opacity: 1; }
+.fav {
+  width: 16px; height: 16px;
+  border-radius: 2px;
+  filter: grayscale(1) opacity(0.5);
+  transition: all var(--t);
+}
+.btn:hover .fav { filter: none; opacity: 1; }
+.svg-icon {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  color: var(--text);
+  transition: opacity var(--t);
+}
+.btn:hover .svg-icon { opacity: 1; }
+
+/* .panel */
+.panel { display: flex; flex-direction: column; gap: var(--sp-sm); }
+.panel-heading {
+  font-family: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  padding-bottom: var(--sp-xs);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* .mail-chip */
+.mail-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  height: 30px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  box-shadow: var(--shadow-1);
+  transition: background var(--t), border-color var(--t);
+  flex-shrink: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mail-chip:hover { background: var(--hover-bg); border-color: var(--hover-border); }
+.mail-chip-icon {
+  width: 16px; height: 16px;
+  display: block; flex-shrink: 0;
+  background-color: var(--text);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+}
+.mail-chip-wordmark {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  font-family: "Google Sans", system-ui, sans-serif;
+  letter-spacing: -0.2px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.mail-badge {
+  display: none;
+  position: absolute;
+  top: -6px; right: -6px;
+  background: steelblue;
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  line-height: 1;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3.5px;
+  border-radius: 999px;
+  border: 1.5px solid var(--surface);
+  align-items: center;
+  justify-content: center;
+  letter-spacing: -0.3px;
+  z-index: 1;
+}
+.mail-badge.visible { display: flex; }
+
+/* .ai-chip */
+.ai-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 9px;
+  height: 28px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-decoration: none;
+  color: var(--text);
+  box-shadow: var(--shadow-1);
+  transition: background var(--t), border-color var(--t);
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.ai-chip:hover { background: var(--hover-bg); border-color: var(--hover-border); }
+.ai-icon { width: 15px; height: 15px; flex-shrink: 0; display: block; }
+.ai-wordmark { height: 13px; width: auto; display: block; flex-shrink: 0; }
+
+/* .holiday-badge */
+.holiday-badge {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  font-family: "MonoLisa", ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1;
+}
+.holiday-badge .name-part {
+  padding: 5px 8px;
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+.holiday-badge .days-part {
+  padding: 5px 8px;
+  border-left: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+.holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
+.holiday-badge.today .days-part { display: none; }
+
+/* search modal */
+.srch-modal {
+  width: 100%; max-width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-3);
+  overflow: hidden;
+}
+.srch-input-row {
+  display: flex; align-items: center;
+  gap: var(--sp-sm);
+  padding: var(--sp-md) var(--sp-lg);
+}
+.srch-input-icon { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
+.srch-input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: "MonoLisa", ui-monospace, monospace;
+  font-size: 15px; font-weight: 400;
+  color: var(--text); letter-spacing: -0.28px;
+}
+.srch-input::placeholder { color: var(--text-muted); }
+.srch-sep { height: 1px; background: var(--border); }
+.srch-results { display: flex; flex-direction: column; padding: 4px 0; }
+.srch-result {
+  display: flex; align-items: center;
+  gap: var(--sp-sm);
+  padding: 9px var(--sp-lg);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.srch-result:hover, .srch-result.active { background: var(--hover-bg); }
+.srch-icon {
+  width: 30px; height: 30px;
+  border-radius: var(--r-md);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.srch-icon .si { width:13px;height:13px;background-color:var(--text);opacity:0.55;-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center; }
+.srch-text { flex: 1; min-width: 0; }
+.srch-label { font-size:14px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-0.28px; }
+.srch-sub { font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
+.srch-hint { padding:var(--sp-sm) var(--sp-lg);font-family:"Geist Mono",ui-monospace,monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
+
+/* ── Dark mode sub-section ───────────────────────────────────────────────── */
+.ds-dark-swatch {
+  background: #0a0a0a;
+  border-radius: var(--r-md);
+  padding: var(--sp-lg);
+  border: 1px solid #222;
+}
+.ds-dark-token-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: var(--sp-xs);
+}
+.ds-dark-swatch-card {
+  border: 1px solid #333;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+}
+.ds-dark-swatch-block { height: 36px; }
+.ds-dark-swatch-meta { padding: 6px 8px; border-top: 1px solid #222; }
+.ds-dark-swatch-name { font-family: "Geist Mono", monospace; font-size: 9px; color: #ededed; }
+.ds-dark-swatch-val  { font-family: "Geist Mono", monospace; font-size: 9px; color: #555; }
+
+/* ── Responsive collapse ─────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .ds-layout { grid-template-columns: 1fr; }
+  .ds-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); }
+  .ds-main { padding: var(--sp-lg); }
+}
+</style>
+</head>
+<body>
+
+<div class="ds-layout">
+
+  <!-- ── Sidebar ── -->
+  <aside class="ds-sidebar">
+    <div class="ds-sidebar-header">
+      <div class="ds-wordmark">
+        Design System
+        <span>rchvz.dev · startpage</span>
+      </div>
+    </div>
+
+    <div class="ds-nav-group">
+      <div class="ds-nav-group-label">Tokens</div>
+      <a class="ds-nav-link" href="#colors">Colors</a>
+      <a class="ds-nav-link" href="#typography">Typography</a>
+      <a class="ds-nav-link" href="#spacing">Spacing</a>
+      <a class="ds-nav-link" href="#radius">Radius</a>
+      <a class="ds-nav-link" href="#shadows">Shadows</a>
+      <a class="ds-nav-link" href="#motion">Motion</a>
+    </div>
+
+    <div class="ds-nav-group">
+      <div class="ds-nav-group-label">Components</div>
+      <a class="ds-nav-link" href="#buttons">Buttons (.btn)</a>
+      <a class="ds-nav-link" href="#panels">Panels</a>
+      <a class="ds-nav-link" href="#mail-chips">Mail Chips</a>
+      <a class="ds-nav-link" href="#ai-chips">AI Chips</a>
+      <a class="ds-nav-link" href="#badges">Badges</a>
+      <a class="ds-nav-link" href="#search">Search Modal</a>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="ds-main">
+
+    <!-- Page header -->
+    <div class="ds-page-header">
+      <div class="ds-page-title">
+        <small>rchvz.dev</small>
+        Design System
+      </div>
+      <button class="ds-theme-toggle" onclick="toggleTheme()">
+        <svg id="ds-icon-sun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+          <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+          <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <svg id="ds-icon-moon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:none">
+          <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+        </svg>
+        <span id="ds-theme-label">Dark</span>
+      </button>
+    </div>
+
+    <!-- ── COLORS ── -->
+    <section class="ds-section" id="colors">
+      <div class="ds-section-label">Tokens</div>
+      <div class="ds-section-title">Colors</div>
+      <div class="ds-section-desc">Primitive color values and their semantic aliases. All UI colors are referenced via semantic tokens, never primitives directly.</div>
+
+      <div class="ds-preview-label">Primitives — Light</div>
+      <div class="ds-token-grid">
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#171717"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-primary</div>
+            <div class="ds-swatch-value">#171717</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#ffffff;border-bottom:1px solid #ebebeb"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-on-primary</div>
+            <div class="ds-swatch-value">#ffffff</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#4d4d4d"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-body</div>
+            <div class="ds-swatch-value">#4d4d4d</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#888888"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-mute</div>
+            <div class="ds-swatch-value">#888888</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#ebebeb"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-hairline</div>
+            <div class="ds-swatch-value">#ebebeb</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#a1a1a1"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-hairline-strong</div>
+            <div class="ds-swatch-value">#a1a1a1</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#ffffff;border-bottom:1px solid #ebebeb"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-canvas</div>
+            <div class="ds-swatch-value">#ffffff</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#fafafa;border-bottom:1px solid #ebebeb"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-canvas-soft</div>
+            <div class="ds-swatch-value">#fafafa</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#f5f5f5;border-bottom:1px solid #ebebeb"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-canvas-soft-2</div>
+            <div class="ds-swatch-value">#f5f5f5</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#0070f3"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--c-link</div>
+            <div class="ds-swatch-value">#0070f3</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#4a6fa5"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--accent</div>
+            <div class="ds-swatch-value">#4a6fa5</div>
+          </div>
+        </div>
+        <div class="ds-color-swatch">
+          <div class="ds-swatch-block" style="background:#8a8f92"></div>
+          <div class="ds-swatch-meta">
+            <div class="ds-swatch-name">--accent-2</div>
+            <div class="ds-swatch-value">#8a8f92</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-preview-label" style="margin-top:var(--sp-lg)">Dark mode overrides</div>
+      <div class="ds-dark-swatch">
+        <div class="ds-dark-token-grid">
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#0a0a0a"></div>
+            <div class="ds-dark-swatch-meta">
+              <div class="ds-dark-swatch-name">--bg</div>
+              <div class="ds-dark-swatch-val">#0a0a0a</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#111111"></div>
+            <div class="ds-dark-swatch-meta">
+              <div class="ds-dark-swatch-name">--surface</div>
+              <div class="ds-dark-swatch-val">#111111</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#222222"></div>
+            <div class="ds-dark-swatch-meta">
+              <div class="ds-dark-swatch-name">--border</div>
+              <div class="ds-dark-swatch-val">#222222</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#333333"></div>
+            <div class="ds-dark-swatch-meta">
+              <div class="ds-dark-swatch-name">--border-strong</div>
+              <div class="ds-dark-swatch-val">#333333</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#ededed"></div>
+            <div class="ds-dark-swatch-meta" style="background:#111">
+              <div class="ds-dark-swatch-name">--text</div>
+              <div class="ds-dark-swatch-val">#ededed</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#999999"></div>
+            <div class="ds-dark-swatch-meta" style="background:#111">
+              <div class="ds-dark-swatch-name">--text-body</div>
+              <div class="ds-dark-swatch-val">#999999</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#555555"></div>
+            <div class="ds-dark-swatch-meta" style="background:#111">
+              <div class="ds-dark-swatch-name">--text-muted</div>
+              <div class="ds-dark-swatch-val">#555555</div>
+            </div>
+          </div>
+          <div class="ds-dark-swatch-card">
+            <div class="ds-dark-swatch-block" style="background:#6b8fc4"></div>
+            <div class="ds-dark-swatch-meta" style="background:#111">
+              <div class="ds-dark-swatch-name">--accent</div>
+              <div class="ds-dark-swatch-val">#6b8fc4</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-preview-label" style="margin-top:var(--sp-lg)">Semantic aliases</div>
+      <div class="ds-semantic-grid">
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--bg)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--bg</div>
+            <div class="ds-semantic-alias">→ --c-canvas-soft</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--surface)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--surface</div>
+            <div class="ds-semantic-alias">→ --c-canvas</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--border)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--border</div>
+            <div class="ds-semantic-alias">→ --c-hairline</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--border-strong)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--border-strong</div>
+            <div class="ds-semantic-alias">→ --c-hairline-strong</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--text)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--text</div>
+            <div class="ds-semantic-alias">→ --c-ink</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--text-body)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--text-body</div>
+            <div class="ds-semantic-alias">→ --c-body</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--text-muted)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--text-muted</div>
+            <div class="ds-semantic-alias">→ --c-mute</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--hover-bg)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--hover-bg</div>
+            <div class="ds-semantic-alias">→ --c-canvas-soft-2</div>
+          </div>
+        </div>
+        <div class="ds-semantic-row">
+          <div class="ds-semantic-dot" style="background:var(--hover-border)"></div>
+          <div class="ds-semantic-info">
+            <div class="ds-semantic-name">--hover-border</div>
+            <div class="ds-semantic-alias">→ --c-hairline-strong</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── TYPOGRAPHY ── -->
+    <section class="ds-section" id="typography">
+      <div class="ds-section-label">Tokens</div>
+      <div class="ds-section-title">Typography</div>
+      <div class="ds-section-desc">Three typefaces define the entire system. MonoLisa for body and UI, Geist Mono for labels and code, Geist for display headings.</div>
+
+      <table class="ds-type-table">
+        <thead>
+          <tr>
+            <th>Role</th>
+            <th>Specimen</th>
+            <th>Spec</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="ds-swatch-name">MonoLisa</div>
+              <div class="ds-swatch-value">Body / UI / Buttons</div>
+            </td>
+            <td>
+              <span class="ds-font-sample" style="font-family:'MonoLisa',ui-monospace,monospace;font-size:16px;letter-spacing:-0.28px">The quick brown fox</span>
+            </td>
+            <td>400 · −0.28px · 1.5lh</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="ds-swatch-name">Geist Mono</div>
+              <div class="ds-swatch-value">Panel headings · Labels · Code</div>
+            </td>
+            <td>
+              <span class="ds-font-sample" style="font-family:'Geist Mono',ui-monospace,monospace;font-size:12px;text-transform:uppercase;letter-spacing:0.08em">PANEL HEADING</span>
+            </td>
+            <td>400 · 0.08em · uppercase</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="ds-swatch-name">Geist</div>
+              <div class="ds-swatch-value">Display / Headings</div>
+            </td>
+            <td>
+              <span class="ds-font-sample" style="font-family:'Geist',system-ui,sans-serif;font-size:22px;font-weight:600;letter-spacing:-0.6px">Start Page</span>
+            </td>
+            <td>600 · −0.6px · 1.2lh</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="ds-swatch-name">Google Sans</div>
+              <div class="ds-swatch-value">Mail chip wordmarks</div>
+            </td>
+            <td>
+              <span class="ds-font-sample" style="font-family:'Google Sans',system-ui,sans-serif;font-size:13px;font-weight:500;letter-spacing:-0.2px">Fastmail</span>
+            </td>
+            <td>500 · −0.2px · chip only</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="ds-swatch-name">MonoLisa</div>
+              <div class="ds-swatch-value">Clock date — strong</div>
+            </td>
+            <td>
+              <span class="ds-font-sample" style="font-family:'MonoLisa',ui-monospace,monospace;font-size:22px;font-weight:700;letter-spacing:-0.8px;color:var(--accent)">Thu</span>
+              <span class="ds-font-sample" style="font-family:'MonoLisa',ui-monospace,monospace;font-size:22px;font-weight:400;letter-spacing:-0.6px;color:var(--text-muted)"> Jun 5</span>
+            </td>
+            <td>700 / 400 · 22px · −0.8px</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── SPACING ── -->
+    <section class="ds-section" id="spacing">
+      <div class="ds-section-label">Tokens</div>
+      <div class="ds-section-title">Spacing</div>
+      <div class="ds-section-desc">An 8-point base scale with an extra xxs at 4px. Used for padding, gap, and margin throughout the layout.</div>
+
+      <div class="ds-spacing-list">
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-xxs</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:4px"></div></div>
+          <span class="ds-spacing-val">4px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-xs</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:8px"></div></div>
+          <span class="ds-spacing-val">8px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-sm</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:12px"></div></div>
+          <span class="ds-spacing-val">12px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-md</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:16px"></div></div>
+          <span class="ds-spacing-val">16px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-lg</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:24px"></div></div>
+          <span class="ds-spacing-val">24px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-xl</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:32px"></div></div>
+          <span class="ds-spacing-val">32px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-2xl</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:40px"></div></div>
+          <span class="ds-spacing-val">40px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-3xl</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:48px"></div></div>
+          <span class="ds-spacing-val">48px</span>
+        </div>
+        <div class="ds-spacing-row">
+          <span class="ds-spacing-token">--sp-4xl</span>
+          <div class="ds-spacing-bar-wrap"><div class="ds-spacing-bar" style="width:64px"></div></div>
+          <span class="ds-spacing-val">64px</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── RADIUS ── -->
+    <section class="ds-section" id="radius">
+      <div class="ds-section-label">Tokens</div>
+      <div class="ds-section-title">Border Radius</div>
+      <div class="ds-section-desc">Six radius steps plus a full pill. Buttons use --r-md (8px); mail chips use --r-sm (6px); panels use --r-lg (12px).</div>
+
+      <div class="ds-radius-grid">
+        <div class="ds-radius-card">
+          <div class="ds-radius-demo" style="border-radius:4px"></div>
+          <div class="ds-radius-token">--r-xs</div>
+          <div class="ds-radius-val">4px</div>
+        </div>
+        <div class="ds-radius-card">
+          <div class="ds-radius-demo" style="border-radius:6px"></div>
+          <div class="ds-radius-token">--r-sm</div>
+          <div class="ds-radius-val">6px</div>
+        </div>
+        <div class="ds-radius-card">
+          <div class="ds-radius-demo" style="border-radius:8px"></div>
+          <div class="ds-radius-token">--r-md</div>
+          <div class="ds-radius-val">8px</div>
+        </div>
+        <div class="ds-radius-card">
+          <div class="ds-radius-demo" style="border-radius:12px"></div>
+          <div class="ds-radius-token">--r-lg</div>
+          <div class="ds-radius-val">12px</div>
+        </div>
+        <div class="ds-radius-card">
+          <div class="ds-radius-demo" style="border-radius:16px"></div>
+          <div class="ds-radius-token">--r-xl</div>
+          <div class="ds-radius-val">16px</div>
+        </div>
+        <div class="ds-radius-card">
+          <div class="ds-radius-demo" style="border-radius:9999px"></div>
+          <div class="ds-radius-token">--r-pill</div>
+          <div class="ds-radius-val">9999px</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── SHADOWS ── -->
+    <section class="ds-section" id="shadows">
+      <div class="ds-section-label">Tokens</div>
+      <div class="ds-section-title">Shadows</div>
+      <div class="ds-section-desc">Three elevation levels. All include an inset ring to simulate a border from inside, keeping DOM borders free for interaction states. Dark mode uses white-tinted inset + heavier drop.</div>
+
+      <div class="ds-shadow-grid">
+        <div class="ds-shadow-card" style="box-shadow:var(--shadow-1)">
+          <div class="ds-shadow-token">--shadow-1</div>
+          <div class="ds-shadow-desc">Chips, small UI elements<br>Resting / default state</div>
+        </div>
+        <div class="ds-shadow-card" style="box-shadow:var(--shadow-2)">
+          <div class="ds-shadow-token">--shadow-2</div>
+          <div class="ds-shadow-desc">Buttons (.btn)<br>Primary interactive elements</div>
+        </div>
+        <div class="ds-shadow-card" style="box-shadow:var(--shadow-3)">
+          <div class="ds-shadow-token">--shadow-3</div>
+          <div class="ds-shadow-desc">Hover state, modals<br>Search overlay, lifted cards</div>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-prop">--shadow-1:</span> <span class="tok-val">inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);</span>
+<span class="tok-prop">--shadow-2:</span> <span class="tok-val">inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.04);</span>
+<span class="tok-prop">--shadow-3:</span> <span class="tok-val">inset 0 0 0 1px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.05), 0 8px 24px rgba(0,0,0,0.04);</span>
+
+<span class="tok-selector">/* dark overrides */</span>
+<span class="tok-prop">--shadow-1:</span> <span class="tok-val">inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4);</span>
+<span class="tok-prop">--shadow-2:</span> <span class="tok-val">inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.25);</span>
+<span class="tok-prop">--shadow-3:</span> <span class="tok-val">inset 0 0 0 1px rgba(255,255,255,0.05), 0 1px 2px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.25), 0 8px 24px rgba(0,0,0,0.2);</span></div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── MOTION ── -->
+    <section class="ds-section" id="motion">
+      <div class="ds-section-label">Tokens</div>
+      <div class="ds-section-title">Motion</div>
+      <div class="ds-section-desc">A single easing curve and duration pair covers all transitions. Hover the square to feel the easing.</div>
+
+      <div class="ds-motion-row">
+        <div class="ds-motion-label">--ease</div>
+        <div class="ds-motion-value">cubic-bezier(0.4, 0, 0.2, 1)</div>
+        <div class="ds-motion-demo" title="Hover to preview"></div>
+      </div>
+      <div class="ds-motion-row">
+        <div class="ds-motion-label">--t</div>
+        <div class="ds-motion-value">0.15s var(--ease)</div>
+        <div class="ds-motion-demo" style="transition-duration:0.15s" title="Hover to preview"></div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-prop">--ease:</span> <span class="tok-val">cubic-bezier(0.4, 0, 0.2, 1);</span>
+<span class="tok-prop">--t:</span>    <span class="tok-val">0.15s var(--ease);</span>
+
+<span class="tok-selector">/* usage */</span>
+<span class="tok-prop">transition:</span> <span class="tok-val">background var(--t), border-color var(--t), color var(--t);</span></div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── BUTTONS ── -->
+    <section class="ds-section" id="buttons">
+      <div class="ds-section-label">Components</div>
+      <div class="ds-section-title">Buttons <code style="font-size:14px;font-family:'Geist Mono',monospace;color:var(--text-muted)">.btn</code></div>
+      <div class="ds-section-desc">Every link in the startpage is an <code style="font-family:'Geist Mono',monospace">.btn</code>. Four icon variants exist: silhouette mask (<code style="font-family:'Geist Mono',monospace">.si</code>), colored background (<code style="font-family:'Geist Mono',monospace">.si-color</code>), inline SVG (<code style="font-family:'Geist Mono',monospace">.svg-icon</code>), and favicon (<code style="font-family:'Geist Mono',monospace">.fav</code>). Hover to see the lift + shadow-3.</div>
+
+      <div class="ds-preview">
+        <div class="ds-preview-label">.si — monochrome mask (inherits --text color)</div>
+        <div class="chips">
+          <a class="btn" href="#" onclick="return false">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/github');mask-image:url('https://cdn.simpleicons.org/github')"></span>
+            <span class="label">GitHub</span>
+          </a>
+          <a class="btn" href="#" onclick="return false">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
+            <span class="label">YouTube</span>
+          </a>
+          <a class="btn" href="#" onclick="return false">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/vercel');mask-image:url('https://cdn.simpleicons.org/vercel')"></span>
+            <span class="label">Vercel</span>
+          </a>
+          <a class="btn" href="#" onclick="return false">
+            <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/nextdns');mask-image:url('https://cdn.simpleicons.org/nextdns')"></span>
+            <span class="label">NextDNS</span>
+          </a>
+        </div>
+
+        <div class="ds-preview-label">.svg-icon — inline SVG</div>
+        <div class="chips">
+          <a class="btn" href="#" onclick="return false">
+            <svg class="svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+              <path d="M372 297V131H256v294c47-28 115-74 116-128m49-198v198c0 106-152 181-165 181S91 403 91 297V99s0-17 17-17h296s17 0 17 17" fill="currentColor"/>
+            </svg>
+            <span class="label">Bitwarden</span>
+          </a>
+          <a class="btn" href="#" onclick="return false">
+            <svg class="svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.01 1.492L0 22.256h6.005l12.01-20.764zM18.005 1.492L11.995 11.9l6.005 10.355L24 11.9zM6.005 22.256L12.01 11.9H24l-6.005 10.356z" fill="currentColor"/>
+            </svg>
+            <span class="label">Google Drive</span>
+          </a>
+        </div>
+
+        <div class="ds-preview-label">.fav — Google favicon (grayscale → color on hover)</div>
+        <div class="chips">
+          <a class="btn" href="#" onclick="return false">
+            <img class="fav" src="https://www.google.com/s2/favicons?domain=trash-guides.info&sz=64" alt="">
+            <span class="label">TRaSH Guides</span>
+          </a>
+          <a class="btn" href="#" onclick="return false">
+            <img class="fav" src="https://www.google.com/s2/favicons?domain=news.ycombinator.com&sz=64" alt="">
+            <span class="label">Hacker News</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-selector">.btn</span> {
+  <span class="tok-prop">height:</span> <span class="tok-val">36px;</span>
+  <span class="tok-prop">padding:</span> <span class="tok-val">8px 14px;</span>
+  <span class="tok-prop">font-size:</span> <span class="tok-val">14px;</span>
+  <span class="tok-prop">letter-spacing:</span> <span class="tok-val">-0.28px;</span>
+  <span class="tok-prop">border-radius:</span> <span class="tok-val">var(--r-md);</span>
+  <span class="tok-prop">box-shadow:</span> <span class="tok-val">var(--shadow-2);</span>
+  <span class="tok-prop">transition:</span> <span class="tok-val">box-shadow 0.15s var(--ease), transform 0.15s var(--ease);</span>
+}
+<span class="tok-selector">.btn:hover</span> { <span class="tok-prop">box-shadow:</span> <span class="tok-val">var(--shadow-3);</span> <span class="tok-prop">transform:</span> <span class="tok-val">translateY(-1px);</span> }</div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── PANELS ── -->
+    <section class="ds-section" id="panels">
+      <div class="ds-section-label">Components</div>
+      <div class="ds-section-title">Panels</div>
+      <div class="ds-section-desc">Links are grouped into <code style="font-family:'Geist Mono',monospace">.panel</code> blocks. Each has a sticky <code style="font-family:'Geist Mono',monospace">.panel-heading</code> (uppercase Geist Mono, accent color) and a flex <code style="font-family:'Geist Mono',monospace">.chips</code> container.</div>
+
+      <div class="ds-preview">
+        <div class="panel">
+          <h2 class="panel-heading">Whatbox</h2>
+          <div class="chips">
+            <a class="btn" href="#" onclick="return false">
+              <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/cloudflare');mask-image:url('https://cdn.simpleicons.org/cloudflare')"></span>
+              <span class="label">Dashboard</span>
+            </a>
+            <a class="btn" href="#" onclick="return false">
+              <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/github');mask-image:url('https://cdn.simpleicons.org/github')"></span>
+              <span class="label">GitHub</span>
+            </a>
+            <a class="btn" href="#" onclick="return false">
+              <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/vercel');mask-image:url('https://cdn.simpleicons.org/vercel')"></span>
+              <span class="label">Vercel</span>
+            </a>
+            <a class="btn" href="#" onclick="return false">
+              <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/nextdns');mask-image:url('https://cdn.simpleicons.org/nextdns')"></span>
+              <span class="label">NextDNS</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-selector">.panel-heading</span> {
+  <span class="tok-prop">font-family:</span> <span class="tok-val">"Geist Mono", ui-monospace, monospace;</span>
+  <span class="tok-prop">font-size:</span> <span class="tok-val">12px;</span>
+  <span class="tok-prop">text-transform:</span> <span class="tok-val">uppercase;</span>
+  <span class="tok-prop">letter-spacing:</span> <span class="tok-val">0.08em;</span>
+  <span class="tok-prop">color:</span> <span class="tok-val">var(--accent);</span>
+  <span class="tok-prop">border-bottom:</span> <span class="tok-val">1px solid var(--border);</span>
+  <span class="tok-prop">position:</span> <span class="tok-val">sticky;</span>
+  <span class="tok-prop">top:</span> <span class="tok-val">0;</span>
+  <span class="tok-prop">background:</span> <span class="tok-val">var(--bg);</span>
+}</div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── MAIL CHIPS ── -->
+    <section class="ds-section" id="mail-chips">
+      <div class="ds-section-label">Components</div>
+      <div class="ds-section-title">Mail Chips</div>
+      <div class="ds-section-desc">Smaller than <code style="font-family:'Geist Mono',monospace">.btn</code> (30px tall vs 36px). Used in the hero bar for quick inbox access. Supports an iOS-style unread badge via <code style="font-family:'Geist Mono',monospace">.mail-badge.visible</code>.</div>
+
+      <div class="ds-preview">
+        <div class="ds-preview-label">Default — no badge</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <a class="mail-chip" href="#" onclick="return false">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg')"></span>
+            <span class="mail-chip-wordmark">Fastmail</span>
+          </a>
+          <a class="mail-chip" href="#" onclick="return false">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg')"></span>
+            <span class="mail-chip-wordmark">Gmail</span>
+          </a>
+          <a class="mail-chip" href="#" onclick="return false">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail.svg')"></span>
+            <span class="mail-chip-wordmark">Proton</span>
+          </a>
+        </div>
+
+        <div class="ds-preview-label" style="margin-top:var(--sp-md)">With unread badge</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <a class="mail-chip" href="#" onclick="return false" style="position:relative">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg')"></span>
+            <span class="mail-chip-wordmark">Fastmail</span>
+            <span class="mail-badge visible">3</span>
+          </a>
+          <a class="mail-chip" href="#" onclick="return false" style="position:relative">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg')"></span>
+            <span class="mail-chip-wordmark">Gmail</span>
+            <span class="mail-badge visible">12</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-selector">.mail-chip</span>  { <span class="tok-prop">height:</span> <span class="tok-val">30px;</span> <span class="tok-prop">border-radius:</span> <span class="tok-val">var(--r-sm);</span> }
+<span class="tok-selector">.mail-badge</span>  { <span class="tok-prop">background:</span> <span class="tok-val">steelblue;</span> <span class="tok-prop">border:</span> <span class="tok-val">1.5px solid var(--surface);</span> <span class="tok-prop">top:</span> <span class="tok-val">-6px;</span> <span class="tok-prop">right:</span> <span class="tok-val">-6px;</span> }
+<span class="tok-selector">.mail-badge.visible</span> { <span class="tok-prop">display:</span> <span class="tok-val">flex;</span> }</div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── AI CHIPS ── -->
+    <section class="ds-section" id="ai-chips">
+      <div class="ds-section-label">Components</div>
+      <div class="ds-section-title">AI Chips</div>
+      <div class="ds-section-desc">28px tall quick-launch chips for AI tools shown in the hero's second row. Use <code style="font-family:'Geist Mono',monospace">.ai-icon</code> (15×15 SVG) paired with <code style="font-family:'Geist Mono',monospace">.ai-wordmark</code> (SVG logotype, 13px tall).</div>
+
+      <div class="ds-preview">
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <!-- Gemini -->
+          <a class="ai-chip" href="#" onclick="return false">
+            <svg class="ai-icon" fill="currentColor" fill-rule="evenodd" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z"/></svg>
+            <span style="font-family:'Google Sans',system-ui,sans-serif;font-size:13px;font-weight:500;letter-spacing:-0.2px;color:var(--text)">Gemini</span>
+          </a>
+          <!-- Claude -->
+          <a class="ai-chip" href="#" onclick="return false">
+            <svg class="ai-icon" fill="currentColor" fill-rule="evenodd" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M20.998 10.949H24v3.102h-3v3.028h-1.487V20H18v-2.921h-1.487V20H15v-2.921H9V20H7.488v-2.921H6V20H4.487v-2.921H3V14.05H0V10.95h3V5h17.998v5.949zM6 10.949h1.488V8.102H6v2.847zm10.51 0H18V8.102h-1.49v2.847z"/></svg>
+            <span style="font-family:'Google Sans',system-ui,sans-serif;font-size:13px;font-weight:500;letter-spacing:-0.2px;color:var(--text)">Claude Code</span>
+          </a>
+          <!-- Generic -->
+          <a class="ai-chip" href="#" onclick="return false">
+            <svg class="ai-icon" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="currentColor" opacity="0.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.4"/></svg>
+            <span style="font-family:'Google Sans',system-ui,sans-serif;font-size:13px;font-weight:500;letter-spacing:-0.2px;color:var(--text)">ChatGPT</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-selector">.ai-chip</span>    { <span class="tok-prop">height:</span> <span class="tok-val">28px;</span> <span class="tok-prop">border-radius:</span> <span class="tok-val">var(--r-sm);</span> <span class="tok-prop">gap:</span> <span class="tok-val">6px;</span> <span class="tok-prop">padding:</span> <span class="tok-val">0 9px;</span> }
+<span class="tok-selector">.ai-icon</span>     { <span class="tok-prop">width:</span> <span class="tok-val">15px;</span> <span class="tok-prop">height:</span> <span class="tok-val">15px;</span> }
+<span class="tok-selector">.ai-wordmark</span> { <span class="tok-prop">height:</span> <span class="tok-val">13px;</span> <span class="tok-prop">width:</span> <span class="tok-val">auto;</span> }</div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── BADGES ── -->
+    <section class="ds-section" id="badges">
+      <div class="ds-section-label">Components</div>
+      <div class="ds-section-title">Holiday Badge</div>
+      <div class="ds-section-desc">A split pill badge shown in the hero when a holiday is ≤7 days away. Left side shows the holiday name (muted), right side shows the countdown (text color, separated by a border). On the day itself, only the name shows (--text, weight 500).</div>
+
+      <div class="ds-preview">
+        <div class="ds-preview-label">Upcoming (days remaining)</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <div class="holiday-badge">
+            <span class="name-part">Independence Day</span>
+            <span class="days-part">29 Days</span>
+          </div>
+          <div class="holiday-badge">
+            <span class="name-part">Christmas Day</span>
+            <span class="days-part">7 Days</span>
+          </div>
+          <div class="holiday-badge">
+            <span class="name-part">New Year's Eve</span>
+            <span class="days-part">Tomorrow</span>
+          </div>
+        </div>
+
+        <div class="ds-preview-label" style="margin-top:var(--sp-md)">Today</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+          <div class="holiday-badge today">
+            <span class="name-part">Juneteenth</span>
+            <span class="days-part">Today</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-selector">.holiday-badge</span>          { <span class="tok-prop">display:</span> <span class="tok-val">none;</span> }        <span class="tok-selector">/* hidden by default */</span>
+<span class="tok-selector">.holiday-badge.visible</span>  { <span class="tok-prop">display:</span> <span class="tok-val">inline-flex;</span> }  <span class="tok-selector">/* shown within 7 days */</span>
+<span class="tok-selector">.holiday-badge.today .days-part</span> { <span class="tok-prop">display:</span> <span class="tok-val">none;</span> }   <span class="tok-selector">/* hides countdown on day-of */</span></div>
+    </section>
+
+    <div class="ds-divider"></div>
+
+    <!-- ── SEARCH ── -->
+    <section class="ds-section" id="search">
+      <div class="ds-section-label">Components</div>
+      <div class="ds-section-title">Search Modal</div>
+      <div class="ds-section-desc">Triggered by pressing <kbd style="font-family:'Geist Mono',monospace;font-size:11px;padding:2px 5px;border:1px solid var(--border);border-radius:var(--r-xs);background:var(--surface)">/</kbd>. Builds its index at runtime by scraping all <code style="font-family:'Geist Mono',monospace">.btn</code> elements. Arrow keys navigate, Enter opens in new tab, Esc closes. The backdrop uses <code style="font-family:'Geist Mono',monospace">backdrop-filter: blur(12px)</code>.</div>
+
+      <div class="ds-preview">
+        <div class="srch-modal">
+          <div class="srch-input-row">
+            <svg class="srch-input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <input type="text" class="srch-input" placeholder="Search..." readonly value="git">
+          </div>
+          <div class="srch-sep"></div>
+          <div class="srch-results">
+            <div class="srch-result active">
+              <div class="srch-icon">
+                <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/github');mask-image:url('https://cdn.simpleicons.org/github')"></span>
+              </div>
+              <div class="srch-text">
+                <div class="srch-label">GitHub</div>
+                <div class="srch-sub">Links</div>
+              </div>
+            </div>
+            <div class="srch-result">
+              <div class="srch-icon">
+                <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/vercel');mask-image:url('https://cdn.simpleicons.org/vercel')"></span>
+              </div>
+              <div class="srch-text">
+                <div class="srch-label">Vercel</div>
+                <div class="srch-sub">Network &amp; Infra</div>
+              </div>
+            </div>
+            <div class="srch-hint">Enter to open · Esc to close</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-code">
+<span class="tok-selector">.srch-overlay</span> {
+  <span class="tok-prop">backdrop-filter:</span> <span class="tok-val">blur(12px);</span>
+  <span class="tok-prop">background:</span> <span class="tok-val">rgba(0,0,0,0.06);</span>  <span class="tok-selector">/* dark: 0.22 */</span>
+  <span class="tok-prop">opacity:</span> <span class="tok-val">0;</span>
+  <span class="tok-prop">pointer-events:</span> <span class="tok-val">none;</span>
+  <span class="tok-prop">transition:</span> <span class="tok-val">opacity 0.15s var(--ease);</span>
+}
+<span class="tok-selector">.srch-overlay.open</span> { <span class="tok-prop">opacity:</span> <span class="tok-val">1;</span> <span class="tok-prop">pointer-events:</span> <span class="tok-val">all;</span> }
+<span class="tok-selector">.srch-modal</span> {
+  <span class="tok-prop">transform:</span> <span class="tok-val">translateY(-8px) scale(0.99);</span>
+  <span class="tok-prop">transition:</span> <span class="tok-val">transform 0.2s cubic-bezier(0.2,0,0,1.1);</span>
+}
+<span class="tok-selector">.srch-overlay.open .srch-modal</span> { <span class="tok-prop">transform:</span> <span class="tok-val">translateY(0) scale(1);</span> }</div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// Theme — same pattern as index.html
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+let isDark = prefersDark;
+
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('ds-icon-sun').style.display  = isDark  ? 'block' : 'none';
+  document.getElementById('ds-icon-moon').style.display = !isDark ? 'block' : 'none';
+  document.getElementById('ds-theme-label').textContent  = isDark  ? 'Light' : 'Dark';
+}
+
+function toggleTheme() { isDark = !isDark; applyTheme(); }
+applyTheme();
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('.ds-section[id]');
+const navLinks  = document.querySelectorAll('.ds-nav-link');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const link = document.querySelector(`.ds-nav-link[href="#${e.target.id}"]`);
+      if (link) link.classList.add('active');
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
