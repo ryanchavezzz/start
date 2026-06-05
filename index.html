@@ -562,13 +562,18 @@ body {
           </a>
           <a class="mail-chip" href="https://voice.google.com" target="_blank" title="Google Voice voicemails — uses Gmail OAuth">
             <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg')"></span>
-            <span class="mail-chip-wordmark">VM</span>
+            <span class="mail-chip-wordmark">Voicemail</span>
             <span class="mail-badge" id="gvVmPill"></span>
           </a>
-          <a class="mail-chip" href="https://voice.google.com" target="_blank" title="Google Voice texts — uses Gmail OAuth">
+          <a class="mail-chip" href="https://voice.google.com" target="_blank" title="Google Voice text messages — uses Gmail OAuth">
             <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg')"></span>
-            <span class="mail-chip-wordmark">Texts</span>
+            <span class="mail-chip-wordmark">Messages</span>
             <span class="mail-badge" id="gvSmsPill"></span>
+          </a>
+          <a class="mail-chip" href="https://voice.google.com" target="_blank" title="Google Voice missed calls — uses Gmail OAuth">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg')"></span>
+            <span class="mail-chip-wordmark">Missed</span>
+            <span class="mail-badge" id="gvMissedPill"></span>
           </a>
         </div>
         <div class="hero-controls">
@@ -1195,9 +1200,10 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
 
 // Google Voice unread counts (piggybacks on Gmail OAuth token)
 (function() {
-  const TOKEN_KEY = 'gm_access_token';
-  const vmPill  = document.getElementById('gvVmPill');
-  const smsPill = document.getElementById('gvSmsPill');
+  const TOKEN_KEY  = 'gm_access_token';
+  const vmPill     = document.getElementById('gvVmPill');
+  const smsPill    = document.getElementById('gvSmsPill');
+  const missedPill = document.getElementById('gvMissedPill');
 
   async function fetchCount(token, query) {
     const res = await fetch(
@@ -1222,12 +1228,14 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     const token = localStorage.getItem(TOKEN_KEY);
     if (!token) return;
     try {
-      const [vm, sms] = await Promise.all([
+      const [vm, sms, missed] = await Promise.all([
         fetchCount(token, 'is:unread label:google-voice "New voicemail"'),
-        fetchCount(token, 'is:unread label:google-voice "New text message"')
+        fetchCount(token, 'is:unread label:google-voice "New text message"'),
+        fetchCount(token, 'is:unread label:google-voice "Missed call"')
       ]);
-      if (vm  !== null) showCount(vmPill,  vm);
-      if (sms !== null) showCount(smsPill, sms);
+      if (vm     !== null) showCount(vmPill,     vm);
+      if (sms    !== null) showCount(smsPill,    sms);
+      if (missed !== null) showCount(missedPill, missed);
     } catch (e) {}
   }
 
