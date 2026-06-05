@@ -290,10 +290,10 @@ body {
 }
 .mail-badge.visible { display: flex; }
 /* Google Voice triple-chip */
-.gv-chip { gap: 8px; }
-.gv-item { display: inline-flex; align-items: center; gap: 3px; }
-.gv-count { font-size: 11px; font-weight: 700; color: steelblue; display: none; }
-.gv-count.visible { display: inline; }
+.gv-chip { gap: 6px; }
+.gv-item { display: none; align-items: center; gap: 3px; }
+.gv-item.visible { display: inline-flex; }
+.gv-item span:last-child { font-size: 11px; font-weight: 700; color: steelblue; }
 /* Second hero row — AI chips */
 .hero-second { display: flex; align-items: center; gap: 4px; width: 100%; }
 .ai-chip {
@@ -566,17 +566,19 @@ body {
             <span class="mail-chip-wordmark">Proton</span>
           </a>
           <a class="mail-chip gv-chip" href="https://voice.google.com" target="_blank" title="Google Voice">
-            <span class="gv-item">
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg')"></span>
+            <span class="mail-chip-wordmark">Voice</span>
+            <span class="gv-item" id="gvVmItem">
               <span class="mail-chip-icon" style="-webkit-mask-image:url('icons/gv-voicemail.svg');mask-image:url('icons/gv-voicemail.svg')"></span>
-              <span class="gv-count" id="gvVmCount"></span>
+              <span id="gvVmCount"></span>
             </span>
-            <span class="gv-item">
+            <span class="gv-item" id="gvSmsItem">
               <span class="mail-chip-icon" style="-webkit-mask-image:url('icons/gv-text-message.svg');mask-image:url('icons/gv-text-message.svg')"></span>
-              <span class="gv-count" id="gvSmsCount"></span>
+              <span id="gvSmsCount"></span>
             </span>
-            <span class="gv-item">
+            <span class="gv-item" id="gvMissedItem">
               <span class="mail-chip-icon" style="-webkit-mask-image:url('icons/gv-missed-call.svg');mask-image:url('icons/gv-missed-call.svg')"></span>
-              <span class="gv-count" id="gvMissedCount"></span>
+              <span id="gvMissedCount"></span>
             </span>
           </a>
         </div>
@@ -1205,8 +1207,11 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
 // Google Voice unread counts (piggybacks on Gmail OAuth token)
 (function() {
   const TOKEN_KEY    = 'gm_access_token';
+  const vmItem      = document.getElementById('gvVmItem');
   const vmCount     = document.getElementById('gvVmCount');
+  const smsItem     = document.getElementById('gvSmsItem');
   const smsCount    = document.getElementById('gvSmsCount');
+  const missedItem  = document.getElementById('gvMissedItem');
   const missedCount = document.getElementById('gvMissedCount');
 
   async function fetchCount(token, query) {
@@ -1219,12 +1224,12 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     return (data.messages || []).length;
   }
 
-  function showCount(el, count) {
+  function showCount(item, countEl, count) {
     if (count > 0) {
-      el.textContent = count > 99 ? '99+' : String(count);
-      el.classList.add('visible');
+      countEl.textContent = count > 99 ? '99+' : String(count);
+      item.classList.add('visible');
     } else {
-      el.classList.remove('visible');
+      item.classList.remove('visible');
     }
   }
 
@@ -1237,9 +1242,9 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
         fetchCount(token, 'is:unread label:google-voice "New text message"'),
         fetchCount(token, 'is:unread label:google-voice "Missed call"')
       ]);
-      if (vm     !== null) showCount(vmCount,     vm);
-      if (sms    !== null) showCount(smsCount,    sms);
-      if (missed !== null) showCount(missedCount, missed);
+      if (vm     !== null) showCount(vmItem,     vmCount,     vm);
+      if (sms    !== null) showCount(smsItem,    smsCount,    sms);
+      if (missed !== null) showCount(missedItem, missedCount, missed);
     } catch (e) {}
   }
 
