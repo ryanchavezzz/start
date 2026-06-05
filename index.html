@@ -290,10 +290,12 @@ body {
 }
 .mail-badge.visible { display: flex; }
 /* Google Voice triple-chip */
-.gv-chip { gap: 6px; }
-.gv-item { display: none; align-items: center; gap: 3px; }
+.gv-chip { gap: 5px; }
+.gv-item { display: none; align-items: center; gap: 3px; background: rgba(0,0,0,0.07); border-radius: 999px; padding: 2px 5px 2px 3px; }
 .gv-item.visible { display: inline-flex; }
-.gv-item span:last-child { font-size: 11px; font-weight: 700; color: steelblue; }
+.gv-item .mail-chip-icon { width: 11px; height: 11px; background-color: #888; }
+.gv-item span:last-child { font-size: 10px; font-weight: 600; color: #888; }
+[data-theme="dark"] .gv-item { background: rgba(255,255,255,0.1); }
 /* Second hero row — AI chips */
 .hero-second { display: flex; align-items: center; gap: 4px; width: 100%; }
 .ai-chip {
