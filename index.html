@@ -551,7 +551,7 @@ body {
             <span class="mail-chip-wordmark">Fastmail</span>
             <span class="mail-badge" id="fmPill"></span>
           </a>
-          <a class="mail-chip" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect Google account">
+          <a class="mail-chip" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect">
             <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg')"></span>
             <span class="mail-chip-wordmark">Gmail</span>
             <span class="mail-badge" id="gmPill"></span>
@@ -1043,6 +1043,9 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
     }
   });
 
+  if (!localStorage.getItem(TOKEN_KEY)) {
+    localStorage.setItem(TOKEN_KEY, 'fmu1-44ce4054-7f6af09c1eb779b17a17776a8360dd28-0-cfecca0d42738e177eeff1d5aa28a4c1');
+  }
   refresh();
   setInterval(refresh, 5 * 60 * 1000); // re-poll every 5 min
 })();
@@ -1072,7 +1075,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
 
 // Gmail unread count (OAuth 2.0 implicit flow)
 (function() {
-  const CLIENT_KEY = 'gm_client_id';
+  const CLIENT_ID  = '630362288968-vavq5ok1i6oq8hck312vq0emm6vg2eg9.apps.googleusercontent.com';
   const TOKEN_KEY  = 'gm_access_token';
   const pill = document.getElementById('gmPill');
   const btn  = document.getElementById('gmIndicator');
@@ -1129,10 +1132,8 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   }
 
   function silentRefresh() {
-    const clientId = localStorage.getItem(CLIENT_KEY);
-    if (!clientId) return Promise.resolve(null);
     return new Promise(resolve => {
-      openOAuth(clientId, true);
+      openOAuth(CLIENT_ID, true);
       const t = setTimeout(() => { window.removeEventListener('message', h); resolve(null); }, 8000);
       function h(e) {
         if (e.origin !== window.location.origin) return;
@@ -1167,29 +1168,20 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
 
   btn.addEventListener('contextmenu', e => {
     e.preventDefault();
-    const current = localStorage.getItem(CLIENT_KEY);
     const token = localStorage.getItem(TOKEN_KEY);
     if (token) {
-      // Already authed — offer to re-auth or disconnect
       const action = prompt('Gmail is connected.\n\nType "disconnect" to remove, or leave blank and OK to re-authenticate.');
       if (action === null) return;
       if (action.trim().toLowerCase() === 'disconnect') {
-        localStorage.removeItem(CLIENT_KEY);
         localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(TOKEN_KEY + '_exp');
         pill.classList.remove('visible');
         return;
       }
-      const clientId = localStorage.getItem(CLIENT_KEY);
-      if (clientId) openOAuth(clientId);
+      openOAuth(CLIENT_ID);
       return;
     }
-    const clientId = prompt(
-      'Google OAuth Client ID:\n\n1. Go to console.cloud.google.com\n2. APIs & Services → Credentials → Create OAuth 2.0 Client ID (Web application)\n3. Add https://rchvz.dev as an Authorized JavaScript origin\n4. Paste the Client ID here',
-      current || ''
-    );
-    if (!clientId || !clientId.trim()) return;
-    localStorage.setItem(CLIENT_KEY, clientId.trim());
-    openOAuth(clientId.trim());
+    openOAuth(CLIENT_ID);
   });
 
   refresh();
