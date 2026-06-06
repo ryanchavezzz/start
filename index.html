@@ -337,7 +337,14 @@ body {
 }
 .ai-app:hover .ai-app-icon { background: var(--hover-bg); border-color: var(--hover-border); }
 .ai-app:active .ai-app-icon { transform: scale(0.93); }
-.ai-icon { width: 26px; height: 26px; display: block; color: var(--text); }
+.ai-icon {
+  width: 26px; height: 26px; display: block;
+  background-color: var(--text);
+  -webkit-mask-size: contain; mask-size: contain;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center; mask-position: center;
+  flex-shrink: 0;
+}
 .ai-app-label {
   font-size: 10px;
   font-weight: 500;
@@ -618,21 +625,21 @@ body {
         </div>
         <div class="mail-bar">
           <a class="mail-chip" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
-            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/fastmail.svg')"></span>
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/fastmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/fastmail.svg')"></span>
             <span class="mail-chip-wordmark">Fastmail</span>
             <span class="mail-badge" id="fmPill"></span>
           </a>
           <a class="mail-chip" id="gmIndicator" href="https://mail.google.com" target="_blank" title="Gmail — right-click to connect">
-            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/gmail.svg')"></span>
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/gmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/gmail.svg')"></span>
             <span class="mail-chip-wordmark">Gmail</span>
             <span class="mail-badge" id="gmPill"></span>
           </a>
           <a class="mail-chip" href="https://mail.proton.me" target="_blank" title="Proton Mail">
-            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/proton-mail.svg')"></span>
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/proton_mail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/proton_mail.svg')"></span>
             <span class="mail-chip-wordmark">Proton</span>
           </a>
           <a class="mail-chip gv-chip" href="https://voice.google.com" target="_blank" title="Google Voice">
-            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/google-voice.svg')"></span>
+            <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_voice.svg')"></span>
             <span class="mail-chip-wordmark">Voice</span>
             <span class="gv-item" id="gvVmItem">
               <span class="mail-chip-icon" style="-webkit-mask-image:url('icons/gv-voicemail.svg');mask-image:url('icons/gv-voicemail.svg')"></span>
@@ -669,13 +676,13 @@ body {
       <div class="hero-second">
         <a class="ai-app" href="https://gemini.google.com" target="_blank" title="Gemini">
           <span class="ai-app-icon">
-            <svg class="ai-icon" fill="currentColor" fill-rule="evenodd" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z"/></svg>
+            <span class="ai-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_gemini.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_gemini.svg')"></span>
           </span>
           <span class="ai-app-label">Gemini</span>
         </a>
         <a class="ai-app" href="https://claude.ai/code" target="_blank" title="Claude Code">
           <span class="ai-app-icon">
-            <svg class="ai-icon" fill="currentColor" fill-rule="evenodd" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path clip-rule="evenodd" d="M20.998 10.949H24v3.102h-3v3.028h-1.487V20H18v-2.921h-1.487V20H15v-2.921H9V20H7.488v-2.921H6V20H4.487v-2.921H3V14.05H0V10.95h3V5h17.998v5.949zM6 10.949h1.488V8.102H6v2.847zm10.51 0H18V8.102h-1.49v2.847z"/></svg>
+            <span class="ai-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/claude_by_anthropic.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/claude_by_anthropic.svg')"></span>
           </span>
           <span class="ai-app-label">Claude Code</span>
         </a>
@@ -710,11 +717,11 @@ body {
           <span class="label">Jackett</span>
         </a>
         <a class="btn" href="https://72-21-17-113.1d11c9457b33442c90f4c6872b0ff1b1.plex.direct:15914/web/index.html#!/settings/web/general" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/plex-icon.svg');mask-image:url('icons/plex-icon.svg')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/plex.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/plex.svg')"></span>
           <span class="label">Plex</span>
         </a>
         <a class="btn" href="http://stash.rchvz.dev" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/stash-icon.svg');mask-image:url('icons/stash-icon.svg')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/stash.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/stash.svg')"></span>
           <span class="label">Stash</span>
         </a>
         <a class="btn" href="https://tmm.rchvz.dev" target="_blank">
@@ -742,7 +749,7 @@ body {
           <span class="label">iCloud</span>
         </a>
         <a class="btn" href="https://youtube.com" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/youtube');mask-image:url('https://cdn.simpleicons.org/youtube')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/youtube.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/youtube.svg')"></span>
           <span class="label">YouTube</span>
         </a>
         <a class="btn" href="https://sniffies.com" target="_blank">
@@ -758,19 +765,19 @@ body {
           <span class="label">Brutalist</span>
         </a>
         <a class="btn" href="https://claude.ai/new" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/claude');mask-image:url('https://cdn.simpleicons.org/claude')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/claude_by_anthropic.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/claude_by_anthropic.svg')"></span>
           <span class="label">Claude</span>
         </a>
         <a class="btn" href="https://chatgpt.com" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/chatgpt-icon.svg');mask-image:url('icons/chatgpt-icon.svg')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/chatgpt.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/chatgpt.svg')"></span>
           <span class="label">ChatGPT</span>
         </a>
         <a class="btn" href="https://gemini.google.com/app" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/googlegemini');mask-image:url('https://cdn.simpleicons.org/googlegemini')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_gemini.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_gemini.svg')"></span>
           <span class="label">Gemini</span>
         </a>
         <a class="btn" href="https://voice.google.com" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/google-voice-icon.svg');mask-image:url('icons/google-voice-icon.svg')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_voice.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_voice.svg')"></span>
           <span class="label">Voice</span>
         </a>
         <a class="btn" href="https://vault.bitwarden.com/" target="_blank">
@@ -787,7 +794,7 @@ body {
           <span class="label">Deep Links</span>
         </a>
         <a class="btn" href="https://github.com/ryanchavezzz" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/github');mask-image:url('https://cdn.simpleicons.org/github')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/github.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/github.svg')"></span>
           <span class="label">GitHub</span>
         </a>
       </div>
@@ -801,11 +808,11 @@ body {
           <span class="label">Speed Test</span>
         </a>
         <a class="btn" href="https://my.nextdns.io/8584eb/logs" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('https://cdn.simpleicons.org/nextdns');mask-image:url('https://cdn.simpleicons.org/nextdns')"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/nextdns.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/nextdns.svg')"></span>
           <span class="label">NextDNS</span>
         </a>
         <a class="btn" href="https://wifiman.com/" target="_blank">
-          <span class="si" style="-webkit-mask-image:url('icons/wifiman-icon.svg');mask-image:url('icons/wifiman-icon.svg');width:22px;height:22px"></span>
+          <span class="si" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/wifiman.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/wifiman.svg');width:22px;height:22px"></span>
           <span class="label">WiFiMan</span>
         </a>
         <a class="btn" href="https://vercel.com/ryanchavezzz" target="_blank">
