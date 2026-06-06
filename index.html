@@ -565,6 +565,29 @@ body {
 .srch-sub   { font-family:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-transform:uppercase;letter-spacing:0.06em; }
 .srch-hint  { padding:var(--sp-sm) var(--sp-lg);font-family:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;color:var(--text-muted);text-align:center;letter-spacing:0.06em;text-transform:uppercase; }
 
+@media (max-width: 599px) {
+  .hero-top {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .mail-bar {
+    order: -1;
+    width: 100%;
+    flex-shrink: 1;
+  }
+  .mail-chip-wordmark {
+    display: none;
+  }
+  .mail-chip {
+    padding: 0 9px;
+  }
+  .hero-second {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
 </style>
 </head>
 <body>
