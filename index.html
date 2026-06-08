@@ -262,8 +262,7 @@ body {
 /* Toolbar date — same format as the hero clock, sized to match the mail bar, pinned to the left edge while chips scroll */
 .toolbar-date {
   display: flex;
-  align-items: baseline;
-  gap: 4px;
+  align-items: center;
   height: 26px;
   font-family: "Geist", system-ui, -apple-system, sans-serif;
   font-size: 12px;
@@ -271,6 +270,7 @@ body {
   letter-spacing: -0.3px;
   color: var(--text);
   line-height: 1;
+  white-space: nowrap;
   flex-shrink: 0;
   position: sticky;
   left: 0;
@@ -943,12 +943,15 @@ body {
 (function() {
   function updateClock() {
     const now = new Date();
-    const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
-    const month   = now.toLocaleDateString('en-US', { month: 'short' });
-    const day     = now.getDate();
-    const html = `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
-    document.getElementById('clockDate').innerHTML = html;
-    document.getElementById('toolbarDate').innerHTML = html;
+    const weekday   = now.toLocaleDateString('en-US', { weekday: 'short' });
+    const month     = now.toLocaleDateString('en-US', { month: 'short' });
+    const monthLong = now.toLocaleDateString('en-US', { month: 'long' });
+    const day       = now.getDate();
+
+    document.getElementById('clockDate').innerHTML =
+      `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
+    document.getElementById('toolbarDate').innerHTML =
+      `<strong>${weekday}</strong>, <span class="month">${monthLong}</span> <span class="day-num">${day}</span>`;
   }
   updateClock();
   setInterval(updateClock, 1000);
