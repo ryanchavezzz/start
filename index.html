@@ -145,15 +145,18 @@ body {
 
 
 /* Theme toggle + hero controls */
-.hero-controls {
+.hero-controls { display: none; }
+.toolbar-controls {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 .theme-switch,
 .refresh-btn {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -238,12 +241,6 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 36px; color: var(--text-muted); letter-spacing: -1px;   font-family: "Geist", system-ui, sans-serif; }
 .clock-date .day-num { font-weight: 700; font-size: 36px; color: var(--text-muted); letter-spacing: -1.2px; font-family: "Geist", system-ui, sans-serif; }
 
-/* hero-left: date + holiday badge inline */
-.hero-left {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-}
 
 /* Sticky thin mail toolbar — pinned to the very top of the page */
 .mail-toolbar {
@@ -288,9 +285,57 @@ body {
   padding-right: 10px;
   margin-right: 6px;
 }
-.toolbar-date strong   { font-weight: 700; color: var(--accent);     font-family: "MonoLisa", system-ui, sans-serif; }
+.toolbar-date strong   { font-weight: 900; color: var(--accent);     font-family: "MonoLisa", system-ui, sans-serif; }
 .toolbar-date .month   { font-weight: 400; color: var(--text-muted); font-family: "MonoLisa", system-ui, sans-serif; }
 .toolbar-date .day-num { font-weight: 700; color: var(--text-muted); font-family: "MonoLisa", system-ui, sans-serif; }
+
+/* Toolbar weather — pinned to the right edge, current temp matches the toolbar date's size/weight */
+.toolbar-weather {
+  display: none;
+  align-items: center;
+  gap: 5px;
+  height: 26px;
+  padding-left: 8px;
+  flex-shrink: 0;
+  position: sticky;
+  right: 0;
+  background: var(--surface);
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+}
+.toolbar-weather.visible { display: inline-flex; }
+.toolbar-weather .tw-now {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.toolbar-weather .tw-temp {
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+.toolbar-weather .tw-hilo {
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.toolbar-weather .tw-half {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 5px;
+  font-size: 11px;
+  letter-spacing: -0.2px;
+}
+.toolbar-weather .tw-half.hi { background: var(--text); color: var(--bg); font-weight: 800; }
+.toolbar-weather .tw-half.lo { background: var(--border); color: var(--text-muted); font-weight: 300; }
+.toolbar-weather .tw-half svg { display: block; width: 14px; height: 14px; }
 
 /* Mail chips */
 .mail-bar { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
@@ -695,50 +740,25 @@ body {
         </span>
       </a>
     </div>
+    <div class="toolbar-controls">
+      <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
+        <span class="refresh-icon" style="-webkit-mask-image:url('icons/refresh-seal-icon.svg');mask-image:url('icons/refresh-seal-icon.svg')"></span>
+      </button>
+      <div class="theme-switch" onclick="toggleTheme()">
+        <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+          <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+    <div class="toolbar-weather" id="toolbarWeather"></div>
   </div>
 </div>
 
-<!-- ── Hero with mesh gradient ── -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-meta">
-      <div class="hero-top">
-        <div class="hero-left">
-          <div class="clock-date" id="clockDate"></div>
-          <div class="holiday-badge" id="holidayBadge"></div>
-        </div>
-        <div class="hero-controls">
-          <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
-            <span class="refresh-icon" style="-webkit-mask-image:url('icons/refresh-seal-icon.svg');mask-image:url('icons/refresh-seal-icon.svg')"></span>
-          </button>
-          <div class="theme-switch" onclick="toggleTheme()">
-            <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
-              <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
-            <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
-            </svg>
-          </div>
-        </div>
-      </div>
-      <div class="hero-second">
-        <a class="ai-app" href="https://gemini.google.com" target="_blank" title="Gemini">
-          <span class="ai-app-icon">
-            <span class="ai-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_gemini.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/google_gemini.svg')"></span>
-          </span>
-          <span class="ai-app-label">Gemini</span>
-        </a>
-        <a class="ai-app" href="https://claude.ai/code" target="_blank" title="Claude Code">
-          <span class="ai-app-icon">
-            <span class="ai-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/claude_by_anthropic.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/claude_by_anthropic.svg')"></span>
-          </span>
-          <span class="ai-app-label">Claude Code</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <div class="wrapper">
   <main class="content">
@@ -953,7 +973,6 @@ body {
     const day     = now.getDate();
     const html = `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
 
-    document.getElementById('clockDate').innerHTML = html;
     document.getElementById('toolbarDate').innerHTML = html;
   }
   updateClock();
@@ -1017,6 +1036,28 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
         `<span class="name-part">${next.name}</span><span class="days-part">${dayText}</span>`;
     }
   }
+})();
+
+// Weather
+(function() {
+  const hiIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="currentColor" d="M285 239.2V182h31v148h-31v-63.4h-58V330h-31V182h31v57.2Z"/></svg>`;
+  const loIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="currentColor" d="M234.3 182v120.6H310V330H202V182Z"/></svg>`;
+  const widget = document.getElementById('toolbarWeather');
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7482137&longitude=-122.4224271&current=temperature_2m,relative_humidity_2m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America/Los_Angeles')
+    .then(res => res.json())
+    .then(data => {
+      const current = Math.round(data.current.temperature_2m);
+      const hi = Math.round(data.daily.temperature_2m_max[0]);
+      const lo = Math.round(data.daily.temperature_2m_min[0]);
+      widget.innerHTML =
+        `<span class="tw-now">Now</span><span class="tw-temp">${current}°</span>` +
+        `<span class="tw-hilo">` +
+          `<span class="tw-half hi">${hiIcon}${hi}°</span>` +
+          `<span class="tw-half lo">${loIcon}${lo}°</span>` +
+        `</span>`;
+      widget.classList.add('visible');
+    })
+    .catch(() => {});
 })();
 
 // Search
