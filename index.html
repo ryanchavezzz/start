@@ -442,6 +442,39 @@ body {
 .holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
 .holiday-badge.today .days-part { display: none; }
 
+/* Weather badge */
+.weather-badge {
+  display: none;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  line-height: 1;
+}
+.weather-badge.visible { display: inline-flex; }
+.weather-badge .current-part {
+  padding: 5px 8px;
+  color: var(--text);
+  font-weight: 500;
+  letter-spacing: -0.2px;
+}
+.weather-badge .range-part {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 5px 8px;
+  border-left: 1px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 400;
+  letter-spacing: -0.2px;
+}
+.weather-badge .range-part svg { display: block; width: 12px; height: 12px; }
+.weather-badge .lo-icon { margin-left: 5px; }
+
 /* ── Panels ───────────────────────────────────────────────────────────── */
 .content {
   display: flex;
@@ -706,6 +739,7 @@ body {
         <div class="hero-left">
           <div class="clock-date" id="clockDate"></div>
           <div class="holiday-badge" id="holidayBadge"></div>
+          <div class="weather-badge" id="weatherBadge"></div>
         </div>
         <div class="hero-controls">
           <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
@@ -1017,6 +1051,25 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
         `<span class="name-part">${next.name}</span><span class="days-part">${dayText}</span>`;
     }
   }
+})();
+
+// Weather
+(function() {
+  const hiIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="#ef4444" d="M285 239.2V182h31v148h-31v-63.4h-58V330h-31V182h31v57.2Z"/></svg>`;
+  const loIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="#2885c7" d="M234.3 182v120.6H310V330H202V182Z"/></svg>`;
+  const badge = document.getElementById('weatherBadge');
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7482137&longitude=-122.4224271&current=temperature_2m,relative_humidity_2m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America/Los_Angeles')
+    .then(res => res.json())
+    .then(data => {
+      const current = Math.round(data.current.temperature_2m);
+      const hi = Math.round(data.daily.temperature_2m_max[0]);
+      const lo = Math.round(data.daily.temperature_2m_min[0]);
+      badge.innerHTML =
+        `<span class="current-part">${current}°</span>` +
+        `<span class="range-part">${hiIcon}${hi}°<span class="lo-icon">${loIcon}</span>${lo}°</span>`;
+      badge.classList.add('visible');
+    })
+    .catch(() => {});
 })();
 
 // Search
