@@ -172,13 +172,7 @@ body {
 .refresh-btn:hover { border-color: var(--border-strong); }
 .switch-icon { width:13px;height:13px;color:var(--text-muted);display:none; }
 .switch-icon.active { display:block; }
-.refresh-icon {
-  width: 13px; height: 13px; display: block;
-  background-color: currentColor;
-  -webkit-mask-size: contain; mask-size: contain;
-  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-  -webkit-mask-position: center; mask-position: center;
-}
+.refresh-btn svg { width: 13px; height: 13px; }
 .refresh-btn.active {
   background: var(--text);
   border-color: var(--text);
@@ -681,7 +675,11 @@ body {
         </div>
         <div class="hero-controls">
           <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
-            <span class="refresh-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/interval_timer.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/interval_timer.svg')"></span>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" fill="none">
+              <path d="M5.75 1.5h3.5M7.5 3.25v1.4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="7.5" cy="8.25" r="5.25" stroke="currentColor" stroke-width="1"/>
+              <path d="M7.5 5.75v2.7l1.8 1.4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </button>
           <div class="theme-switch" onclick="toggleTheme()">
             <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
