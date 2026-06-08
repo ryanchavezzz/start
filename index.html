@@ -310,30 +310,31 @@ body {
 }
 .toolbar-weather.visible { display: inline-flex; }
 .toolbar-weather .tw-temp {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: -0.3px;
   color: var(--text);
 }
 .toolbar-weather .tw-hilo {
   display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.toolbar-weather .tw-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 3px 7px;
+  align-items: stretch;
   border-radius: var(--r-pill);
   border: 1px solid var(--border);
-  background: var(--bg);
-  font-size: 13px;
+  overflow: hidden;
+}
+.toolbar-weather .tw-half {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: -0.2px;
   color: var(--text-muted);
 }
-.toolbar-weather .tw-pill svg { display: block; width: 12px; height: 12px; }
+.toolbar-weather .tw-half.hi { background: rgba(239, 68, 68, 0.1); }
+.toolbar-weather .tw-half.lo { background: rgba(40, 133, 199, 0.1); border-left: 1px solid var(--border); }
+.toolbar-weather .tw-half svg { display: block; width: 15px; height: 15px; }
 
 /* Mail chips */
 .mail-bar { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
@@ -1077,8 +1078,8 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
       widget.innerHTML =
         `<span class="tw-temp">${current}°</span>` +
         `<span class="tw-hilo">` +
-          `<span class="tw-pill hi">${hiIcon}${hi}°</span>` +
-          `<span class="tw-pill lo">${loIcon}${lo}°</span>` +
+          `<span class="tw-half hi">${hiIcon}${hi}°</span>` +
+          `<span class="tw-half lo">${loIcon}${lo}°</span>` +
         `</span>`;
       widget.classList.add('visible');
     })
