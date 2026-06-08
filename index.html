@@ -259,6 +259,30 @@ body {
 }
 .mail-toolbar-inner::-webkit-scrollbar { display: none; }
 
+/* Toolbar date — same format as the hero clock, sized to match the mail bar, pinned to the left edge while chips scroll */
+.toolbar-date {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  height: 26px;
+  font-family: "Geist", system-ui, -apple-system, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+  line-height: 1;
+  flex-shrink: 0;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--surface);
+  padding-right: 10px;
+  margin-right: 6px;
+}
+.toolbar-date strong   { font-weight: 700; color: var(--accent);     font-family: "Geist", system-ui, sans-serif; }
+.toolbar-date .month   { font-weight: 400; color: var(--text-muted); font-family: "Geist", system-ui, sans-serif; letter-spacing: -0.2px; }
+.toolbar-date .day-num { font-weight: 700; color: var(--text-muted); font-family: "Geist", system-ui, sans-serif; }
+
 /* Mail chips */
 .mail-bar { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
 .mail-chip {
@@ -629,6 +653,7 @@ body {
 <!-- ── Sticky thin mail toolbar ── -->
 <div class="mail-toolbar">
   <div class="mail-toolbar-inner">
+    <div class="toolbar-date" id="toolbarDate"></div>
     <div class="mail-bar">
       <a class="mail-chip" id="fmIndicator" href="https://fastmail.com" target="_blank" title="Fastmail — right-click to set API token">
         <span class="mail-chip-icon" style="-webkit-mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/fastmail.svg');mask-image:url('https://cdn.jsdelivr.net/gh/LawnchairLauncher/lawnicons@develop/svgs/fastmail.svg')"></span>
@@ -921,9 +946,9 @@ body {
     const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
     const month   = now.toLocaleDateString('en-US', { month: 'short' });
     const day     = now.getDate();
-    document.getElementById('clockDate').innerHTML =
-      `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
-
+    const html = `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
+    document.getElementById('clockDate').innerHTML = html;
+    document.getElementById('toolbarDate').innerHTML = html;
   }
   updateClock();
   setInterval(updateClock, 1000);
