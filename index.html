@@ -309,6 +309,13 @@ body {
   white-space: nowrap;
 }
 .toolbar-weather.visible { display: inline-flex; }
+.toolbar-weather .tw-now {
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
 .toolbar-weather .tw-temp {
   font-size: 11px;
   font-weight: 700;
@@ -328,12 +335,11 @@ body {
   gap: 4px;
   padding: 3px 8px;
   font-size: 11px;
-  font-weight: 600;
   letter-spacing: -0.2px;
   color: var(--text-muted);
 }
-.toolbar-weather .tw-half.hi { background: rgba(239, 68, 68, 0.1); }
-.toolbar-weather .tw-half.lo { background: rgba(40, 133, 199, 0.1); border-left: 1px solid var(--border); }
+.toolbar-weather .tw-half.hi { background: rgba(239, 68, 68, 0.1); font-weight: 800; }
+.toolbar-weather .tw-half.lo { background: rgba(40, 133, 199, 0.1); border-left: 1px solid var(--border); font-weight: 300; }
 .toolbar-weather .tw-half svg { display: block; width: 15px; height: 15px; }
 
 /* Mail chips */
@@ -1076,7 +1082,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
       const hi = Math.round(data.daily.temperature_2m_max[0]);
       const lo = Math.round(data.daily.temperature_2m_min[0]);
       widget.innerHTML =
-        `<span class="tw-temp">${current}°</span>` +
+        `<span class="tw-now">Now</span><span class="tw-temp">${current}°</span>` +
         `<span class="tw-hilo">` +
           `<span class="tw-half hi">${hiIcon}${hi}°</span>` +
           `<span class="tw-half lo">${loIcon}${lo}°</span>` +
