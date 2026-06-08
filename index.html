@@ -241,20 +241,6 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 36px; color: var(--text-muted); letter-spacing: -1px;   font-family: "Geist", system-ui, sans-serif; }
 .clock-date .day-num { font-weight: 700; font-size: 36px; color: var(--text-muted); letter-spacing: -1.2px; font-family: "Geist", system-ui, sans-serif; }
 
-/* Date strip — giant date + holiday badge below the toolbar */
-.date-strip {
-  width: 100%;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-}
-.date-strip-inner {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 10px var(--sp-lg) 12px;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-}
 
 /* Sticky thin mail toolbar — pinned to the very top of the page */
 .mail-toolbar {
@@ -772,13 +758,6 @@ body {
   </div>
 </div>
 
-<!-- ── Date strip ── -->
-<div class="date-strip">
-  <div class="date-strip-inner">
-    <div class="clock-date" id="clockDate"></div>
-    <div class="holiday-badge" id="holidayBadge"></div>
-  </div>
-</div>
 
 <!-- ── Hero with mesh gradient ── -->
 <div class="hero">
@@ -1015,7 +994,6 @@ body {
     const day     = now.getDate();
     const html = `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
 
-    document.getElementById('clockDate').innerHTML = html;
     document.getElementById('toolbarDate').innerHTML = html;
   }
   updateClock();
