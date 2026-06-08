@@ -292,6 +292,49 @@ body {
 .toolbar-date .month   { font-weight: 400; color: var(--text-muted); font-family: "MonoLisa", system-ui, sans-serif; }
 .toolbar-date .day-num { font-weight: 700; color: var(--text-muted); font-family: "MonoLisa", system-ui, sans-serif; }
 
+/* Toolbar weather — pinned to the right edge, current temp matches the toolbar date's size/weight */
+.toolbar-weather {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  height: 26px;
+  margin-left: auto;
+  padding-left: 10px;
+  flex-shrink: 0;
+  position: sticky;
+  right: 0;
+  background: var(--surface);
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
+  line-height: 1;
+  white-space: nowrap;
+}
+.toolbar-weather.visible { display: inline-flex; }
+.toolbar-weather .tw-temp {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+.toolbar-weather .tw-hilo {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.toolbar-weather .tw-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 7px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: var(--text-muted);
+}
+.toolbar-weather .tw-pill svg { display: block; width: 12px; height: 12px; }
+
 /* Mail chips */
 .mail-bar { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
 .mail-chip {
@@ -441,40 +484,6 @@ body {
 }
 .holiday-badge.today .name-part { color: var(--text); font-weight: 500; }
 .holiday-badge.today .days-part { display: none; }
-
-/* Weather badge */
-.weather-badge {
-  display: none;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 2px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-sm);
-  background: var(--surface);
-  box-shadow: var(--shadow-1);
-  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
-  padding: 5px 10px;
-  line-height: 1;
-}
-.weather-badge.visible { display: inline-flex; }
-.weather-badge .current-part {
-  color: var(--text);
-  font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.4px;
-}
-.weather-badge .range-part {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  color: var(--text-muted);
-  font-weight: 400;
-  font-size: 11px;
-  letter-spacing: -0.2px;
-}
-.weather-badge .range-part svg { display: block; width: 11px; height: 11px; }
-.weather-badge .lo-icon { margin-left: 5px; }
 
 /* ── Panels ───────────────────────────────────────────────────────────── */
 .content {
@@ -729,6 +738,7 @@ body {
         </span>
       </a>
     </div>
+    <div class="toolbar-weather" id="toolbarWeather"></div>
   </div>
 </div>
 
@@ -740,7 +750,6 @@ body {
         <div class="hero-left">
           <div class="clock-date" id="clockDate"></div>
           <div class="holiday-badge" id="holidayBadge"></div>
-          <div class="weather-badge" id="weatherBadge"></div>
         </div>
         <div class="hero-controls">
           <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
@@ -1058,17 +1067,20 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
 (function() {
   const hiIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="#ef4444" d="M285 239.2V182h31v148h-31v-63.4h-58V330h-31V182h31v57.2Z"/></svg>`;
   const loIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="#2885c7" d="M234.3 182v120.6H310V330H202V182Z"/></svg>`;
-  const badge = document.getElementById('weatherBadge');
+  const widget = document.getElementById('toolbarWeather');
   fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7482137&longitude=-122.4224271&current=temperature_2m,relative_humidity_2m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America/Los_Angeles')
     .then(res => res.json())
     .then(data => {
       const current = Math.round(data.current.temperature_2m);
       const hi = Math.round(data.daily.temperature_2m_max[0]);
       const lo = Math.round(data.daily.temperature_2m_min[0]);
-      badge.innerHTML =
-        `<span class="current-part">${current}°</span>` +
-        `<span class="range-part">${hiIcon}${hi}°<span class="lo-icon">${loIcon}</span>${lo}°</span>`;
-      badge.classList.add('visible');
+      widget.innerHTML =
+        `<span class="tw-temp">${current}°</span>` +
+        `<span class="tw-hilo">` +
+          `<span class="tw-pill hi">${hiIcon}${hi}°</span>` +
+          `<span class="tw-pill lo">${loIcon}${lo}°</span>` +
+        `</span>`;
+      widget.classList.add('visible');
     })
     .catch(() => {});
 })();
