@@ -145,15 +145,18 @@ body {
 
 
 /* Theme toggle + hero controls */
-.hero-controls {
+.hero-controls { display: none; }
+.toolbar-controls {
   display: flex;
   align-items: center;
   gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 .theme-switch,
 .refresh-btn {
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -238,8 +241,16 @@ body {
 .clock-date .month   { font-weight: 400; font-size: 36px; color: var(--text-muted); letter-spacing: -1px;   font-family: "Geist", system-ui, sans-serif; }
 .clock-date .day-num { font-weight: 700; font-size: 36px; color: var(--text-muted); letter-spacing: -1.2px; font-family: "Geist", system-ui, sans-serif; }
 
-/* hero-left: date + holiday badge inline */
-.hero-left {
+/* Date strip — giant date + holiday badge below the toolbar */
+.date-strip {
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.date-strip-inner {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 10px var(--sp-lg) 12px;
   display: flex;
   align-items: center;
   gap: var(--sp-sm);
@@ -298,8 +309,7 @@ body {
   align-items: center;
   gap: 5px;
   height: 26px;
-  margin-left: auto;
-  padding-left: 10px;
+  padding-left: 8px;
   flex-shrink: 0;
   position: sticky;
   right: 0;
@@ -744,7 +754,29 @@ body {
         </span>
       </a>
     </div>
+    <div class="toolbar-controls">
+      <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
+        <span class="refresh-icon" style="-webkit-mask-image:url('icons/refresh-seal-icon.svg');mask-image:url('icons/refresh-seal-icon.svg')"></span>
+      </button>
+      <div class="theme-switch" onclick="toggleTheme()">
+        <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
+          <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
     <div class="toolbar-weather" id="toolbarWeather"></div>
+  </div>
+</div>
+
+<!-- ── Date strip ── -->
+<div class="date-strip">
+  <div class="date-strip-inner">
+    <div class="clock-date" id="clockDate"></div>
+    <div class="holiday-badge" id="holidayBadge"></div>
   </div>
 </div>
 
@@ -752,26 +784,6 @@ body {
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-meta">
-      <div class="hero-top">
-        <div class="hero-left">
-          <div class="clock-date" id="clockDate"></div>
-          <div class="holiday-badge" id="holidayBadge"></div>
-        </div>
-        <div class="hero-controls">
-          <button class="refresh-btn" id="refreshBtn" onclick="toggleRefresh()" title="Auto-refresh every 15s">
-            <span class="refresh-icon" style="-webkit-mask-image:url('icons/refresh-seal-icon.svg');mask-image:url('icons/refresh-seal-icon.svg')"></span>
-          </button>
-          <div class="theme-switch" onclick="toggleTheme()">
-            <svg class="switch-icon" id="iconSun" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="8" cy="8" r="2.5" fill="currentColor"/>
-              <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.55 3.55l1.41 1.41M11.04 11.04l1.41 1.41M3.55 12.45l1.41-1.41M11.04 4.96l1.41-1.41" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-            </svg>
-            <svg class="switch-icon" id="iconMoon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13.5 10A6 6 0 0 1 6 2.5a6 6 0 1 0 7.5 7.5z" fill="currentColor"/>
-            </svg>
-          </div>
-        </div>
-      </div>
       <div class="hero-second">
         <a class="ai-app" href="https://gemini.google.com" target="_blank" title="Gemini">
           <span class="ai-app-icon">
