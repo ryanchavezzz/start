@@ -263,8 +263,9 @@ body {
 .toolbar-date {
   display: flex;
   align-items: center;
+  gap: 4px;
   height: 26px;
-  font-family: "Geist", system-ui, -apple-system, sans-serif;
+  font-family: "MonoLisa", system-ui, -apple-system, sans-serif;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: -0.3px;
@@ -279,9 +280,9 @@ body {
   padding-right: 10px;
   margin-right: 6px;
 }
-.toolbar-date strong   { font-weight: 700; color: var(--accent);     font-family: "Geist", system-ui, sans-serif; }
-.toolbar-date .month   { font-weight: 400; color: var(--text-muted); font-family: "Geist", system-ui, sans-serif; letter-spacing: -0.2px; }
-.toolbar-date .day-num { font-weight: 700; color: var(--text-muted); font-family: "Geist", system-ui, sans-serif; }
+.toolbar-date strong   { font-weight: 700; color: var(--accent);     font-family: "MonoLisa", system-ui, sans-serif; }
+.toolbar-date .month   { font-weight: 400; color: var(--text-muted); font-family: "MonoLisa", system-ui, sans-serif; }
+.toolbar-date .day-num { font-weight: 700; color: var(--text-muted); font-family: "MonoLisa", system-ui, sans-serif; }
 
 /* Mail chips */
 .mail-bar { display: inline-flex; align-items: center; gap: 4px; flex-shrink: 0; }
@@ -943,15 +944,13 @@ body {
 (function() {
   function updateClock() {
     const now = new Date();
-    const weekday   = now.toLocaleDateString('en-US', { weekday: 'short' });
-    const month     = now.toLocaleDateString('en-US', { month: 'short' });
-    const monthLong = now.toLocaleDateString('en-US', { month: 'long' });
-    const day       = now.getDate();
+    const weekday = now.toLocaleDateString('en-US', { weekday: 'short' });
+    const month   = now.toLocaleDateString('en-US', { month: 'short' });
+    const day     = now.getDate();
+    const html = `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
 
-    document.getElementById('clockDate').innerHTML =
-      `<strong>${weekday}</strong><span class="month">${month}</span><span class="day-num">${day}</span>`;
-    document.getElementById('toolbarDate').innerHTML =
-      `<strong>${weekday}</strong>, <span class="month">${monthLong}</span> <span class="day-num">${day}</span>`;
+    document.getElementById('clockDate').innerHTML = html;
+    document.getElementById('toolbarDate').innerHTML = html;
   }
   updateClock();
   setInterval(updateClock, 1000);
