@@ -700,6 +700,15 @@ body {
   }
 }
 
+/* ── Circle Clock Widget ──────────────────────────────────────────────── */
+.circle-clock-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--sp-sm) 0 0;
+}
+#circleClock { display: block; }
+
 </style>
 </head>
 <body>
@@ -761,6 +770,9 @@ body {
 
 
 <div class="wrapper">
+  <div class="circle-clock-wrap">
+    <canvas id="circleClock"></canvas>
+  </div>
   <main class="content">
     <div class="panel" id="panel-whatbox">
       <h2 class="panel-heading">Whatbox</h2>
@@ -988,7 +1000,115 @@ function applyTheme() {
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 let isDark = prefersDark;
 applyTheme();
-function toggleTheme() { isDark = !isDark; applyTheme(); }
+function toggleTheme() { isDark = !isDark; applyTheme(); if (window._redrawClock) window._redrawClock(); }
+
+// Circle Clock
+(function() {
+  const canvas = document.getElementById('circleClock');
+  const ctx = canvas.getContext('2d');
+
+  const SIZE = 160;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.style.width  = SIZE + 'px';
+  canvas.style.height = SIZE + 'px';
+  canvas.width  = SIZE * dpr;
+  canvas.height = SIZE * dpr;
+  ctx.scale(dpr, dpr);
+
+  const cx = SIZE / 2, cy = SIZE / 2;
+  const R  = 62;   // arc radius
+  const SW = 10;   // stroke width
+
+  function lerp(a, b, t) { return a + (b - a) * Math.max(0, Math.min(1, t)); }
+  function lerpRGB(c1, c2, t) { return [lerp(c1[0],c2[0],t), lerp(c1[1],c2[1],t), lerp(c1[2],c2[2],t)]; }
+  function rgb([r,g,b]) { return `rgb(${r|0},${g|0},${b|0})`; }
+
+  // Color stops keyed to time-of-day using actual sunrise/sunset
+  function arcColor(hour) {
+    const st = window._sunTimes || { rise: 6.5, set: 19.8 };
+    const r = st.rise, s = st.set;
+    const stops = [
+      [0,         13,  26,  82],  // midnight navy
+      [r - 1.5,   13,  26,  82],  // deep night
+      [r - 0.3,  230,  90,  40],  // pre-dawn warm orange
+      [r + 1.0,  252, 195,  65],  // dawn golden
+      [(r+s)/2,  255, 220,  85],  // midday bright yellow
+      [s - 1.5,  250, 165,  55],  // late afternoon amber
+      [s - 0.2,  215,  80,  38],  // dusk orange-red
+      [s + 1.2,   45,  42, 125],  // evening blue-purple
+      [s + 2.5,   13,  26,  82],  // night navy
+      [24,        13,  26,  82],
+    ];
+    for (let i = 0; i < stops.length - 1; i++) {
+      const [h1,...c1] = stops[i], [h2,...c2] = stops[i+1];
+      if (hour >= h1 && hour < h2) return lerpRGB(c1, c2, (hour - h1) / (h2 - h1));
+    }
+    return [13, 26, 82];
+  }
+
+  function draw() {
+    const now  = new Date();
+    const h    = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+    const totalH   = h + m / 60 + s / 3600;
+    const progress = ((totalH % 12) / 12) || 1;  // treat exact 12:00 as full circle
+
+    const col     = arcColor(totalH);
+    const colStr  = rgb(col);
+    const dark    = document.documentElement.getAttribute('data-theme') === 'dark';
+
+    ctx.clearRect(0, 0, SIZE, SIZE);
+
+    // Track ring
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = dark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.07)';
+    ctx.lineWidth = SW;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+
+    // Progress arc
+    const start = -Math.PI / 2;
+    const end   = start + progress * Math.PI * 2;
+    ctx.shadowBlur  = 10;
+    ctx.shadowColor = colStr;
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, start, end);
+    ctx.strokeStyle = colStr;
+    ctx.lineWidth   = SW;
+    ctx.lineCap     = 'round';
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Dot at arc tip (hour hand end)
+    const dx = cx + R * Math.cos(end);
+    const dy = cy + R * Math.sin(end);
+    ctx.shadowBlur  = 8;
+    ctx.shadowColor = colStr;
+    ctx.beginPath();
+    ctx.arc(dx, dy, SW / 2 + 1.5, 0, Math.PI * 2);
+    ctx.fillStyle = colStr;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // Center: HH:MM
+    const hDisp = String(h % 12 || 12).padStart(2, '0');
+    const mDisp = String(m).padStart(2, '0');
+    ctx.textAlign    = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle    = dark ? '#ededed' : '#171717';
+    ctx.font         = '700 26px "Geist Mono","MonoLisa",monospace';
+    ctx.fillText(`${hDisp}:${mDisp}`, cx, cy + 5);
+
+    // AM/PM
+    ctx.font      = '400 11px "Geist Mono","MonoLisa",monospace';
+    ctx.fillStyle = dark ? '#444' : '#aaa';
+    ctx.fillText(h < 12 ? 'AM' : 'PM', cx, cy + 20);
+  }
+
+  draw();
+  setInterval(draw, 1000);
+  window._redrawClock = draw;
+})();
 
 // Holidays
 (function() {
@@ -1043,7 +1163,7 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
   const hiIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="currentColor" d="M285 239.2V182h31v148h-31v-63.4h-58V330h-31V182h31v57.2Z"/></svg>`;
   const loIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path d="M0 0h512v512H0z" fill="none"/><path fill="currentColor" d="M234.3 182v120.6H310V330H202V182Z"/></svg>`;
   const widget = document.getElementById('toolbarWeather');
-  fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7482137&longitude=-122.4224271&current=temperature_2m,relative_humidity_2m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&timezone=America/Los_Angeles')
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=37.7482137&longitude=-122.4224271&current=temperature_2m,relative_humidity_2m,apparent_temperature&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset&temperature_unit=fahrenheit&timezone=America/Los_Angeles')
     .then(res => res.json())
     .then(data => {
       const current = Math.round(data.current.temperature_2m);
@@ -1056,6 +1176,11 @@ function toggleTheme() { isDark = !isDark; applyTheme(); }
           `<span class="tw-half lo">${loIcon}${lo}°</span>` +
         `</span>`;
       widget.classList.add('visible');
+      if (data.daily.sunrise && data.daily.sunrise[0]) {
+        const parseHour = s => { const d = new Date(s); return d.getHours() + d.getMinutes() / 60; };
+        window._sunTimes = { rise: parseHour(data.daily.sunrise[0]), set: parseHour(data.daily.sunset[0]) };
+        if (window._redrawClock) window._redrawClock();
+      }
     })
     .catch(() => {});
 })();
